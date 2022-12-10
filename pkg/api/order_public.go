@@ -3,7 +3,7 @@ package api
 import (
 	"time"
 
-	"github.com/Asia-Loop-GmbH/asia-loop-utils-go/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/db"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
