@@ -1,10 +1,25 @@
 package db
 
 import (
+	"context"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+
+	"github.com/nam-truong-le/lambda-utils-go/pkg/aws/ssm"
+	"github.com/nam-truong-le/lambda-utils-go/pkg/mongodb"
 )
+
+const colOrders = "orders"
+
+func CollectionOrders(ctx context.Context) (*mongo.Collection, error) {
+	database, err := ssm.GetParameter(ctx, "/mongo/database", false)
+	if err != nil {
+		return nil, err
+	}
+	return mongodb.Collection(ctx, database, colOrders)
+}
 
 type OrderShippingMethod string
 
