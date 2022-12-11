@@ -14,7 +14,7 @@ import (
 const colStores = "stores"
 
 func CollectionStores(ctx context.Context) (*mongo.Collection, error) {
-	database, err := ssm.GetParameter(ctx, "/mongo/database", false)
+	database, err := ssm.GetParameter(ctx, "/mongo/db", false)
 	if err != nil {
 		return nil, err
 	}
