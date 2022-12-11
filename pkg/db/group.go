@@ -14,7 +14,7 @@ import (
 const colGroups = "groups"
 
 func CollectionGroups(ctx context.Context) (*mongo.Collection, error) {
-	database, err := ssm.GetParameter(ctx, "/mongo/db", false)
+	database, err := ssm.GetParameter(ctx, "/mongo/database", false)
 	if err != nil {
 		return nil, err
 	}
