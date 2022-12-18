@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 type MetaData struct {
 	Key          string      `json:"key"`

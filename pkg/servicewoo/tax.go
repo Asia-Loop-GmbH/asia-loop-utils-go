@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 type Tax struct {
 	ID       int    `json:"id"`

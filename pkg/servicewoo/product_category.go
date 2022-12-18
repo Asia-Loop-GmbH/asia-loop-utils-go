@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 type ProductCategory struct {
 	TermID         int    `json:"term_id"`

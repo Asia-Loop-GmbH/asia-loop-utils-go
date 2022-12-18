@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 type ShippingLine struct {
 	ID          int        `json:"id"`

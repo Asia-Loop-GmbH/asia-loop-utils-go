@@ -4,18 +4,19 @@ go 1.19
 
 require (
 	github.com/Masterminds/goutils v1.1.1
+	github.com/aws/aws-lambda-go v1.36.0
 	github.com/aws/aws-sdk-go-v2 v1.17.3
 	github.com/aws/aws-sdk-go-v2/service/sns v1.18.8
 	github.com/mailjet/mailjet-apiv3-go/v4 v4.0.1
 	github.com/nam-truong-le/lambda-utils-go v1.10.0
 	github.com/nyaruka/phonenumbers v1.1.4
+	github.com/shopspring/decimal v1.3.1
 	github.com/stretchr/testify v1.8.0
 	go.mongodb.org/mongo-driver v1.11.1
 	googlemaps.github.io/maps v1.3.2
 )
 
 require (
-	github.com/aws/aws-lambda-go v1.36.0 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.18.5 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.13.5 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.21 // indirect

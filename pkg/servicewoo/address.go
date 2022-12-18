@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 type ShippingAddress struct {
 	FirstName string `json:"first_name"`

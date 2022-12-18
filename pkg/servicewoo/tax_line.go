@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 type TaxLine struct {
 	ID               int        `json:"id"`

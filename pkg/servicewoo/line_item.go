@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 type LineItem struct {
 	ID          int               `json:"id"`

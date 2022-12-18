@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 // Coupon : "discount_type", "date_expires", "individual_use",... | currently assume that only one type is used and no expires
 // TODO: add logic to differentiate types

@@ -1,4 +1,4 @@
-package woo
+package servicewoo
 
 type FeeLine struct {
 	ID        int        `json:"id"`
