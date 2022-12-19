@@ -25,7 +25,7 @@ func PublishOrderPickupReady(ctx context.Context, data *EventOrderPickupReadyDat
 	if !ok {
 		return fmt.Errorf("undefined stage in context")
 	}
-	topic, err := ssm.GetParameter(ctx, "/sns/order/pickup-ready/arn", false)
+	topic, err := ssm.GetParameter(ctx, TopicPickupReadyARN, false)
 	if err != nil {
 		log.Errorf("failed to get topic arn: %s", err)
 		return err

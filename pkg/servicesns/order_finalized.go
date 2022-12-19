@@ -25,7 +25,7 @@ func PublishOrderFinalized(ctx context.Context, data *EventOrderFinalizedData) e
 	if !ok {
 		return fmt.Errorf("undefined stage in context")
 	}
-	topic, err := ssm.GetParameter(ctx, "/sns/order/finalized/arn", false)
+	topic, err := ssm.GetParameter(ctx, TopicOrderFinalizedARN, false)
 	if err != nil {
 		log.Errorf("failed to get topic arn: %s", err)
 		return err

@@ -25,7 +25,7 @@ func PublishOrderCreated(ctx context.Context, data *EventOrderCreatedData) error
 		return fmt.Errorf("undefined stage in context")
 	}
 
-	topic, err := ssm.GetParameter(ctx, "/sns/createdOrder/arn", false)
+	topic, err := ssm.GetParameter(ctx, TopicOrderCreatedARN, false)
 	if err != nil {
 		log.Errorf("failed to get topic arn: %s", err)
 		return err

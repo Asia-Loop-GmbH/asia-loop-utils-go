@@ -24,7 +24,7 @@ func PublishOrderPOSPaid(ctx context.Context, data *EventOrderPOSPaidData) error
 	if !ok {
 		return fmt.Errorf("undefined stage in context")
 	}
-	topic, err := ssm.GetParameter(ctx, "/sns/order/pos-invoice/arn", false)
+	topic, err := ssm.GetParameter(ctx, TopicPOSInvoiceARN, false)
 	if err != nil {
 		log.Errorf("failed to get topic arn: %s", err)
 		return err
