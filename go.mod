@@ -15,7 +15,7 @@ require (
 	github.com/nyaruka/phonenumbers v1.1.4
 	github.com/pkg/errors v0.9.1
 	github.com/shopspring/decimal v1.3.1
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 	go.mongodb.org/mongo-driver v1.11.1
 	googlemaps.github.io/maps v1.3.2
 )
