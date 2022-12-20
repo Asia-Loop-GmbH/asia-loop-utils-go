@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/adyen/adyen-go-api-library/v5/src/adyen"
-	"github.com/adyen/adyen-go-api-library/v5/src/common"
+	"github.com/adyen/adyen-go-api-library/v6/src/adyen"
+	"github.com/adyen/adyen-go-api-library/v6/src/common"
 
 	"github.com/nam-truong-le/lambda-utils-go/pkg/aws/ssm"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/pkg/context"

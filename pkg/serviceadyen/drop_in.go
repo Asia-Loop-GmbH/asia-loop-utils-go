@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/adyen/adyen-go-api-library/v5/src/checkout"
+	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
 	"github.com/shopspring/decimal"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/api"
