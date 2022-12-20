@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/Masterminds/goutils v1.1.1
 	github.com/adyen/adyen-go-api-library/v5 v5.1.0
+	github.com/adyen/adyen-go-api-library/v6 v6.0.1
 	github.com/aws/aws-lambda-go v1.36.0
 	github.com/aws/aws-sdk-go-v2 v1.17.3
 	github.com/aws/aws-sdk-go-v2/config v1.18.6

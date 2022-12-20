@@ -5,6 +5,7 @@ github.com/Masterminds/goutils v1.1.1 h1:5nUrii3FMTL5diU80unEVvNevw1nH4+ZV4DSLVJ
 github.com/Masterminds/goutils v1.1.1/go.mod h1:8cTjp+g8YejhMuvIA5y2vz3BpJxksy863GQaJW2MFNU=
 github.com/adyen/adyen-go-api-library/v5 v5.1.0 h1:WmEXhbxmbIzlzKAjvfdFYQr8XPvyiaSRB8wRgwak7rI=
 github.com/adyen/adyen-go-api-library/v5 v5.1.0/go.mod h1:pK7IRfP4/W4ZJiV7TsYPvve9dq8zzGHo250i2Htg4mA=
+github.com/adyen/adyen-go-api-library/v6 v6.0.1/go.mod h1:BXQ9Gj9POtdQmzUShH3q4rjFan0DOHeOcFqegidCiSw=
 github.com/aws/aws-lambda-go v1.36.0 h1:NWBWBJgavrQOjF1uKDG5D7Qs5y5o75HcrjfA16Hwfak=
 github.com/aws/aws-lambda-go v1.36.0/go.mod h1:jwFe2KmMsHmffA1X2R09hH6lFzJQxzI8qK17ewzbQMM=
 github.com/aws/aws-sdk-go-v2 v1.17.3 h1:shN7NlnVzvDUgPQ+1rLMSxY8OWRNDRYtiqe0p/PgrhY=
