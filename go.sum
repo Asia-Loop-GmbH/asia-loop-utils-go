@@ -106,6 +106,7 @@ github.com/montanaflynn/stats v0.6.6 h1:Duep6KMIDpY4Yo11iFsvyqJDyfzLF9+sndUKT+v6
 github.com/montanaflynn/stats v0.6.6/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
 github.com/nam-truong-le/lambda-utils-go v1.14.0 h1:TPpoL94V1tWiE3cZm9YqLDHpf8V8FvXj5YaVt5mhPWs=
 github.com/nam-truong-le/lambda-utils-go v1.14.0/go.mod h1:mKdsgXmzTG+MD0nYgWPGu6HvjyLhQNEnJzLEtoQZy70=
+github.com/nam-truong-le/lambda-utils-go/v2 v2.0.0/go.mod h1:gfQwafsY1sQVyg49MBZ5RtHIf0E3oUsVJ/RJ7e6jOjw=
 github.com/nyaruka/phonenumbers v1.1.4 h1:de8exybd7+g9q+gXP04Ypt9ijFYXXm8wrgqPf+Ckk20=
 github.com/nyaruka/phonenumbers v1.1.4/go.mod h1:yShPJHDSH3aTKzCbXyVxNpbl2kA+F+Ne5Pun/MvFRos=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
