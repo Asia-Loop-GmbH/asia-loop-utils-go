@@ -25,8 +25,8 @@ github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.22.0 h1:pYLNx6zc
 github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.22.0/go.mod h1:ptcvvcDMc0lkuPjU6NFgSgptt6WeARIADRPsUJMDGLU=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.21 h1:5C6XgTViSb0bunmU57b3CT+MhxULqHH2721FVA+/kDM=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.21/go.mod h1:lRToEJsn+DRA9lW4O9L9+/3hjTkUzlzyzHqn8MTds5k=
-github.com/aws/aws-sdk-go-v2/service/sns v1.18.8 h1:Iwbdihm8vAnNJhnggU1D98JD79ZIIaOFFB8DBiA8Z48=
-github.com/aws/aws-sdk-go-v2/service/sns v1.18.8/go.mod h1:iTh9DgwDnFqF5LfFHNXWAxLe9zV0/XcWaMCWXIRDqXA=
+github.com/aws/aws-sdk-go-v2/service/sns v1.19.0 h1:ZU8uo+/XBgJLoYMEN5iPUd+WQXLt53S46ULtRa85+uk=
+github.com/aws/aws-sdk-go-v2/service/sns v1.19.0/go.mod h1:iTh9DgwDnFqF5LfFHNXWAxLe9zV0/XcWaMCWXIRDqXA=
 github.com/aws/aws-sdk-go-v2/service/ssm v1.33.4 h1:s8o8aN6cOaYQ6oJ4D7DMV98iyNhkiY1PDFSk5uSbqF8=
 github.com/aws/aws-sdk-go-v2/service/ssm v1.33.4/go.mod h1:Hf7wSogKP1XCJ9GgW8erZDL6IZ1NLwLN7bYdV/Gn/LI=
 github.com/aws/aws-sdk-go-v2/service/sso v1.12.0 h1:/2gzjhQowRLarkkBOGPXSRnb8sQ2RVsjdG1C/UliK/c=
