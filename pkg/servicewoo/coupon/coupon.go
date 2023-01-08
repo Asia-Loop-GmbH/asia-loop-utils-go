@@ -12,7 +12,7 @@ import (
 	"github.com/shopspring/decimal"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/servicewoo"
-	"github.com/nam-truong-le/lambda-utils-go/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
 )
 
 func IsValidAndHasEnough(ctx context.Context, code, appliedAmount string) bool {

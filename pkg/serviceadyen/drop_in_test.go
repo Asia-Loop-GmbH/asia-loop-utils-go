@@ -8,7 +8,7 @@ import (
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/random"
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/serviceadyen"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/pkg/context"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
 )
 
 func TestNewDropInPayment_Success(t *testing.T) {

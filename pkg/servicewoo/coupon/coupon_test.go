@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/servicewoo/coupon"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/pkg/context"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
 )
 
 func TestGetCouponByCode_Success(t *testing.T) {
