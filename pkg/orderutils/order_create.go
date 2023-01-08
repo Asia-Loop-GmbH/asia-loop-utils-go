@@ -13,7 +13,7 @@ import (
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/normalizer"
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/random"
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/servicegooglemaps"
-	"github.com/nam-truong-le/lambda-utils-go/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
 )
 
 func CreateOrder(ctx context.Context, orderOptions *api.CreateOrderOrderOptions,

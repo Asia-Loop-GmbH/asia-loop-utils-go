@@ -8,10 +8,10 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sns"
 	"github.com/aws/aws-sdk-go-v2/service/sns/types"
 
-	mysns "github.com/nam-truong-le/lambda-utils-go/pkg/aws/sns"
-	"github.com/nam-truong-le/lambda-utils-go/pkg/aws/ssm"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/pkg/context"
-	"github.com/nam-truong-le/lambda-utils-go/pkg/logger"
+	mysns "github.com/nam-truong-le/lambda-utils-go/v2/pkg/aws/sns"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/aws/ssm"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
 )
 
 type EventOrderCreatedData struct {

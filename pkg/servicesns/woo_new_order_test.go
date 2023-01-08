@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/servicesns"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/pkg/context"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
 )
 
 func TestPublishWooNewOrder(t *testing.T) {

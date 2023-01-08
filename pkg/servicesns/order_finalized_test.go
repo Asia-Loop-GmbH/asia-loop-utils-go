@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/servicesns"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/pkg/context"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
 )
 
 func TestPublishOrderFinalized(t *testing.T) {

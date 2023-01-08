@@ -6,8 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"github.com/nam-truong-le/lambda-utils-go/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/pkg/mongodb"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/aws/ssm"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/mongodb"
 )
 
 const colCompany = "companies"

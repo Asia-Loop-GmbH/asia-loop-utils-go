@@ -6,8 +6,8 @@ import (
 
 	"googlemaps.github.io/maps"
 
-	"github.com/nam-truong-le/lambda-utils-go/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/aws/ssm"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
 )
 
 type ResolveAddressResult struct {

@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/servicewoo"
-	"github.com/nam-truong-le/lambda-utils-go/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
 )
 
 const (

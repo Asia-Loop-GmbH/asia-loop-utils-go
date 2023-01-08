@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nam-truong-le/lambda-utils-go/pkg/logger"
-	"github.com/nam-truong-le/lambda-utils-go/pkg/pusher"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/pusher"
 )
 
 const (
