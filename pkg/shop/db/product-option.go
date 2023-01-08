@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -25,6 +26,8 @@ type ProductOption struct {
 	Name        string               `bson:"name" json:"name"`
 	DisplayName string               `bson:"displayName" json:"displayName"`
 	Values      []ProductOptionValue `bson:"values" json:"values"`
+	CreatedAt   time.Time            `bson:"createdAt" json:"createdAt"`
+	UpdatedAt   time.Time            `bson:"updatedAt" json:"updatedAt"`
 }
 
 type ProductOptionValue struct {
