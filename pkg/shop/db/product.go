@@ -29,7 +29,7 @@ type Product struct {
 	TaxClassStandard string             `bson:"taxClassStandard" json:"taxClassStandard"`
 	TaxClassTakeAway string             `bson:"taxClassTakeAway" json:"taxClassTakeAway"`
 	Categories       []string           `bson:"categories" json:"categories"`
-	Images           []string           `bson:"images" json:"images"`
+	Images           []Image            `bson:"images" json:"images"`
 	Options          []string           `bson:"options" json:"options"`
 	Variations       []ProductVariation `bson:"variations" json:"variations"`
 	DisabledIn       []string           `bson:"disabledIn" json:"disabledIn"`
