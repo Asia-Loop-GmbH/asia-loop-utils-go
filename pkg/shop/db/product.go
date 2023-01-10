@@ -34,6 +34,7 @@ type Product struct {
 	Variations       []ProductVariation `bson:"variations" json:"variations"`
 	DisabledIn       []string           `bson:"disabledIn" json:"disabledIn"`
 	OutOfStockIn     []string           `bson:"outOfStockIn" json:"outOfStockIn"`
+	Description      string             `bson:"description" json:"description"`
 	CreatedAt        time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt        time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
