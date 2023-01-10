@@ -6,9 +6,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/db"
-	commoncontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/mongodb"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/db"
+	commoncontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/mongodb"
 )
 
 func TestNextByStage(t *testing.T) {

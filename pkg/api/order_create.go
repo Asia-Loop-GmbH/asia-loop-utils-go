@@ -3,7 +3,7 @@ package api
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/db"
 )
 
 type CreateOrderRequest struct {

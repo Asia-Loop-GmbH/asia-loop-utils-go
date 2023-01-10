@@ -6,9 +6,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/random"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/serviceadyen"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/random"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/serviceadyen"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 
 func TestNewDropInPayment_Success(t *testing.T) {

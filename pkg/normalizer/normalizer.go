@@ -8,7 +8,7 @@ import (
 	"github.com/Masterminds/goutils"
 	"github.com/nyaruka/phonenumbers"
 
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 func Email(ctx context.Context, email string) string {

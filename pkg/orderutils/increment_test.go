@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/orderutils"
-	commoncontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/orderutils"
+	commoncontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 
 func TestNextOrderInvoice(t *testing.T) {

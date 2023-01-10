@@ -9,8 +9,8 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 const (

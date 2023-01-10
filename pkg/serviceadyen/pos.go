@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/random"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/random"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 func NewTender(ctx context.Context, pos, orderId string, amount float32) error {

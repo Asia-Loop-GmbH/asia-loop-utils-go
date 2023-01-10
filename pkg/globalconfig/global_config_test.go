@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/globalconfig"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/globalconfig"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 func TestGet(t *testing.T) {

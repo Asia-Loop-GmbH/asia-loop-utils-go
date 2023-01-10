@@ -6,8 +6,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/servicewoo"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/servicewoo"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 func GetSlots(ctx context.Context) (*Slots, error) {
