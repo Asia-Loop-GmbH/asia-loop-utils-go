@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/random"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/random"
 )
 
 func TestRandomString_Success(t *testing.T) {

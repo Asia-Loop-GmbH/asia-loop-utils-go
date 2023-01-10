@@ -7,9 +7,9 @@ import (
 	"github.com/adyen/adyen-go-api-library/v6/src/adyen"
 	"github.com/adyen/adyen-go-api-library/v6/src/common"
 
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/aws/ssm"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 var (

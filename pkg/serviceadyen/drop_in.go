@@ -11,8 +11,8 @@ import (
 	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
 	"github.com/shopspring/decimal"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/api"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/api"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 type SessionResponse struct {

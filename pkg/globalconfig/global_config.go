@@ -5,7 +5,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/db"
 )
 
 func Get(ctx context.Context) (*db.GlobalConfig, error) {

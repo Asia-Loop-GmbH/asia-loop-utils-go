@@ -5,7 +5,7 @@ import (
 
 	"github.com/mailjet/mailjet-apiv3-go/v4"
 
-	mymailjet "github.com/nam-truong-le/lambda-utils-go/v2/pkg/mailjet"
+	mymailjet "github.com/nam-truong-le/lambda-utils-go/v3/pkg/mailjet"
 )
 
 type TemplateID int

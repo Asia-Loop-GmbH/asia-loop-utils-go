@@ -9,10 +9,10 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sns/types"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	mysns "github.com/nam-truong-le/lambda-utils-go/v2/pkg/aws/sns"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/aws/ssm"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/v2/pkg/context"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	mysns "github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/sns"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 type EventOrderFinalizedData struct {

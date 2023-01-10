@@ -8,12 +8,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/api"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/db"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/normalizer"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/random"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/pkg/servicegooglemaps"
-	"github.com/nam-truong-le/lambda-utils-go/v2/pkg/logger"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/api"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/normalizer"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/random"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/servicegooglemaps"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 func CreateOrder(ctx context.Context, orderOptions *api.CreateOrderOrderOptions,
