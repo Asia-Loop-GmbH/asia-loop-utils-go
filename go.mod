@@ -14,10 +14,11 @@ require (
 	github.com/nam-truong-le/lambda-utils-go/v3 v3.0.0
 	github.com/nyaruka/phonenumbers v1.1.4
 	github.com/pkg/errors v0.9.1
+	github.com/samber/lo v1.37.0
 	github.com/shopspring/decimal v1.3.1
 	github.com/stretchr/testify v1.8.1
 	go.mongodb.org/mongo-driver v1.11.1
-	googlemaps.github.io/maps v1.3.2
+	googlemaps.github.io/maps v1.3.3
 )
 
 require (
@@ -42,7 +43,6 @@ require (
 	github.com/montanaflynn/stats v0.6.6 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/pusher/pusher-http-go/v5 v5.1.1 // indirect
-	github.com/samber/lo v1.37.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
