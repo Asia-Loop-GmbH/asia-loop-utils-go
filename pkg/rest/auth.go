@@ -3,6 +3,7 @@ package rest
 import (
 	"context"
 	"net/http"
+	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/pkg/errors"
@@ -24,7 +25,7 @@ func RequireAdmin(ctx context.Context, request *events.APIGatewayProxyRequest) *
 		return rest.ResponseError(ctx, http.StatusInternalServerError, request, errors.Wrap(err, "failed to init db collection"))
 	}
 
-	username := request.RequestContext.Identity.User
+	username := GetSignInFromRequest(ctx, request)
 	find := colRoles.FindOne(ctx, bson.M{"user": username})
 	user := new(db.User)
 	err = find.Decode(user)
@@ -45,4 +46,23 @@ func RequireAdmin(ctx context.Context, request *events.APIGatewayProxyRequest) *
 	}
 
 	return nil
+}
+
+func GetSignInFromRequest(ctx context.Context, request *events.APIGatewayProxyRequest) string {
+	log := logger.FromContext(ctx)
+	log.Infof("Get signin from request")
+
+	auth := request.RequestContext.Identity.CognitoAuthenticationProvider
+	parts := strings.Split(auth, ":")
+	if len(parts) < 3 {
+		log.Warnf("Malformed auth: %s", auth)
+		return ""
+	}
+	if parts[len(parts)-2] != "CognitoSignIn" {
+		log.Warnf("Unsupported auth: %s", auth)
+		return ""
+	}
+	signIn := parts[len(parts)-1]
+	log.Infof("Sign in user: %s", signIn)
+	return signIn
 }
