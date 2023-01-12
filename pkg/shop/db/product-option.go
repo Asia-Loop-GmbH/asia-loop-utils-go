@@ -34,6 +34,7 @@ type ProductOptionValue struct {
 	Name         string   `bson:"name" json:"name"`
 	DisplayName  string   `bson:"displayName" json:"displayName"`
 	PrintName    string   `bson:"printName" json:"printName"`
+	Image        *string  `bson:"image" json:"image"`
 	DisabledIn   []string `bson:"disabledIn" json:"disabledIn"`
 	OutOfStockIn []string `bson:"outOfStockIn" json:"outOfStockIn"`
 	Allergens    []string `bson:"allergens" json:"allergens"`
