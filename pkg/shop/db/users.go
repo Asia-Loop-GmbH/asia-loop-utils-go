@@ -24,6 +24,7 @@ type RoleEntry struct {
 type User struct {
 	ID    primitive.ObjectID `bson:"_id" json:"id"`
 	User  string             `bson:"user" json:"user"`
+	Email string             `bson:"email" json:"email"`
 	Roles []RoleEntry        `bson:"roles" json:"roles"`
 }
 
