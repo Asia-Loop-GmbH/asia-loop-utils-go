@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -21,8 +22,10 @@ func CollectionCarts(ctx context.Context) (*mongo.Collection, error) {
 }
 
 type Cart struct {
-	ID    primitive.ObjectID `bson:"_id" json:"id"`
-	Items []CartItem         `bson:"items" json:"items"`
+	ID        primitive.ObjectID `bson:"_id" json:"id"`
+	Items     []CartItem         `bson:"items" json:"items"`
+	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
+	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
 
 type CartItem struct {
