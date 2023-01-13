@@ -14,7 +14,7 @@ import (
 type PublicCart struct {
 	ID        primitive.ObjectID `json:"id"`
 	Items     []PublicCartItem   `json:"items"`
-	Summary   *PublicCartSummary `json:"summary"`
+	Summary   *PublicCartSummary `json:"summary,omitempty"`
 	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
