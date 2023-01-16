@@ -31,6 +31,7 @@ type Store struct {
 	Owner                string             `bson:"owner" json:"owner"`
 	BusinessRegistration string             `bson:"businessRegistration" json:"businessRegistration"`
 	TaxNumber            string             `bson:"taxNumber" json:"taxNumber"`
+	MBW                  map[string]string  `bson:"mbw" json:"mbw"`
 	CreatedAt            time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt            time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
