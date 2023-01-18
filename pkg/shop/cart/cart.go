@@ -15,6 +15,7 @@ type PublicCart struct {
 	ID        primitive.ObjectID `json:"id"`
 	Items     []PublicCartItem   `json:"items"`
 	Summary   PublicCartSummary  `json:"summary"`
+	Secret    string             `json:"secret"`
 	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
@@ -59,6 +60,7 @@ func Calculate(ctx context.Context, c *db.Cart) (*PublicCart, error) {
 				"MwSt. 7%": "0.00",
 			},
 		},
+		Secret:    c.Secret,
 		CreatedAt: c.CreatedAt,
 		UpdatedAt: c.UpdatedAt,
 	}, nil
