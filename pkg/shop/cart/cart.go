@@ -4,8 +4,10 @@ import (
 	"context"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/shop/db"
@@ -38,6 +40,47 @@ type PublicCartItem struct {
 	Tax        string   `json:"tax"`
 	Net        string   `json:"net"`
 	TaxClass   string   `json:"taxClass"`
+}
+
+func CalculatePublicCart(ctx context.Context, shoppingCart *db.Cart) (*PublicCart, error) {
+	log := logger.FromContext(ctx)
+	log.Infof("Calculate public cart")
+
+	colProducts, err := db.CollectionProducts(ctx)
+	if err != nil {
+		log.Errorf("Failed to init db collection: %s", err)
+		return nil, errors.Wrap(err, "failed to init db collection")
+	}
+	findProducts, err := colProducts.Find(ctx, bson.M{}) // TODO: search only related products
+	if err != nil {
+		log.Errorf("Failed to find products: %s", err)
+		return nil, errors.Wrap(err, "failed to find products")
+	}
+	products := make([]db.Product, 0)
+	err = findProducts.All(ctx, &products)
+	if err != nil {
+		log.Errorf("Failed to decode products: %s", err)
+		return nil, errors.Wrap(err, "failed to decode products")
+	}
+
+	colTaxes, err := db.CollectionTaxes(ctx)
+	if err != nil {
+		log.Errorf("Failed to init db collection: %s", err)
+		return nil, errors.Wrap(err, "failed to init db collection")
+	}
+	findTaxes, err := colTaxes.Find(ctx, bson.M{})
+	if err != nil {
+		log.Errorf("Failed to find taxes: %s", err)
+		return nil, errors.Wrap(err, "failed to find taxes")
+	}
+	taxes := make([]db.Tax, 0)
+	err = findTaxes.All(ctx, &taxes)
+	if err != nil {
+		log.Errorf("Failed to decode taxes: %s", err)
+		return nil, errors.Wrap(err, "failed to decode taxes")
+	}
+
+	return Calculate(ctx, shoppingCart, products, taxes)
 }
 
 func Calculate(ctx context.Context, c *db.Cart, products []db.Product, taxes []db.Tax) (*PublicCart, error) {
