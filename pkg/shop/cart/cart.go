@@ -83,7 +83,7 @@ func CalculatePublicCart(ctx context.Context, shoppingCart *db.Cart) (*PublicCar
 	return Calculate(ctx, shoppingCart, products, taxes)
 }
 
-func Calculate(ctx context.Context, c *db.Cart, products []db.Product, taxes []db.Tax) (*PublicCart, error) {
+func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product, taxes []db.Tax) (*PublicCart, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Calculate cart")
 
@@ -94,7 +94,7 @@ func Calculate(ctx context.Context, c *db.Cart, products []db.Product, taxes []d
 		"takeaway": decimal.Zero,
 	}
 
-	items := lo.Map(c.Items, func(item db.CartItem, index int) PublicCartItem {
+	items := lo.Map(shoppingCart.Items, func(item db.CartItem, index int) PublicCartItem {
 		product, ok := lo.Find(products, func(p db.Product) bool {
 			return p.ID.Hex() == item.ProductID
 		})
@@ -109,6 +109,9 @@ func Calculate(ctx context.Context, c *db.Cart, products []db.Product, taxes []d
 		}
 
 		itemPrice := decimal.RequireFromString(product.Price.Value)
+		if shoppingCart.IsPickup {
+			itemPrice = itemPrice.Mul(decimal.NewFromFloat(0.8)).Round(2)
+		}
 		taxRate := decimal.RequireFromString(tax.Rate)
 		taxPrice := itemPrice.Div(decimal.NewFromInt(1).Add(taxRate)).Mul(taxRate).Round(2)
 		netPrice := itemPrice.Sub(taxPrice)
@@ -127,7 +130,7 @@ func Calculate(ctx context.Context, c *db.Cart, products []db.Product, taxes []d
 			CartItem:   item,
 			SKU:        product.SKU,
 			Categories: product.Categories,
-			UnitPrice:  product.Price.Value, // TODO: we must improve this in the future, when we support store specific prices
+			UnitPrice:  itemPrice.StringFixed(2), // TODO: we must improve this in the future, when we support store specific prices
 			Total:      totalPrice.StringFixed(2),
 			Tax:        totalTax.StringFixed(2),
 			Net:        totalNet.StringFixed(2),
@@ -136,8 +139,8 @@ func Calculate(ctx context.Context, c *db.Cart, products []db.Product, taxes []d
 	})
 
 	return &PublicCart{
-		ID:       c.ID,
-		IsPickup: c.IsPickup,
+		ID:       shoppingCart.ID,
+		IsPickup: shoppingCart.IsPickup,
 		Items:    items,
 		Summary: PublicCartSummary{
 			Total:    sTotal.StringFixed(2),
@@ -147,8 +150,8 @@ func Calculate(ctx context.Context, c *db.Cart, products []db.Product, taxes []d
 				"takeaway": sTaxes["takeaway"].StringFixed(2),
 			},
 		},
-		Secret:    c.Secret,
-		CreatedAt: c.CreatedAt,
-		UpdatedAt: c.UpdatedAt,
+		Secret:    shoppingCart.Secret,
+		CreatedAt: shoppingCart.CreatedAt,
+		UpdatedAt: shoppingCart.UpdatedAt,
 	}, nil
 }
