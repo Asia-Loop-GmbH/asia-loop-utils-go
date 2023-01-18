@@ -23,6 +23,7 @@ func CollectionCarts(ctx context.Context) (*mongo.Collection, error) {
 
 type Cart struct {
 	ID        primitive.ObjectID `bson:"_id" json:"id"`
+	IsPickup  bool               `bson:"isPickup" json:"isPickup"`
 	Items     []CartItem         `bson:"items" json:"items"`
 	Secret    string             `bson:"secret" json:"secret"`
 	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
