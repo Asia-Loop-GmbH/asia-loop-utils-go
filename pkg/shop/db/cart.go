@@ -24,6 +24,7 @@ func CollectionCarts(ctx context.Context) (*mongo.Collection, error) {
 type Cart struct {
 	ID        primitive.ObjectID `bson:"_id" json:"id"`
 	Items     []CartItem         `bson:"items" json:"items"`
+	Secret    string             `bson:"secret" json:"secret"`
 	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
