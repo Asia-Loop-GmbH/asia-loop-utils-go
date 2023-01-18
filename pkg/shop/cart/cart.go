@@ -96,7 +96,7 @@ func Calculate(ctx context.Context, c *db.Cart, products []db.Product, taxes []d
 
 	items := lo.Map(c.Items, func(item db.CartItem, index int) PublicCartItem {
 		product, ok := lo.Find(products, func(p db.Product) bool {
-			return p.ID.String() == item.ProductID
+			return p.ID.Hex() == item.ProductID
 		})
 		if !ok {
 			return PublicCartItem{} // TODO: we don't expect that this happens, so just ignore this case for now
