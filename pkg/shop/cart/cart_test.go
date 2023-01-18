@@ -35,6 +35,71 @@ func TestDecimal(t *testing.T) {
 	assert.Equal(t, "1.23", decimal.NewFromFloat(1.225).Round(2).StringFixed(2))
 }
 
+func TestCalculate_ShippingMethodPickup(t *testing.T) {
+	id := primitive.NewObjectID()
+	sku := "some-sku"
+	name := "product name"
+	price := "12.34"
+	expectedUnitPrice := "9.87"
+	amount := 4
+	expectedTotal := "39.48"
+	expectedTax := "2.60"
+	expectedNet := "36.88"
+	expectedTaxClass := "takeaway"
+	cartItem := db.CartItem{
+		ProductID: id.Hex(),
+		Options:   nil,
+		Amount:    amount,
+	}
+
+	categories := []string{"category1", "category2"}
+	products := []db.Product{
+		{
+			ID:   id,
+			SKU:  sku,
+			Name: name,
+			Price: db.CustomizablePrice{
+				Value:        price,
+				CustomValues: nil,
+			},
+			TaxClassStandard: "standard",
+			TaxClassTakeAway: "takeaway",
+			Categories:       categories,
+			Options:          nil,
+			Variations:       nil,
+		},
+	}
+	shoppingCart := db.Cart{
+		ID:       id,
+		IsPickup: true,
+		Items:    []db.CartItem{cartItem},
+	}
+	publicCart, err := cart.Calculate(context.TODO(), &shoppingCart, products, taxes)
+
+	assert.NoError(t, err)
+	assert.Equal(t, true, publicCart.IsPickup)
+
+	assert.Equal(t, cart.PublicCartItem{
+		CartItem:   cartItem,
+		SKU:        sku,
+		Categories: categories,
+		UnitPrice:  expectedUnitPrice,
+		Total:      expectedTotal,
+		Tax:        expectedTax,
+		Net:        expectedNet,
+		TaxClass:   expectedTaxClass,
+	}, publicCart.Items[0])
+
+	assert.Equal(t, cart.PublicCartSummary{
+		Total:    expectedTotal,
+		TotalTax: expectedTax,
+		TotalNet: expectedNet,
+		Taxes: map[string]string{
+			"takeaway": expectedTax,
+		},
+	}, publicCart.Summary)
+}
+
 func TestCalculate(t *testing.T) {
 	id := primitive.NewObjectID()
 	secret := "some-secret"
@@ -100,11 +165,11 @@ func TestCalculate(t *testing.T) {
 	}, publicCart.Items[0])
 
 	assert.Equal(t, cart.PublicCartSummary{
-		Total:    "49.36",
-		TotalTax: "3.24",
-		TotalNet: "46.12",
+		Total:    expectedTotal,
+		TotalTax: expectedTax,
+		TotalNet: expectedNet,
 		Taxes: map[string]string{
-			"takeaway": "3.24",
+			"takeaway": expectedTax,
 		},
 	}, publicCart.Summary)
 }
