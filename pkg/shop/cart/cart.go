@@ -14,6 +14,11 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
+const (
+	TaxClassStandard = "standard"
+	TaxClassTakeaway = "takeaway"
+)
+
 type PublicCart struct {
 	ID        primitive.ObjectID `json:"id"`
 	IsPickup  bool               `json:"isPickup"`
@@ -25,10 +30,15 @@ type PublicCart struct {
 }
 
 type PublicCartSummary struct {
-	Total    string            `json:"total"`
-	TotalTax string            `json:"totalTax"`
-	TotalNet string            `json:"net"`
-	Taxes    map[string]string `json:"taxes"`
+	Total  TotalSummary `json:"total"`
+	Tax    TotalSummary `json:"tax"`
+	Net    TotalSummary `json:"net"`
+	Saving string       `json:"saving"`
+}
+
+type TotalSummary struct {
+	Value  string            `json:"value"`
+	Values map[string]string `json:"values"` // Values are values grouped by tax classes
 }
 
 type PublicCartItem struct {
@@ -39,6 +49,7 @@ type PublicCartItem struct {
 	Total      string   `json:"total"`
 	Tax        string   `json:"tax"`
 	Net        string   `json:"net"`
+	Saving     string   `json:"saving"`
 	TaxClass   string   `json:"taxClass"`
 }
 
@@ -90,9 +101,7 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 	sTotal := decimal.Zero
 	sTax := decimal.Zero
 	sNet := decimal.Zero
-	sTaxes := map[string]decimal.Decimal{
-		"takeaway": decimal.Zero,
-	}
+	sSaving := decimal.Zero
 
 	items := lo.Map(shoppingCart.Items, func(item db.CartItem, index int) PublicCartItem {
 		product, ok := lo.Find(products, func(p db.Product) bool {
@@ -102,15 +111,19 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 			return PublicCartItem{} // TODO: we don't expect that this happens, so just ignore this case for now
 		}
 		tax, ok := lo.Find(taxes, func(tax db.Tax) bool {
-			return tax.Name == "takeaway"
+			return tax.Name == TaxClassTakeaway
 		})
 		if !ok {
 			return PublicCartItem{}
 		}
 
 		itemPrice := decimal.RequireFromString(product.Price.Value)
+		saving := decimal.Zero
 		if shoppingCart.IsPickup {
+			originalPrice := itemPrice.Add(decimal.Zero)
 			itemPrice = itemPrice.Mul(decimal.NewFromFloat(0.8)).Round(2)
+			saving = originalPrice.Sub(itemPrice).Mul(decimal.NewFromInt(int64(item.Amount)))
+			sSaving = sSaving.Add(saving)
 		}
 		taxRate := decimal.RequireFromString(tax.Rate)
 		taxPrice := itemPrice.Div(decimal.NewFromInt(1).Add(taxRate)).Mul(taxRate).Round(2)
@@ -124,7 +137,6 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 		sTotal = sTotal.Add(totalPrice)
 		sNet = sNet.Add(totalNet)
 		sTax = sTax.Add(totalTax)
-		sTaxes["takeaway"] = sTaxes["takeaway"].Add(sTax) // TODO: this must be improved in the future, when we support multiple taxes
 
 		return PublicCartItem{
 			CartItem:   item,
@@ -134,7 +146,8 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 			Total:      totalPrice.StringFixed(2),
 			Tax:        totalTax.StringFixed(2),
 			Net:        totalNet.StringFixed(2),
-			TaxClass:   "takeaway",
+			Saving:     saving.StringFixed(2),
+			TaxClass:   TaxClassTakeaway,
 		}
 	})
 
@@ -143,12 +156,19 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 		IsPickup: shoppingCart.IsPickup,
 		Items:    items,
 		Summary: PublicCartSummary{
-			Total:    sTotal.StringFixed(2),
-			TotalTax: sTax.StringFixed(2),
-			TotalNet: sNet.StringFixed(2),
-			Taxes: map[string]string{
-				"takeaway": sTaxes["takeaway"].StringFixed(2),
+			Total: TotalSummary{
+				Value:  sTotal.StringFixed(2),
+				Values: map[string]string{TaxClassTakeaway: sTotal.StringFixed(2)},
 			},
+			Tax: TotalSummary{
+				Value:  sTax.StringFixed(2),
+				Values: map[string]string{TaxClassTakeaway: sTax.StringFixed(2)},
+			},
+			Net: TotalSummary{
+				Value:  sNet.StringFixed(2),
+				Values: map[string]string{TaxClassTakeaway: sNet.StringFixed(2)},
+			},
+			Saving: sSaving.StringFixed(2),
 		},
 		Secret:    shoppingCart.Secret,
 		CreatedAt: shoppingCart.CreatedAt,
