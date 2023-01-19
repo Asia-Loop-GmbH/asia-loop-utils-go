@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -26,8 +27,16 @@ type Cart struct {
 	IsPickup  bool               `bson:"isPickup" json:"isPickup"`
 	Items     []CartItem         `bson:"items" json:"items"`
 	Secret    string             `bson:"secret" json:"secret"`
+	Payments  []Payment          `bson:"payments" json:"payments"`
 	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
+}
+
+type Payment struct {
+	Session     checkout.CreateCheckoutSessionResponse `bson:"session" json:"session"`
+	Environment string                                 `bson:"environment" json:"environment"`
+	Client      string                                 `bson:"client" json:"client"`
+	// TODO: add webhook events to this
 }
 
 type CartItem struct {
