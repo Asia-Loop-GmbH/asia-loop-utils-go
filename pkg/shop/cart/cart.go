@@ -44,7 +44,7 @@ type TotalSummary struct {
 type PublicCartItem struct {
 	db.CartItem
 	SKU        string   `json:"sku"`
-	Name       string   `json:"nam"`
+	Name       string   `json:"name"`
 	Categories []string `json:"categories"`
 	UnitPrice  string   `json:"unitPrice"`
 	Total      string   `json:"total"`
