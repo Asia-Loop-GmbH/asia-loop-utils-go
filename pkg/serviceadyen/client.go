@@ -2,7 +2,6 @@ package serviceadyen
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/adyen/adyen-go-api-library/v6/src/adyen"
 	"github.com/adyen/adyen-go-api-library/v6/src/common"
@@ -12,40 +11,30 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
-var (
-	envMap = map[string]common.Environment{
-		"dev":  common.TestEnv,
-		"pre":  common.LiveEnv,
-		"prod": common.LiveEnv,
-	}
-)
-
 func newClient(ctx context.Context) (*adyen.APIClient, error) {
 	log := logger.FromContext(ctx)
-	stage, ok := ctx.Value(mycontext.FieldStage).(string)
-	if !ok {
-		return nil, fmt.Errorf("undefined stage in context")
-	}
 
-	log.Infof("new adyen client: %s", stage)
+	log.Infof("new adyen client")
+	apiEnv, err := ssm.GetParameter(ctx, "/adyen/env", false)
+	if err != nil {
+		return nil, err
+	}
 	apiKey, err := ssm.GetParameter(ctx, "/adyen/key", true)
 	if err != nil {
 		return nil, err
 	}
-	environment, ok := envMap[stage]
-	if !ok {
-		return nil, fmt.Errorf("no adyen environment config found for stage: %s", stage)
-	}
+
+	stage := ctx.Value(mycontext.FieldStage).(string)
 	if stage == "dev" {
 		return adyen.NewClient(&common.Config{
 			ApiKey:      apiKey,
-			Environment: environment,
+			Environment: common.Environment(apiEnv),
 		}), nil
 	}
 
 	return adyen.NewClient(&common.Config{
 		ApiKey:                apiKey,
-		Environment:           environment,
+		Environment:           common.Environment(apiEnv),
 		LiveEndpointURLPrefix: livePrefix,
 	}), nil
 }
