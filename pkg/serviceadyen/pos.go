@@ -9,8 +9,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/random"
+	"github.com/samber/lo"
+
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )
 
 func NewTender(ctx context.Context, pos, orderId string, amount float32) error {
@@ -30,7 +32,7 @@ func NewTender(ctx context.Context, pos, orderId string, amount float32) error {
 				MessageCategory: messageCategoryPayment,
 				MessageType:     messageTypeRequest,
 				SaleID:          orderId,
-				ServiceID:       random.String(10, false, false, true),
+				ServiceID:       random.String(10, lo.NumbersCharset),
 				POIID:           pos,
 			},
 			PaymentRequest: PaymentRequest{

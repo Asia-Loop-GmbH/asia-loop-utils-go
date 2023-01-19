@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/samber/lo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/api"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/db"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/normalizer"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/random"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/servicegooglemaps"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/api"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/normalizer"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/servicegooglemaps"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )
 
 func CreateOrder(ctx context.Context, orderOptions *api.CreateOrderOrderOptions,
@@ -75,8 +76,8 @@ func CreateOrder(ctx context.Context, orderOptions *api.CreateOrderOrderOptions,
 		log.Infof("failed to find customer: %s %s (%s)", firstName, lastName, formattedAddress)
 		customerRef := fmt.Sprintf(
 			"%s%s",
-			random.String(2, false, true, false),
-			random.String(6, false, false, true),
+			random.String(2, lo.UpperCaseLettersCharset),
+			random.String(6, lo.NumbersCharset),
 		)
 		customerCreatedAt := time.Now()
 		newCustomer := db.Customer{
@@ -105,7 +106,7 @@ func CreateOrder(ctx context.Context, orderOptions *api.CreateOrderOrderOptions,
 	if err != nil {
 		return nil, err
 	}
-	secret := random.String(32, true, false, true)
+	secret := random.String(32, lo.AlphanumericCharset)
 	orderCreatedAt := time.Now()
 	newOrder := db.Order{
 		ID:                  primitive.NewObjectID(),
