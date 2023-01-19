@@ -55,13 +55,11 @@ func TestCalculate_ShippingMethodPickup(t *testing.T) {
 	expectedCartSaving := "9.88"
 
 	categories := []string{"category1", "category2"}
-	description := "some description"
 	products := []db.Product{
 		{
-			ID:          id,
-			SKU:         sku,
-			Description: description,
-			Name:        name,
+			ID:   id,
+			SKU:  sku,
+			Name: name,
 			Price: db.CustomizablePrice{
 				Value:        price,
 				CustomValues: nil,
@@ -84,16 +82,16 @@ func TestCalculate_ShippingMethodPickup(t *testing.T) {
 	assert.Equal(t, true, publicCart.IsPickup)
 
 	assert.Equal(t, cart.PublicCartItem{
-		CartItem:    cartItem,
-		SKU:         sku,
-		Description: description,
-		Categories:  categories,
-		UnitPrice:   expectedUnitPrice,
-		Total:       expectedTotal,
-		Tax:         expectedTax,
-		Net:         expectedNet,
-		Saving:      expectedItemSaving,
-		TaxClass:    expectedTaxClass,
+		CartItem:   cartItem,
+		SKU:        sku,
+		Name:       name,
+		Categories: categories,
+		UnitPrice:  expectedUnitPrice,
+		Total:      expectedTotal,
+		Tax:        expectedTax,
+		Net:        expectedNet,
+		Saving:     expectedItemSaving,
+		TaxClass:   expectedTaxClass,
 	}, publicCart.Items[0])
 
 	assert.Equal(t, cart.PublicCartSummary{
@@ -132,13 +130,11 @@ func TestCalculate(t *testing.T) {
 		Amount:    amount,
 	}
 	categories := []string{"category1", "category2"}
-	description := "some description"
 	products := []db.Product{
 		{
-			ID:          id,
-			SKU:         sku,
-			Description: description,
-			Name:        name,
+			ID:   id,
+			SKU:  sku,
+			Name: name,
 			Price: db.CustomizablePrice{
 				Value:        price,
 				CustomValues: nil,
@@ -168,16 +164,16 @@ func TestCalculate(t *testing.T) {
 	assert.Equal(t, false, publicCart.IsPickup)
 
 	assert.Equal(t, cart.PublicCartItem{
-		CartItem:    cartItem,
-		SKU:         sku,
-		Description: description,
-		Categories:  categories,
-		UnitPrice:   price,
-		Total:       expectedTotal,
-		Tax:         expectedTax,
-		Net:         expectedNet,
-		TaxClass:    expectedTaxClass,
-		Saving:      "0.00",
+		CartItem:   cartItem,
+		SKU:        sku,
+		Name:       name,
+		Categories: categories,
+		UnitPrice:  price,
+		Total:      expectedTotal,
+		Tax:        expectedTax,
+		Net:        expectedNet,
+		TaxClass:   expectedTaxClass,
+		Saving:     "0.00",
 	}, publicCart.Items[0])
 
 	assert.Equal(t, cart.PublicCartSummary{

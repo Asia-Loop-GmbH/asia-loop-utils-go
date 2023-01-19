@@ -43,15 +43,15 @@ type TotalSummary struct {
 
 type PublicCartItem struct {
 	db.CartItem
-	SKU         string   `json:"sku"`
-	Description string   `json:"description"`
-	Categories  []string `json:"categories"`
-	UnitPrice   string   `json:"unitPrice"`
-	Total       string   `json:"total"`
-	Tax         string   `json:"tax"`
-	Net         string   `json:"net"`
-	Saving      string   `json:"saving"`
-	TaxClass    string   `json:"taxClass"`
+	SKU        string   `json:"sku"`
+	Name       string   `json:"nam"`
+	Categories []string `json:"categories"`
+	UnitPrice  string   `json:"unitPrice"`
+	Total      string   `json:"total"`
+	Tax        string   `json:"tax"`
+	Net        string   `json:"net"`
+	Saving     string   `json:"saving"`
+	TaxClass   string   `json:"taxClass"`
 }
 
 func CalculatePublicCart(ctx context.Context, shoppingCart *db.Cart) (*PublicCart, error) {
@@ -140,16 +140,16 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 		sTax = sTax.Add(totalTax)
 
 		return PublicCartItem{
-			CartItem:    item,
-			SKU:         product.SKU,
-			Description: product.Description,
-			Categories:  product.Categories,
-			UnitPrice:   itemPrice.StringFixed(2), // TODO: we must improve this in the future, when we support store specific prices
-			Total:       totalPrice.StringFixed(2),
-			Tax:         totalTax.StringFixed(2),
-			Net:         totalNet.StringFixed(2),
-			Saving:      saving.StringFixed(2),
-			TaxClass:    TaxClassTakeaway,
+			CartItem:   item,
+			SKU:        product.SKU,
+			Name:       product.Name,
+			Categories: product.Categories,
+			UnitPrice:  itemPrice.StringFixed(2), // TODO: we must improve this in the future, when we support store specific prices
+			Total:      totalPrice.StringFixed(2),
+			Tax:        totalTax.StringFixed(2),
+			Net:        totalNet.StringFixed(2),
+			Saving:     saving.StringFixed(2),
+			TaxClass:   TaxClassTakeaway,
 		}
 	})
 
