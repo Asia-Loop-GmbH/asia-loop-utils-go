@@ -51,6 +51,8 @@ func TestCalculate_ShippingMethodPickup(t *testing.T) {
 		Options:   nil,
 		Amount:    amount,
 	}
+	expectedItemSaving := "9.88"
+	expectedCartSaving := "9.88"
 
 	categories := []string{"category1", "category2"}
 	products := []db.Product{
@@ -87,16 +89,24 @@ func TestCalculate_ShippingMethodPickup(t *testing.T) {
 		Total:      expectedTotal,
 		Tax:        expectedTax,
 		Net:        expectedNet,
+		Saving:     expectedItemSaving,
 		TaxClass:   expectedTaxClass,
 	}, publicCart.Items[0])
 
 	assert.Equal(t, cart.PublicCartSummary{
-		Total:    expectedTotal,
-		TotalTax: expectedTax,
-		TotalNet: expectedNet,
-		Taxes: map[string]string{
-			"takeaway": expectedTax,
+		Total: cart.TotalSummary{
+			Value:  expectedTotal,
+			Values: map[string]string{cart.TaxClassTakeaway: expectedTotal},
 		},
+		Tax: cart.TotalSummary{
+			Value:  expectedTax,
+			Values: map[string]string{cart.TaxClassTakeaway: expectedTax},
+		},
+		Net: cart.TotalSummary{
+			Value:  expectedNet,
+			Values: map[string]string{cart.TaxClassTakeaway: expectedNet},
+		},
+		Saving: expectedCartSaving,
 	}, publicCart.Summary)
 }
 
@@ -162,15 +172,23 @@ func TestCalculate(t *testing.T) {
 		Tax:        expectedTax,
 		Net:        expectedNet,
 		TaxClass:   expectedTaxClass,
+		Saving:     "0.00",
 	}, publicCart.Items[0])
 
 	assert.Equal(t, cart.PublicCartSummary{
-		Total:    expectedTotal,
-		TotalTax: expectedTax,
-		TotalNet: expectedNet,
-		Taxes: map[string]string{
-			"takeaway": expectedTax,
+		Total: cart.TotalSummary{
+			Value:  expectedTotal,
+			Values: map[string]string{cart.TaxClassTakeaway: expectedTotal},
 		},
+		Tax: cart.TotalSummary{
+			Value:  expectedTax,
+			Values: map[string]string{cart.TaxClassTakeaway: expectedTax},
+		},
+		Net: cart.TotalSummary{
+			Value:  expectedNet,
+			Values: map[string]string{cart.TaxClassTakeaway: expectedNet},
+		},
+		Saving: "0.00",
 	}, publicCart.Summary)
 }
 
