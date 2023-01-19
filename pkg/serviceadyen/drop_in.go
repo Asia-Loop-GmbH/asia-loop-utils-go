@@ -9,7 +9,7 @@ import (
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v2/pkg/shop/cart"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/cart"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )
