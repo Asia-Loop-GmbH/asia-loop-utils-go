@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
+	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"
@@ -408,6 +409,7 @@ func TestCalculate(t *testing.T) {
 		Options:   nil,
 		Amount:    amount,
 	}
+	invoiceNumber := lo.ToPtr("invoice number")
 	categories := []string{"category1", "category2"}
 	products := []db.Product{
 		{
@@ -426,13 +428,15 @@ func TestCalculate(t *testing.T) {
 		},
 	}
 	shoppingCart := db.Cart{
-		ID:        id,
-		IsPickup:  false,
-		Secret:    secret,
-		CreatedAt: created,
-		UpdatedAt: updated,
-		Items:     []db.CartItem{cartItem},
-		Payments:  nil,
+		ID:            id,
+		IsPickup:      false,
+		InvoiceNumber: invoiceNumber,
+		Paid:          true,
+		Secret:        secret,
+		CreatedAt:     created,
+		UpdatedAt:     updated,
+		Items:         []db.CartItem{cartItem},
+		Payments:      nil,
 	}
 	publicCart, err := cart.Calculate(context.TODO(), &shoppingCart, products, taxes)
 
@@ -442,6 +446,8 @@ func TestCalculate(t *testing.T) {
 	assert.Equal(t, updated, publicCart.UpdatedAt)
 	assert.Equal(t, created, publicCart.CreatedAt)
 	assert.Equal(t, false, publicCart.IsPickup)
+	assert.True(t, publicCart.Paid)
+	assert.Equal(t, invoiceNumber, publicCart.InvoiceNumber)
 	assert.Nil(t, publicCart.Payment)
 
 	assert.Equal(t, cart.PublicCartItem{

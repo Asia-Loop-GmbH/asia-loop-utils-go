@@ -20,14 +20,16 @@ const (
 )
 
 type PublicCart struct {
-	ID        primitive.ObjectID `json:"id"`
-	IsPickup  bool               `json:"isPickup"`
-	Items     []PublicCartItem   `json:"items"`
-	Summary   PublicCartSummary  `json:"summary"`
-	Secret    string             `json:"secret"`
-	Payment   *db.Payment        `json:"payment,omitempty"`
-	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
-	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
+	ID            primitive.ObjectID `json:"id"`
+	IsPickup      bool               `json:"isPickup"`
+	Items         []PublicCartItem   `json:"items"`
+	Summary       PublicCartSummary  `json:"summary"`
+	Secret        string             `json:"secret"`
+	Paid          bool               `json:"paid"`
+	InvoiceNumber *string            `json:"invoiceNumber"`
+	Payment       *db.Payment        `json:"payment,omitempty"`
+	CreatedAt     time.Time          `bson:"createdAt" json:"createdAt"`
+	UpdatedAt     time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
 
 type PublicCartSummary struct {
@@ -165,9 +167,11 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 	}
 
 	return &PublicCart{
-		ID:       shoppingCart.ID,
-		IsPickup: shoppingCart.IsPickup,
-		Items:    items,
+		ID:            shoppingCart.ID,
+		IsPickup:      shoppingCart.IsPickup,
+		Paid:          shoppingCart.Paid,
+		InvoiceNumber: shoppingCart.InvoiceNumber,
+		Items:         items,
 		Summary: PublicCartSummary{
 			Total: TotalSummary{
 				Value:  sTotal.StringFixed(2),
