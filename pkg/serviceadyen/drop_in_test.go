@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/serviceadyen"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/cart"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/db"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 
@@ -19,10 +19,10 @@ func TestNewDropInPayment_Success(t *testing.T) {
 	ctx := context.WithValue(context.TODO(), mycontext.FieldStage, "dev")
 	response, err := serviceadyen.NewDropInPayment(
 		ctx,
-		&cart.PublicCart{
+		&db.Order{
 			ID: primitive.NewObjectID(),
-			Summary: cart.PublicCartSummary{
-				Total: cart.TotalSummary{Value: "12.34"},
+			Summary: db.OrderSummary{
+				Total: db.TotalSummary{Value: "12.34"},
 			},
 		},
 		"http://localhost:3000",

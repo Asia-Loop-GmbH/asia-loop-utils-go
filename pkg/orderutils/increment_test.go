@@ -30,3 +30,13 @@ func TestNextOrderInvoiceLieferando(t *testing.T) {
 	assert.NoError(t, err)
 	log.Printf("%s", *next)
 }
+
+func TestNextShopOrderInvoice(t *testing.T) {
+	if testing.Short() {
+		t.Skip()
+	}
+	ctx := context.WithValue(context.Background(), commoncontext.FieldStage, "dev")
+	next, err := orderutils.NextShopOrderInvoice(ctx)
+	assert.NoError(t, err)
+	log.Printf("%s", *next)
+}

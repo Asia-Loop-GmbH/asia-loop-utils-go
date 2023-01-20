@@ -11,6 +11,11 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/mongodb"
 )
 
+const (
+	TaxClassStandard = "standard"
+	TaxClassTakeaway = "takeaway"
+)
+
 const colTax = "taxes"
 
 func CollectionTaxes(ctx context.Context) (*mongo.Collection, error) {

@@ -8,56 +8,12 @@ import (
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
-const (
-	TaxClassStandard = "standard"
-	TaxClassTakeaway = "takeaway"
-)
-
-type PublicCart struct {
-	ID            primitive.ObjectID `json:"id"`
-	IsPickup      bool               `json:"isPickup"`
-	Items         []PublicCartItem   `json:"items"`
-	Summary       PublicCartSummary  `json:"summary"`
-	Secret        string             `json:"secret"`
-	Paid          bool               `json:"paid"`
-	InvoiceNumber *string            `json:"invoiceNumber"`
-	Payment       *db.Payment        `json:"payment,omitempty"`
-	CreatedAt     time.Time          `bson:"createdAt" json:"createdAt"`
-	UpdatedAt     time.Time          `bson:"updatedAt" json:"updatedAt"`
-}
-
-type PublicCartSummary struct {
-	Total  TotalSummary `json:"total"`
-	Tax    TotalSummary `json:"tax"`
-	Net    TotalSummary `json:"net"`
-	Saving string       `json:"saving"`
-}
-
-type TotalSummary struct {
-	Value  string            `json:"value"`
-	Values map[string]string `json:"values"` // Values are values grouped by tax classes
-}
-
-type PublicCartItem struct {
-	db.CartItem
-	SKU        string   `json:"sku"`
-	Name       string   `json:"name"`
-	Categories []string `json:"categories"`
-	UnitPrice  string   `json:"unitPrice"`
-	Total      string   `json:"total"`
-	Tax        string   `json:"tax"`
-	Net        string   `json:"net"`
-	Saving     string   `json:"saving"`
-	TaxClass   string   `json:"taxClass"`
-}
-
-func CalculatePublicCart(ctx context.Context, shoppingCart *db.Cart) (*PublicCart, error) {
+func CalculatePublicCart(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Calculate public cart")
 
@@ -98,7 +54,7 @@ func CalculatePublicCart(ctx context.Context, shoppingCart *db.Cart) (*PublicCar
 	return Calculate(ctx, shoppingCart, products, taxes)
 }
 
-func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product, taxes []db.Tax) (*PublicCart, error) {
+func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product, taxes []db.Tax) (*db.Order, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Calculate cart")
 
@@ -107,18 +63,18 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 	sNet := decimal.Zero
 	sSaving := decimal.Zero
 
-	items := lo.Map(shoppingCart.Items, func(item db.CartItem, index int) PublicCartItem {
+	items := lo.Map(shoppingCart.Items, func(item db.CartItem, index int) db.OrderItem {
 		product, ok := lo.Find(products, func(p db.Product) bool {
 			return p.ID.Hex() == item.ProductID
 		})
 		if !ok {
-			return PublicCartItem{} // TODO: we don't expect that this happens, so just ignore this case for now
+			return db.OrderItem{} // TODO: we don't expect that this happens, so just ignore this case for now
 		}
 		tax, ok := lo.Find(taxes, func(tax db.Tax) bool {
-			return tax.Name == TaxClassTakeaway
+			return tax.Name == db.TaxClassTakeaway
 		})
 		if !ok {
-			return PublicCartItem{}
+			return db.OrderItem{}
 		}
 
 		itemPrice := decimal.RequireFromString(product.Price.Value)
@@ -142,7 +98,7 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 		sNet = sNet.Add(totalNet)
 		sTax = sTax.Add(totalTax)
 
-		return PublicCartItem{
+		return db.OrderItem{
 			CartItem:   item,
 			SKU:        product.SKU,
 			Name:       product.Name,
@@ -152,7 +108,7 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 			Tax:        totalTax.StringFixed(2),
 			Net:        totalNet.StringFixed(2),
 			Saving:     saving.StringFixed(2),
-			TaxClass:   TaxClassTakeaway,
+			TaxClass:   db.TaxClassTakeaway,
 		}
 	})
 
@@ -166,24 +122,23 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 		}
 	}
 
-	return &PublicCart{
-		ID:            shoppingCart.ID,
-		IsPickup:      shoppingCart.IsPickup,
-		Paid:          shoppingCart.Paid,
-		InvoiceNumber: shoppingCart.InvoiceNumber,
-		Items:         items,
-		Summary: PublicCartSummary{
-			Total: TotalSummary{
+	return &db.Order{
+		ID:       shoppingCart.ID,
+		IsPickup: shoppingCart.IsPickup,
+		Paid:     shoppingCart.Paid,
+		Items:    items,
+		Summary: db.OrderSummary{
+			Total: db.TotalSummary{
 				Value:  sTotal.StringFixed(2),
-				Values: map[string]string{TaxClassTakeaway: sTotal.StringFixed(2)},
+				Values: map[string]string{db.TaxClassTakeaway: sTotal.StringFixed(2)},
 			},
-			Tax: TotalSummary{
+			Tax: db.TotalSummary{
 				Value:  sTax.StringFixed(2),
-				Values: map[string]string{TaxClassTakeaway: sTax.StringFixed(2)},
+				Values: map[string]string{db.TaxClassTakeaway: sTax.StringFixed(2)},
 			},
-			Net: TotalSummary{
+			Net: db.TotalSummary{
 				Value:  sNet.StringFixed(2),
-				Values: map[string]string{TaxClassTakeaway: sNet.StringFixed(2)},
+				Values: map[string]string{db.TaxClassTakeaway: sNet.StringFixed(2)},
 			},
 			Saving: sSaving.StringFixed(2),
 		},
