@@ -11,7 +11,7 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/servicewoo"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/servicewoo"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 

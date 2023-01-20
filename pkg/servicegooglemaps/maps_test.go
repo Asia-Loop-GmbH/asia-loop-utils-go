@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/servicegooglemaps"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/servicegooglemaps"
 	commoncontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 

@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/orderutils"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/orderutils"
 	commoncontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 
@@ -27,6 +27,16 @@ func TestNextOrderInvoiceLieferando(t *testing.T) {
 	}
 	ctx := context.WithValue(context.Background(), commoncontext.FieldStage, "dev")
 	next, err := orderutils.NextOrderInvoiceLieferando(ctx)
+	assert.NoError(t, err)
+	log.Printf("%s", *next)
+}
+
+func TestNextShopOrderInvoice(t *testing.T) {
+	if testing.Short() {
+		t.Skip()
+	}
+	ctx := context.WithValue(context.Background(), commoncontext.FieldStage, "dev")
+	next, err := orderutils.NextShopOrderInvoice(ctx)
 	assert.NoError(t, err)
 	log.Printf("%s", *next)
 }

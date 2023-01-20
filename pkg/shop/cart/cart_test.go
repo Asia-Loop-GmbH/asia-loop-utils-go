@@ -7,14 +7,13 @@ import (
 	"time"
 
 	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
-	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/cart"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/shop/cart"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/shop/db"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 
@@ -96,7 +95,7 @@ func TestCalculate_IgnoreExpired(t *testing.T) {
 	assert.Equal(t, true, publicCart.IsPickup)
 	assert.Nil(t, publicCart.Payment)
 
-	assert.Equal(t, cart.PublicCartItem{
+	assert.Equal(t, db.OrderItem{
 		CartItem:   cartItem,
 		SKU:        sku,
 		Name:       name,
@@ -109,18 +108,18 @@ func TestCalculate_IgnoreExpired(t *testing.T) {
 		TaxClass:   expectedTaxClass,
 	}, publicCart.Items[0])
 
-	assert.Equal(t, cart.PublicCartSummary{
-		Total: cart.TotalSummary{
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
 			Value:  expectedTotal,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTotal},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
 		},
-		Tax: cart.TotalSummary{
+		Tax: db.TotalSummary{
 			Value:  expectedTax,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTax},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
 		},
-		Net: cart.TotalSummary{
+		Net: db.TotalSummary{
 			Value:  expectedNet,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedNet},
+			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
 		},
 		Saving: expectedCartSaving,
 	}, publicCart.Summary)
@@ -185,7 +184,7 @@ func TestCalculate_IgnoreTotalNotMatch(t *testing.T) {
 	assert.Equal(t, true, publicCart.IsPickup)
 	assert.Nil(t, publicCart.Payment)
 
-	assert.Equal(t, cart.PublicCartItem{
+	assert.Equal(t, db.OrderItem{
 		CartItem:   cartItem,
 		SKU:        sku,
 		Name:       name,
@@ -198,18 +197,18 @@ func TestCalculate_IgnoreTotalNotMatch(t *testing.T) {
 		TaxClass:   expectedTaxClass,
 	}, publicCart.Items[0])
 
-	assert.Equal(t, cart.PublicCartSummary{
-		Total: cart.TotalSummary{
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
 			Value:  expectedTotal,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTotal},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
 		},
-		Tax: cart.TotalSummary{
+		Tax: db.TotalSummary{
 			Value:  expectedTax,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTax},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
 		},
-		Net: cart.TotalSummary{
+		Net: db.TotalSummary{
 			Value:  expectedNet,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedNet},
+			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
 		},
 		Saving: expectedCartSaving,
 	}, publicCart.Summary)
@@ -285,7 +284,7 @@ func TestCalculate_TakeLastPayment(t *testing.T) {
 	assert.Equal(t, true, publicCart.IsPickup)
 	assert.Equal(t, &p2, publicCart.Payment)
 
-	assert.Equal(t, cart.PublicCartItem{
+	assert.Equal(t, db.OrderItem{
 		CartItem:   cartItem,
 		SKU:        sku,
 		Name:       name,
@@ -298,18 +297,18 @@ func TestCalculate_TakeLastPayment(t *testing.T) {
 		TaxClass:   expectedTaxClass,
 	}, publicCart.Items[0])
 
-	assert.Equal(t, cart.PublicCartSummary{
-		Total: cart.TotalSummary{
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
 			Value:  expectedTotal,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTotal},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
 		},
-		Tax: cart.TotalSummary{
+		Tax: db.TotalSummary{
 			Value:  expectedTax,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTax},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
 		},
-		Net: cart.TotalSummary{
+		Net: db.TotalSummary{
 			Value:  expectedNet,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedNet},
+			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
 		},
 		Saving: expectedCartSaving,
 	}, publicCart.Summary)
@@ -361,7 +360,7 @@ func TestCalculate_ShippingMethodPickup(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, true, publicCart.IsPickup)
 
-	assert.Equal(t, cart.PublicCartItem{
+	assert.Equal(t, db.OrderItem{
 		CartItem:   cartItem,
 		SKU:        sku,
 		Name:       name,
@@ -374,18 +373,18 @@ func TestCalculate_ShippingMethodPickup(t *testing.T) {
 		TaxClass:   expectedTaxClass,
 	}, publicCart.Items[0])
 
-	assert.Equal(t, cart.PublicCartSummary{
-		Total: cart.TotalSummary{
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
 			Value:  expectedTotal,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTotal},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
 		},
-		Tax: cart.TotalSummary{
+		Tax: db.TotalSummary{
 			Value:  expectedTax,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTax},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
 		},
-		Net: cart.TotalSummary{
+		Net: db.TotalSummary{
 			Value:  expectedNet,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedNet},
+			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
 		},
 		Saving: expectedCartSaving,
 	}, publicCart.Summary)
@@ -409,7 +408,6 @@ func TestCalculate(t *testing.T) {
 		Options:   nil,
 		Amount:    amount,
 	}
-	invoiceNumber := lo.ToPtr("invoice number")
 	categories := []string{"category1", "category2"}
 	products := []db.Product{
 		{
@@ -428,15 +426,14 @@ func TestCalculate(t *testing.T) {
 		},
 	}
 	shoppingCart := db.Cart{
-		ID:            id,
-		IsPickup:      false,
-		InvoiceNumber: invoiceNumber,
-		Paid:          true,
-		Secret:        secret,
-		CreatedAt:     created,
-		UpdatedAt:     updated,
-		Items:         []db.CartItem{cartItem},
-		Payments:      nil,
+		ID:        id,
+		IsPickup:  false,
+		Paid:      true,
+		Secret:    secret,
+		CreatedAt: created,
+		UpdatedAt: updated,
+		Items:     []db.CartItem{cartItem},
+		Payments:  nil,
 	}
 	publicCart, err := cart.Calculate(context.TODO(), &shoppingCart, products, taxes)
 
@@ -447,10 +444,9 @@ func TestCalculate(t *testing.T) {
 	assert.Equal(t, created, publicCart.CreatedAt)
 	assert.Equal(t, false, publicCart.IsPickup)
 	assert.True(t, publicCart.Paid)
-	assert.Equal(t, invoiceNumber, publicCart.InvoiceNumber)
 	assert.Nil(t, publicCart.Payment)
 
-	assert.Equal(t, cart.PublicCartItem{
+	assert.Equal(t, db.OrderItem{
 		CartItem:   cartItem,
 		SKU:        sku,
 		Name:       name,
@@ -463,18 +459,18 @@ func TestCalculate(t *testing.T) {
 		Saving:     "0.00",
 	}, publicCart.Items[0])
 
-	assert.Equal(t, cart.PublicCartSummary{
-		Total: cart.TotalSummary{
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
 			Value:  expectedTotal,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTotal},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
 		},
-		Tax: cart.TotalSummary{
+		Tax: db.TotalSummary{
 			Value:  expectedTax,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedTax},
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
 		},
-		Net: cart.TotalSummary{
+		Net: db.TotalSummary{
 			Value:  expectedNet,
-			Values: map[string]string{cart.TaxClassTakeaway: expectedNet},
+			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
 		},
 		Saving: "0.00",
 	}, publicCart.Summary)

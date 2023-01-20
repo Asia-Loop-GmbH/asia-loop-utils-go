@@ -1,4 +1,4 @@
-module github.com/asia-loop-gmbh/asia-loop-utils-go/v3
+module github.com/asia-loop-gmbh/asia-loop-utils-go/v4
 
 go 1.19
 

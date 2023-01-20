@@ -9,12 +9,12 @@ import (
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/cart"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )
 
-func NewDropInPayment(ctx context.Context, shoppingCart *cart.PublicCart, returnURL string) (*checkout.CreateCheckoutSessionResponse, error) {
+func NewDropInPayment(ctx context.Context, shoppingCart *db.Order, returnURL string) (*checkout.CreateCheckoutSessionResponse, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("new drop in payment for cart [%s]", shoppingCart.ID.Hex())
 	client, err := newClient(ctx)
