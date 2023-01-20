@@ -25,6 +25,7 @@ type PublicCart struct {
 	Items     []PublicCartItem   `json:"items"`
 	Summary   PublicCartSummary  `json:"summary"`
 	Secret    string             `json:"secret"`
+	Payment   *db.Payment        `json:"payment,omitempty"`
 	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
@@ -153,6 +154,16 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 		}
 	})
 
+	var payment *db.Payment
+	last, err := lo.Last(shoppingCart.Payments)
+	if err == nil {
+		sameAmount := last.Session.Amount.Value == sTotal.Mul(decimal.NewFromInt(100)).IntPart()
+		notExpired := last.Session.ExpiresAt.After(time.Now())
+		if sameAmount && notExpired {
+			payment = &last
+		}
+	}
+
 	return &PublicCart{
 		ID:       shoppingCart.ID,
 		IsPickup: shoppingCart.IsPickup,
@@ -172,6 +183,7 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 			},
 			Saving: sSaving.StringFixed(2),
 		},
+		Payment:   payment,
 		Secret:    shoppingCart.Secret,
 		CreatedAt: shoppingCart.CreatedAt,
 		UpdatedAt: shoppingCart.UpdatedAt,
