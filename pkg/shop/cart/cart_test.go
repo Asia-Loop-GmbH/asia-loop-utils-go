@@ -12,8 +12,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/cart"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/shop/cart"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/shop/db"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 

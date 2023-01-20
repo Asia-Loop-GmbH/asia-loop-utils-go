@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v3/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v4/pkg/db"
 )
 
 type GroupDetails struct {
