@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
+	"github.com/adyen/adyen-go-api-library/v6/src/notification"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -28,6 +29,7 @@ type Cart struct {
 	Items     []CartItem         `bson:"items" json:"items"`
 	Secret    string             `bson:"secret" json:"secret"`
 	Payments  []Payment          `bson:"payments" json:"payments"`
+	Paid      bool               `bson:"paid" json:"paid"`
 	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
@@ -36,7 +38,7 @@ type Payment struct {
 	Session     checkout.CreateCheckoutSessionResponse `bson:"session" json:"session"`
 	Environment string                                 `bson:"environment" json:"environment"`
 	Client      string                                 `bson:"client" json:"client"`
-	// TODO: add webhook events to this
+	Events      []notification.NotificationRequestItem `bson:"events" json:"events"`
 }
 
 type CartItem struct {
