@@ -13,7 +13,7 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
-func CalculatePublicCart(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {
+func ToOrder(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Calculate public cart")
 
@@ -51,10 +51,10 @@ func CalculatePublicCart(ctx context.Context, shoppingCart *db.Cart) (*db.Order,
 		return nil, errors.Wrap(err, "failed to decode taxes")
 	}
 
-	return Calculate(ctx, shoppingCart, products, taxes)
+	return toOrder(ctx, shoppingCart, products, taxes)
 }
 
-func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product, taxes []db.Tax) (*db.Order, error) {
+func toOrder(ctx context.Context, shoppingCart *db.Cart, products []db.Product, taxes []db.Tax) (*db.Order, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Calculate cart")
 
@@ -124,6 +124,8 @@ func Calculate(ctx context.Context, shoppingCart *db.Cart, products []db.Product
 
 	return &db.Order{
 		ID:       shoppingCart.ID,
+		StoreKey: shoppingCart.StoreKey,
+		Checkout: shoppingCart.Checkout,
 		IsPickup: shoppingCart.IsPickup,
 		Paid:     shoppingCart.Paid,
 		Items:    items,
