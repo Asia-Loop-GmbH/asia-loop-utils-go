@@ -13,6 +13,7 @@ import (
 
 type Order struct {
 	ID            primitive.ObjectID `bson:"_id" json:"id"`
+	StoreKey      string             `bson:"storeKey" json:"storeKey"`
 	IsPickup      bool               `bson:"isPickup" json:"isPickup"`
 	Items         []OrderItem        `bson:"items" json:"items"`
 	Summary       OrderSummary       `bson:"summary" json:"summary"`
@@ -21,6 +22,7 @@ type Order struct {
 	InvoiceNumber *string            `bson:"invoiceNumber,omitempty" json:"invoiceNumber,omitempty"`
 	OrderNumber   *string            `bson:"orderNumber,omitempty" json:"orderNumber,omitempty"`
 	Payment       *Payment           `bson:"payment" json:"payment,omitempty"`
+	Checkout      *CartCheckout      `bson:"checkout,omitempty" json:"checkout,omitempty"`
 	CreatedAt     time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt     time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
