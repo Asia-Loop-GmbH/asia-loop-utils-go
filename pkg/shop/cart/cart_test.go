@@ -771,8 +771,10 @@ func TestToOrder(t *testing.T) {
 		Slot:         "",
 		Begin:        lo.ToPtr(time.Now()),
 	}
+	user := lo.ToPtr("some user")
 	shoppingCart := db.Cart{
 		ID:        id,
+		User:      user,
 		StoreKey:  storeKey,
 		IsPickup:  false,
 		Paid:      true,
@@ -794,6 +796,7 @@ func TestToOrder(t *testing.T) {
 	assert.True(t, order.Paid)
 	assert.Equal(t, storeKey, order.StoreKey)
 	assert.Equal(t, cartCheckout, order.Checkout)
+	assert.Equal(t, user, order.User)
 	assert.Nil(t, order.Payment)
 
 	assert.Equal(t, db.OrderItem{

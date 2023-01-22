@@ -25,6 +25,7 @@ func CollectionCarts(ctx context.Context) (*mongo.Collection, error) {
 
 type Cart struct {
 	ID        primitive.ObjectID `bson:"_id" json:"id"`
+	User      *string            `bson:"user,omitempty" json:"user,omitempty"`
 	StoreKey  string             `bson:"storeKey" json:"storeKey"`
 	IsPickup  bool               `bson:"isPickup" json:"isPickup"`
 	Items     []CartItem         `bson:"items" json:"items"`

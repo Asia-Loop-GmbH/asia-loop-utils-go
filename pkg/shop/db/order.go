@@ -14,6 +14,7 @@ import (
 type Order struct {
 	ID            primitive.ObjectID `bson:"_id" json:"id"`
 	StoreKey      string             `bson:"storeKey" json:"storeKey"`
+	User          *string            `bson:"user,omitempty" json:"user,omitempty"`
 	IsPickup      bool               `bson:"isPickup" json:"isPickup"`
 	Items         []OrderItem        `bson:"items" json:"items"`
 	Summary       OrderSummary       `bson:"summary" json:"summary"`

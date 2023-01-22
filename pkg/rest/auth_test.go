@@ -16,7 +16,7 @@ func TestGetSignInFromRequest(t *testing.T) {
 			},
 		},
 	}
-	assert.Equal(t, "2671a429-b69b-453e-84b1-c6eb4d5cc551", GetSignInFromRequest(context.TODO(), request))
+	assert.Equal(t, "2671a429-b69b-453e-84b1-c6eb4d5cc551", *GetSignInFromRequest(context.TODO(), request))
 }
 
 func TestGetSignInFromRequest_Malformed(t *testing.T) {
@@ -27,7 +27,7 @@ func TestGetSignInFromRequest_Malformed(t *testing.T) {
 			},
 		},
 	}
-	assert.Equal(t, "", GetSignInFromRequest(context.TODO(), request))
+	assert.Nil(t, GetSignInFromRequest(context.TODO(), request))
 }
 
 func TestGetSignInFromRequest_Unsupported(t *testing.T) {
@@ -38,5 +38,5 @@ func TestGetSignInFromRequest_Unsupported(t *testing.T) {
 			},
 		},
 	}
-	assert.Equal(t, "", GetSignInFromRequest(context.TODO(), request))
+	assert.Nil(t, GetSignInFromRequest(context.TODO(), request))
 }
