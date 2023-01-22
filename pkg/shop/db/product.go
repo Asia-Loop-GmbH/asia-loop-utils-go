@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/samber/lo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -49,4 +50,16 @@ type ProductVariation struct {
 type ProductVariationOption struct {
 	Name  string `bson:"name" json:"name"`
 	Value string `bson:"value" json:"value"`
+}
+
+func (p *Product) GetPrice(storeKey string, selectedOptions map[string]string) string {
+	variation, ok := lo.Find(p.Variations, func(variation ProductVariation) bool {
+		return lo.EveryBy(variation.Options, func(opt ProductVariationOption) bool {
+			return opt.Value == selectedOptions[opt.Name]
+		})
+	})
+	if ok {
+		return variation.Price.GetPrice(storeKey)
+	}
+	return p.Price.GetPrice(storeKey)
 }
