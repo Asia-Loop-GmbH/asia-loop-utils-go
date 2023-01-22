@@ -36,7 +36,7 @@ func TestDecimal(t *testing.T) {
 	assert.Equal(t, "1.23", decimal.NewFromFloat(1.225).Round(2).StringFixed(2))
 }
 
-func TestCalculate_IgnoreExpired(t *testing.T) {
+func TestToOrder_IgnoreExpired(t *testing.T) {
 	id := primitive.NewObjectID()
 	sku := "some-sku"
 	name := "product name"
@@ -125,7 +125,7 @@ func TestCalculate_IgnoreExpired(t *testing.T) {
 	}, order.Summary)
 }
 
-func TestCalculate_IgnoreTotalNotMatch(t *testing.T) {
+func TestToOrder_IgnoreTotalNotMatch(t *testing.T) {
 	id := primitive.NewObjectID()
 	sku := "some-sku"
 	name := "product name"
@@ -214,7 +214,7 @@ func TestCalculate_IgnoreTotalNotMatch(t *testing.T) {
 	}, order.Summary)
 }
 
-func TestCalculate_TakeLastPayment(t *testing.T) {
+func TestToOrder_TakeLastPayment(t *testing.T) {
 	id := primitive.NewObjectID()
 	sku := "some-sku"
 	name := "product name"
@@ -314,7 +314,7 @@ func TestCalculate_TakeLastPayment(t *testing.T) {
 	}, order.Summary)
 }
 
-func TestCalculate_ShippingMethodPickup(t *testing.T) {
+func TestToOrder_ShippingMethodPickup(t *testing.T) {
 	id := primitive.NewObjectID()
 	sku := "some-sku"
 	name := "product name"
@@ -390,7 +390,7 @@ func TestCalculate_ShippingMethodPickup(t *testing.T) {
 	}, order.Summary)
 }
 
-func TestCalculate(t *testing.T) {
+func TestToOrder_VariableProduct(t *testing.T) {
 	id := primitive.NewObjectID()
 	secret := "some-secret"
 	updated := time.Now()
@@ -398,35 +398,52 @@ func TestCalculate(t *testing.T) {
 	sku := "some-sku"
 	name := "product name"
 	price := "12.34"
+	varPrice := "15.67"
 	amount := 4
-	expectedTotal := "49.36"
-	expectedTax := "3.24"
-	expectedNet := "46.12"
+	expectedTotal := "62.68"
+	expectedTax := "4.12"
+	expectedNet := "58.56"
 	expectedTaxClass := "takeaway"
-	cartItem := db.CartItem{
-		ProductID: id.Hex(),
-		Options:   nil,
-		Amount:    amount,
-	}
 	categories := []string{"category1", "category2"}
-	products := []db.Product{
-		{
-			ID:   id,
-			SKU:  sku,
-			Name: name,
-			Price: db.CustomizablePrice{
-				Value:        price,
-				CustomValues: nil,
+	variableProduct := db.Product{
+		ID:   id,
+		SKU:  sku,
+		Name: name,
+		Price: db.CustomizablePrice{
+			Value:        price,
+			CustomValues: nil,
+		},
+		TaxClassStandard: "standard",
+		TaxClassTakeAway: "takeaway",
+		Categories:       categories,
+		Options:          []string{"option-1", "option-2"},
+		Variations: []db.ProductVariation{
+			{
+				SKU: sku,
+				Price: db.CustomizablePrice{
+					Value:        varPrice,
+					CustomValues: nil,
+				},
+				Options: []db.ProductVariationOption{
+					{
+						Name:  "option-1",
+						Value: "value-1",
+					},
+				},
 			},
-			TaxClassStandard: "standard",
-			TaxClassTakeAway: "takeaway",
-			Categories:       categories,
-			Options:          nil,
-			Variations:       nil,
 		},
 	}
+	cartItem := db.CartItem{
+		ProductID: id.Hex(),
+		Options: map[string]string{
+			"option-1": "value-1",
+			"option-2": "any-value",
+		},
+		Amount: amount,
+	}
+	products := []db.Product{variableProduct}
 	storeKey := "ERLANGEN"
-	checkout := &db.CartCheckout{
+	cartCheckout := &db.CartCheckout{
 		FirstName:    "First Name",
 		LastName:     "Last",
 		AddressLine1: "Line1",
@@ -450,7 +467,7 @@ func TestCalculate(t *testing.T) {
 		UpdatedAt: updated,
 		Items:     []db.CartItem{cartItem},
 		Payments:  nil,
-		Checkout:  checkout,
+		Checkout:  cartCheckout,
 	}
 	order, err := toOrder(context.TODO(), &shoppingCart, products, taxes)
 
@@ -462,7 +479,217 @@ func TestCalculate(t *testing.T) {
 	assert.Equal(t, false, order.IsPickup)
 	assert.True(t, order.Paid)
 	assert.Equal(t, storeKey, order.StoreKey)
-	assert.Equal(t, checkout, order.Checkout)
+	assert.Equal(t, cartCheckout, order.Checkout)
+	assert.Nil(t, order.Payment)
+
+	assert.Equal(t, db.OrderItem{
+		CartItem:   cartItem,
+		SKU:        sku,
+		Name:       name,
+		Categories: categories,
+		UnitPrice:  varPrice,
+		Total:      expectedTotal,
+		Tax:        expectedTax,
+		Net:        expectedNet,
+		TaxClass:   expectedTaxClass,
+		Saving:     "0.00",
+	}, order.Items[0])
+
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
+			Value:  expectedTotal,
+			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
+		},
+		Tax: db.TotalSummary{
+			Value:  expectedTax,
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
+		},
+		Net: db.TotalSummary{
+			Value:  expectedNet,
+			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
+		},
+		Saving: "0.00",
+	}, order.Summary)
+}
+
+func TestToOrder_StorePrice(t *testing.T) {
+	id := primitive.NewObjectID()
+	secret := "some-secret"
+	updated := time.Now()
+	created := time.Now()
+	sku := "some-sku"
+	name := "product name"
+	price := "12.34"
+	varPrice := "15.67"
+	amount := 4
+	expectedTotal := "62.68"
+	expectedTax := "4.12"
+	expectedNet := "58.56"
+	expectedTaxClass := "takeaway"
+	categories := []string{"category1", "category2"}
+	storeKey := "ERLANGEN"
+	variableProduct := db.Product{
+		ID:   id,
+		SKU:  sku,
+		Name: name,
+		Price: db.CustomizablePrice{
+			Value: price,
+			CustomValues: map[string]string{
+				storeKey: varPrice,
+			},
+		},
+		TaxClassStandard: "standard",
+		TaxClassTakeAway: "takeaway",
+		Categories:       categories,
+	}
+	cartItem := db.CartItem{
+		ProductID: id.Hex(),
+		Amount:    amount,
+	}
+	products := []db.Product{variableProduct}
+	cartCheckout := &db.CartCheckout{
+		FirstName:    "First Name",
+		LastName:     "Last",
+		AddressLine1: "Line1",
+		AddressLine2: "",
+		City:         "City",
+		Postcode:     "Postcode",
+		Telephone:    "Tel",
+		Email:        "Email",
+		Note:         "",
+		Date:         "",
+		Slot:         "",
+		Begin:        lo.ToPtr(time.Now()),
+	}
+	shoppingCart := db.Cart{
+		ID:        id,
+		StoreKey:  storeKey,
+		IsPickup:  false,
+		Paid:      true,
+		Secret:    secret,
+		CreatedAt: created,
+		UpdatedAt: updated,
+		Items:     []db.CartItem{cartItem},
+		Payments:  nil,
+		Checkout:  cartCheckout,
+	}
+	order, err := toOrder(context.TODO(), &shoppingCart, products, taxes)
+
+	assert.NoError(t, err)
+	assert.Equal(t, id, order.ID)
+	assert.Equal(t, secret, order.Secret)
+	assert.Equal(t, updated, order.UpdatedAt)
+	assert.Equal(t, created, order.CreatedAt)
+	assert.Equal(t, false, order.IsPickup)
+	assert.True(t, order.Paid)
+	assert.Equal(t, storeKey, order.StoreKey)
+	assert.Equal(t, cartCheckout, order.Checkout)
+	assert.Nil(t, order.Payment)
+
+	assert.Equal(t, db.OrderItem{
+		CartItem:   cartItem,
+		SKU:        sku,
+		Name:       name,
+		Categories: categories,
+		UnitPrice:  varPrice,
+		Total:      expectedTotal,
+		Tax:        expectedTax,
+		Net:        expectedNet,
+		TaxClass:   expectedTaxClass,
+		Saving:     "0.00",
+	}, order.Items[0])
+
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
+			Value:  expectedTotal,
+			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
+		},
+		Tax: db.TotalSummary{
+			Value:  expectedTax,
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
+		},
+		Net: db.TotalSummary{
+			Value:  expectedNet,
+			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
+		},
+		Saving: "0.00",
+	}, order.Summary)
+}
+
+func TestToOrder_IgnoreZeroCustomPrice(t *testing.T) {
+	id := primitive.NewObjectID()
+	secret := "some-secret"
+	updated := time.Now()
+	created := time.Now()
+	sku := "some-sku"
+	name := "product name"
+	price := "12.34"
+	amount := 4
+	expectedTotal := "49.36"
+	expectedTax := "3.24"
+	expectedNet := "46.12"
+	expectedTaxClass := "takeaway"
+	cartItem := db.CartItem{
+		ProductID: id.Hex(),
+		Options:   nil,
+		Amount:    amount,
+	}
+	storeKey := "ERLANGEN"
+	categories := []string{"category1", "category2"}
+	simpleProduct := db.Product{
+		ID:   id,
+		SKU:  sku,
+		Name: name,
+		Price: db.CustomizablePrice{
+			Value: price,
+			CustomValues: map[string]string{
+				storeKey: "0.00",
+			},
+		},
+		TaxClassStandard: "standard",
+		TaxClassTakeAway: "takeaway",
+		Categories:       categories,
+		Options:          nil,
+		Variations:       nil,
+	}
+	products := []db.Product{simpleProduct}
+	cartCheckout := &db.CartCheckout{
+		FirstName:    "First Name",
+		LastName:     "Last",
+		AddressLine1: "Line1",
+		AddressLine2: "",
+		City:         "City",
+		Postcode:     "Postcode",
+		Telephone:    "Tel",
+		Email:        "Email",
+		Note:         "",
+		Date:         "",
+		Slot:         "",
+		Begin:        lo.ToPtr(time.Now()),
+	}
+	shoppingCart := db.Cart{
+		ID:        id,
+		StoreKey:  storeKey,
+		IsPickup:  false,
+		Paid:      true,
+		Secret:    secret,
+		CreatedAt: created,
+		UpdatedAt: updated,
+		Items:     []db.CartItem{cartItem},
+		Payments:  nil,
+		Checkout:  cartCheckout,
+	}
+	order, err := toOrder(context.TODO(), &shoppingCart, products, taxes)
+
+	assert.NoError(t, err)
+	assert.Equal(t, id, order.ID)
+	assert.Equal(t, secret, order.Secret)
+	assert.Equal(t, updated, order.UpdatedAt)
+	assert.Equal(t, created, order.CreatedAt)
+	assert.Equal(t, false, order.IsPickup)
+	assert.True(t, order.Paid)
+	assert.Equal(t, storeKey, order.StoreKey)
+	assert.Equal(t, cartCheckout, order.Checkout)
 	assert.Nil(t, order.Payment)
 
 	assert.Equal(t, db.OrderItem{
@@ -495,7 +722,111 @@ func TestCalculate(t *testing.T) {
 	}, order.Summary)
 }
 
-func TestCalculatePublicCart(t *testing.T) {
+func TestToOrder(t *testing.T) {
+	id := primitive.NewObjectID()
+	secret := "some-secret"
+	updated := time.Now()
+	created := time.Now()
+	sku := "some-sku"
+	name := "product name"
+	price := "12.34"
+	amount := 4
+	expectedTotal := "49.36"
+	expectedTax := "3.24"
+	expectedNet := "46.12"
+	expectedTaxClass := "takeaway"
+	cartItem := db.CartItem{
+		ProductID: id.Hex(),
+		Options:   nil,
+		Amount:    amount,
+	}
+	categories := []string{"category1", "category2"}
+	simpleProduct := db.Product{
+		ID:   id,
+		SKU:  sku,
+		Name: name,
+		Price: db.CustomizablePrice{
+			Value:        price,
+			CustomValues: nil,
+		},
+		TaxClassStandard: "standard",
+		TaxClassTakeAway: "takeaway",
+		Categories:       categories,
+		Options:          nil,
+		Variations:       nil,
+	}
+	products := []db.Product{simpleProduct}
+	storeKey := "ERLANGEN"
+	cartCheckout := &db.CartCheckout{
+		FirstName:    "First Name",
+		LastName:     "Last",
+		AddressLine1: "Line1",
+		AddressLine2: "",
+		City:         "City",
+		Postcode:     "Postcode",
+		Telephone:    "Tel",
+		Email:        "Email",
+		Note:         "",
+		Date:         "",
+		Slot:         "",
+		Begin:        lo.ToPtr(time.Now()),
+	}
+	shoppingCart := db.Cart{
+		ID:        id,
+		StoreKey:  storeKey,
+		IsPickup:  false,
+		Paid:      true,
+		Secret:    secret,
+		CreatedAt: created,
+		UpdatedAt: updated,
+		Items:     []db.CartItem{cartItem},
+		Payments:  nil,
+		Checkout:  cartCheckout,
+	}
+	order, err := toOrder(context.TODO(), &shoppingCart, products, taxes)
+
+	assert.NoError(t, err)
+	assert.Equal(t, id, order.ID)
+	assert.Equal(t, secret, order.Secret)
+	assert.Equal(t, updated, order.UpdatedAt)
+	assert.Equal(t, created, order.CreatedAt)
+	assert.Equal(t, false, order.IsPickup)
+	assert.True(t, order.Paid)
+	assert.Equal(t, storeKey, order.StoreKey)
+	assert.Equal(t, cartCheckout, order.Checkout)
+	assert.Nil(t, order.Payment)
+
+	assert.Equal(t, db.OrderItem{
+		CartItem:   cartItem,
+		SKU:        sku,
+		Name:       name,
+		Categories: categories,
+		UnitPrice:  price,
+		Total:      expectedTotal,
+		Tax:        expectedTax,
+		Net:        expectedNet,
+		TaxClass:   expectedTaxClass,
+		Saving:     "0.00",
+	}, order.Items[0])
+
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
+			Value:  expectedTotal,
+			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
+		},
+		Tax: db.TotalSummary{
+			Value:  expectedTax,
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
+		},
+		Net: db.TotalSummary{
+			Value:  expectedNet,
+			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
+		},
+		Saving: "0.00",
+	}, order.Summary)
+}
+
+func TestToOrder_Integration(t *testing.T) {
 	if testing.Short() {
 		t.Skip()
 	}
