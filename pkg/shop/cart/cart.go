@@ -9,7 +9,7 @@ import (
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v5/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
