@@ -124,6 +124,7 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, products []db.Product, 
 
 	return &db.Order{
 		ID:       shoppingCart.ID,
+		User:     shoppingCart.User,
 		StoreKey: shoppingCart.StoreKey,
 		Checkout: shoppingCart.Checkout,
 		IsPickup: shoppingCart.IsPickup,
