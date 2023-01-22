@@ -37,6 +37,7 @@ type Product struct {
 	OutOfStockIn     []string           `bson:"outOfStockIn" json:"outOfStockIn"`
 	Description      string             `bson:"description" json:"description"`
 	Allergens        []string           `bson:"allergens" json:"allergens"`
+	IsGiftCard       bool               `bson:"isGiftCard" json:"isGiftCard"`
 	CreatedAt        time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt        time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
@@ -53,6 +54,10 @@ type ProductVariationOption struct {
 }
 
 func (p *Product) GetPrice(storeKey string, selectedOptions map[string]string) string {
+	if p.IsGiftCard {
+		return p.Price.Value
+	}
+
 	variation, ok := lo.Find(p.Variations, func(variation ProductVariation) bool {
 		return lo.EveryBy(variation.Options, func(opt ProductVariationOption) bool {
 			return opt.Value == selectedOptions[opt.Name]

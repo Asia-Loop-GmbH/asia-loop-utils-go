@@ -42,15 +42,17 @@ type TotalSummary struct {
 
 type OrderItem struct {
 	CartItem
-	SKU        string   `bson:"sku" json:"sku"`
-	Name       string   `bson:"name" json:"name"`
-	Categories []string `bson:"categories" json:"categories"`
-	UnitPrice  string   `bson:"unitPrice" json:"unitPrice"`
-	Total      string   `bson:"total" json:"total"`
-	Tax        string   `bson:"tax" json:"tax"`
-	Net        string   `bson:"net" json:"net"`
-	Saving     string   `bson:"saving" json:"saving"`
-	TaxClass   string   `bson:"taxClass" json:"taxClass"`
+	SKU          string   `bson:"sku" json:"sku"`
+	Name         string   `bson:"name" json:"name"`
+	Categories   []string `bson:"categories" json:"categories"`
+	UnitPrice    string   `bson:"unitPrice" json:"unitPrice"`
+	Total        string   `bson:"total" json:"total"`
+	Tax          string   `bson:"tax" json:"tax"`
+	Net          string   `bson:"net" json:"net"`
+	Saving       string   `bson:"saving" json:"saving"`
+	TaxClass     string   `bson:"taxClass" json:"taxClass"`
+	IsGiftCard   bool     `bson:"isGiftCard" json:"isGiftCard"`
+	GiftCardCode *string  `bson:"giftCardCode,omitempty" json:"giftCardCode,omitempty"`
 }
 
 const colOrders = "orders"
