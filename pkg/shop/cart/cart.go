@@ -109,6 +109,7 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, products []db.Product, 
 			Net:        totalNet.StringFixed(2),
 			Saving:     saving.StringFixed(2),
 			TaxClass:   db.TaxClassTakeaway,
+			IsGiftCard: product.IsGiftCard,
 		}
 	})
 

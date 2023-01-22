@@ -696,6 +696,7 @@ func TestToOrder_GiftCard(t *testing.T) {
 		Tax:        expectedTax,
 		Net:        expectedNet,
 		TaxClass:   expectedTaxClass,
+		IsGiftCard: true,
 		Saving:     "0.00",
 	}, order.Items[0])
 
