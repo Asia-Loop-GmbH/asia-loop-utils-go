@@ -79,7 +79,7 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, products []db.Product, 
 
 		itemPrice := decimal.RequireFromString(product.GetPrice(shoppingCart.StoreKey, item.Options))
 		saving := decimal.Zero
-		if shoppingCart.IsPickup {
+		if shoppingCart.IsPickup && !product.IsGiftCard {
 			originalPrice := itemPrice.Add(decimal.Zero)
 			itemPrice = itemPrice.Mul(decimal.NewFromFloat(0.8)).Round(2)
 			saving = originalPrice.Sub(itemPrice).Mul(decimal.NewFromInt(int64(item.Amount)))
