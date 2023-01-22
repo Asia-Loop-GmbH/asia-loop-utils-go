@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v5/pkg/servicesns"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/servicesns"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 

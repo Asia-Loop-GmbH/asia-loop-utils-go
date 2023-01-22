@@ -7,7 +7,7 @@ import (
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v5/pkg/servicewoo/coupon"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/servicewoo/coupon"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 
