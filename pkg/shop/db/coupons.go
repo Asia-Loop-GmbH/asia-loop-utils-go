@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/samber/lo"
+	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -40,4 +42,16 @@ type CouponUsage struct {
 	OrderID   string    `bson:"orderId" json:"orderId"`
 	Total     string    `bson:"total" json:"total"`
 	CreatedAt time.Time `bson:"createdAt" json:"createdAt"`
+}
+
+func (c *Coupon) Available() string {
+	if c.Disabled {
+		return decimal.Zero.StringFixed(2)
+	}
+
+	available := decimal.RequireFromString(c.Total)
+	lo.ForEach(c.Usage, func(u CouponUsage, _ int) {
+		available = available.Sub(decimal.RequireFromString(u.Total))
+	})
+	return available.StringFixed(2)
 }
