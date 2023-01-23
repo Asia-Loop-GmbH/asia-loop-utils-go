@@ -52,7 +52,7 @@ type OrderItem struct {
 	Saving       string   `bson:"saving" json:"saving"`
 	TaxClass     string   `bson:"taxClass" json:"taxClass"`
 	IsGiftCard   bool     `bson:"isGiftCard" json:"isGiftCard"`
-	GiftCardCode *string  `bson:"giftCardCode,omitempty" json:"giftCardCode,omitempty"`
+	GiftCardCode []string `bson:"giftCardCode" json:"giftCardCode"`
 }
 
 const colOrders = "orders"
