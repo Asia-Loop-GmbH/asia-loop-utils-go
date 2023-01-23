@@ -51,10 +51,25 @@ func ToOrder(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {
 		return nil, errors.Wrap(err, "failed to decode taxes")
 	}
 
-	return toOrder(ctx, shoppingCart, products, taxes)
+	var coupon *db.Coupon
+	if shoppingCart.CouponCode != nil {
+		colCoupons, err := db.CollectionCoupons(ctx)
+		if err != nil {
+			log.Errorf("Failed to init db collection: %s", err)
+			return nil, errors.Wrap(err, "failed to init db collection")
+		}
+		findCoupon := colCoupons.FindOne(ctx, bson.M{"code": *shoppingCart.CouponCode, "disabled": false})
+		err = findCoupon.Decode(coupon)
+		if err != nil {
+			log.Errorf("Failed to decode coupon: %s", err)
+			return nil, errors.Wrap(err, "failed to decode coupon")
+		}
+	}
+
+	return toOrder(ctx, shoppingCart, coupon, products, taxes)
 }
 
-func toOrder(ctx context.Context, shoppingCart *db.Cart, products []db.Product, taxes []db.Tax) (*db.Order, error) {
+func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, products []db.Product, taxes []db.Tax) (*db.Order, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Calculate cart")
 
@@ -112,6 +127,33 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, products []db.Product, 
 			IsGiftCard: product.IsGiftCard,
 		}
 	})
+	if coupon != nil {
+		couponAmount := decimal.RequireFromString(coupon.Available())
+		couponAmount = decimal.Min(couponAmount, sTotal)
+		couponTax := couponAmount.Div(decimal.NewFromFloat(1.07)).Mul(decimal.NewFromFloat(0.07)).Round(2)
+		couponNet := couponAmount.Sub(couponTax)
+
+		sTotal = sTotal.Sub(couponAmount)
+		sNet = sNet.Sub(couponNet)
+		sTax = sTax.Sub(couponTax)
+
+		items = append(items, db.OrderItem{
+			CartItem: db.CartItem{
+				Amount: 1,
+			},
+			SKU:          db.CouponSKU,
+			Name:         "Gutschein",
+			Categories:   nil,
+			UnitPrice:    couponAmount.Neg().StringFixed(2),
+			Total:        couponAmount.Neg().StringFixed(2),
+			Tax:          couponTax.Neg().StringFixed(2),
+			Net:          couponNet.Neg().StringFixed(2),
+			Saving:       "0.00",
+			TaxClass:     db.TaxClassTakeaway,
+			IsGiftCard:   false,
+			GiftCardCode: nil,
+		})
+	}
 
 	var payment *db.Payment
 	last, err := lo.Last(shoppingCart.Payments)

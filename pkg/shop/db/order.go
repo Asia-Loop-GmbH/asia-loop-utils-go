@@ -15,6 +15,7 @@ type Order struct {
 	ID            primitive.ObjectID `bson:"_id" json:"id"`
 	StoreKey      string             `bson:"storeKey" json:"storeKey"`
 	User          *string            `bson:"user,omitempty" json:"user,omitempty"`
+	CouponCode    *string            `bson:"couponCode,omitempty" json:"couponCode,omitempty"`
 	IsPickup      bool               `bson:"isPickup" json:"isPickup"`
 	Items         []OrderItem        `bson:"items" json:"items"`
 	Summary       OrderSummary       `bson:"summary" json:"summary"`
@@ -54,6 +55,8 @@ type OrderItem struct {
 	IsGiftCard   bool     `bson:"isGiftCard" json:"isGiftCard"`
 	GiftCardCode []string `bson:"giftCardCode" json:"giftCardCode"`
 }
+
+const CouponSKU = "_CP"
 
 const colOrders = "orders"
 

@@ -24,17 +24,18 @@ func CollectionCarts(ctx context.Context) (*mongo.Collection, error) {
 }
 
 type Cart struct {
-	ID        primitive.ObjectID `bson:"_id" json:"id"`
-	User      *string            `bson:"user,omitempty" json:"user,omitempty"`
-	StoreKey  string             `bson:"storeKey" json:"storeKey"`
-	IsPickup  bool               `bson:"isPickup" json:"isPickup"`
-	Items     []CartItem         `bson:"items" json:"items"`
-	Secret    string             `bson:"secret" json:"secret"`
-	Payments  []Payment          `bson:"payments" json:"payments"`
-	Paid      bool               `bson:"paid" json:"paid"`
-	Checkout  *CartCheckout      `bson:"checkout,omitempty" json:"checkout,omitempty"`
-	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
-	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
+	ID         primitive.ObjectID `bson:"_id" json:"id"`
+	User       *string            `bson:"user,omitempty" json:"user,omitempty"`
+	StoreKey   string             `bson:"storeKey" json:"storeKey"`
+	IsPickup   bool               `bson:"isPickup" json:"isPickup"`
+	Items      []CartItem         `bson:"items" json:"items"`
+	CouponCode *string            `bson:"couponCode,omitempty" json:"couponCode,omitempty"`
+	Secret     string             `bson:"secret" json:"secret"`
+	Payments   []Payment          `bson:"payments" json:"payments"`
+	Paid       bool               `bson:"paid" json:"paid"`
+	Checkout   *CartCheckout      `bson:"checkout,omitempty" json:"checkout,omitempty"`
+	CreatedAt  time.Time          `bson:"createdAt" json:"createdAt"`
+	UpdatedAt  time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
 
 type CartCheckout struct {
