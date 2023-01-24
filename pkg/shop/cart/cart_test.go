@@ -802,17 +802,19 @@ func TestToOrder_ApplyCoupon(t *testing.T) {
 		Slot:         "",
 		Begin:        lo.ToPtr(time.Now()),
 	}
+	couponCode := lo.ToPtr("coupon")
 	shoppingCart := db.Cart{
-		ID:        id,
-		StoreKey:  storeKey,
-		IsPickup:  false,
-		Paid:      true,
-		Secret:    secret,
-		CreatedAt: created,
-		UpdatedAt: updated,
-		Items:     []db.CartItem{cartItem},
-		Payments:  nil,
-		Checkout:  cartCheckout,
+		ID:         id,
+		StoreKey:   storeKey,
+		CouponCode: couponCode,
+		IsPickup:   false,
+		Paid:       true,
+		Secret:     secret,
+		CreatedAt:  created,
+		UpdatedAt:  updated,
+		Items:      []db.CartItem{cartItem},
+		Payments:   nil,
+		Checkout:   cartCheckout,
 	}
 	order, err := toOrder(context.TODO(), &shoppingCart, coupon, products, taxes)
 
@@ -826,6 +828,7 @@ func TestToOrder_ApplyCoupon(t *testing.T) {
 	assert.Equal(t, storeKey, order.StoreKey)
 	assert.Equal(t, cartCheckout, order.Checkout)
 	assert.Nil(t, order.Payment)
+	assert.Equal(t, couponCode, order.CouponCode)
 
 	assert.Equal(t, 2, len(order.Items))
 	// order.Items[0] is tested by other methods
@@ -1170,7 +1173,7 @@ func TestToOrder_Integration(t *testing.T) {
 	ctx := context.WithValue(context.TODO(), mycontext.FieldStage, "dev")
 	colCarts, err := db.CollectionCarts(ctx)
 	assert.NoError(t, err)
-	cartID, err := primitive.ObjectIDFromHex("63c7a67ec0792b6ae57f57e7")
+	cartID, err := primitive.ObjectIDFromHex("63ceb8f5f6ec033180dec5c1")
 	assert.NoError(t, err)
 	find := colCarts.FindOne(ctx, bson.M{"_id": cartID})
 	shoppingCart := new(db.Cart)

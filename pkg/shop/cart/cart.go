@@ -8,6 +8,7 @@ import (
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
@@ -51,7 +52,7 @@ func ToOrder(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {
 		return nil, errors.Wrap(err, "failed to decode taxes")
 	}
 
-	var coupon *db.Coupon
+	coupon := new(db.Coupon)
 	if shoppingCart.CouponCode != nil {
 		colCoupons, err := db.CollectionCoupons(ctx)
 		if err != nil {
@@ -60,10 +61,15 @@ func ToOrder(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {
 		}
 		findCoupon := colCoupons.FindOne(ctx, bson.M{"code": *shoppingCart.CouponCode, "disabled": false})
 		err = findCoupon.Decode(coupon)
-		if err != nil {
+		if err == mongo.ErrNoDocuments {
+			log.Errorf("Coupon not found: %s", *shoppingCart.CouponCode)
+			coupon = nil
+		} else if err != nil {
 			log.Errorf("Failed to decode coupon: %s", err)
 			return nil, errors.Wrap(err, "failed to decode coupon")
 		}
+	} else {
+		coupon = nil
 	}
 
 	return toOrder(ctx, shoppingCart, coupon, products, taxes)
@@ -166,13 +172,14 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 	}
 
 	return &db.Order{
-		ID:       shoppingCart.ID,
-		User:     shoppingCart.User,
-		StoreKey: shoppingCart.StoreKey,
-		Checkout: shoppingCart.Checkout,
-		IsPickup: shoppingCart.IsPickup,
-		Paid:     shoppingCart.Paid,
-		Items:    items,
+		ID:         shoppingCart.ID,
+		User:       shoppingCart.User,
+		CouponCode: shoppingCart.CouponCode,
+		StoreKey:   shoppingCart.StoreKey,
+		Checkout:   shoppingCart.Checkout,
+		IsPickup:   shoppingCart.IsPickup,
+		Paid:       shoppingCart.Paid,
+		Items:      items,
 		Summary: db.OrderSummary{
 			Total: db.TotalSummary{
 				Value:  sTotal.StringFixed(2),
