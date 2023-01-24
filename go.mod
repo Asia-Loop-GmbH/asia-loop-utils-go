@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.21.4
 	github.com/aws/aws-sdk-go-v2/service/sns v1.19.1
 	github.com/mailjet/mailjet-apiv3-go/v4 v4.0.1
-	github.com/nam-truong-le/lambda-utils-go/v3 v3.0.1
+	github.com/nam-truong-le/lambda-utils-go/v3 v3.0.4
 	github.com/nyaruka/phonenumbers v1.1.4
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.37.0
@@ -28,7 +28,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.21 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.28 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.21 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssm v1.35.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssm v1.35.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.12.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.14.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.18.1 // indirect
