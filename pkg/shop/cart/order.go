@@ -45,7 +45,11 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 	checkTotal := decimal.RequireFromString(confirmedTotal)
 	orderTotal := decimal.RequireFromString(order.Summary.Total.Value)
 	if !checkTotal.Equal(orderTotal) {
-		log.Errorf("COUPON FRAUD DETECTED!!!: %s", orderNumber)
+		log.Errorf(
+			"Fraud detected for cart [%s], total confirmed by payment or manually = [%s], order total = [%s]",
+			shoppingCart.ID, checkTotal.StringFixed(2), orderTotal.StringFixed(2),
+		)
+		return nil, fmt.Errorf("different totals: %s | %s", checkTotal.StringFixed(2), orderTotal.StringFixed(2))
 	}
 
 	order.InvoiceNumber = invoiceNumber
