@@ -13,6 +13,10 @@ import (
 )
 
 func TestCreateOrder(t *testing.T) {
+	if testing.Short() {
+		t.Skip()
+	}
+
 	ctx := context.WithValue(context.Background(), mycontext.FieldStage, "dev")
 
 	colCarts, err := db.CollectionCarts(ctx)
