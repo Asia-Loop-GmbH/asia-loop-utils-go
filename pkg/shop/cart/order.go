@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/sns"
+	"github.com/aws/aws-sdk-go-v2/service/sns/types"
 	"github.com/pkg/errors"
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
@@ -13,6 +16,8 @@ import (
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/orderutils"
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/shop/db"
+	mysns "github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/sns"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )
@@ -112,7 +117,42 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 		return nil, errors.Wrap(err, "failed to insert order")
 	}
 	log.Infof("Order was created for cart [%s]", shoppingCart.ID)
+
+	sendSNSOrderCreated(ctx, order)
+
 	return order, nil
+}
+
+func sendSNSOrderCreated(ctx context.Context, order *db.Order) {
+	log := logger.FromContext(ctx)
+	log.Infof("Send SNS message")
+
+	topic, err := ssm.GetParameter(ctx, "/shop/sns/order/created/arn", false)
+	if err != nil {
+		log.Errorf("Failed to get topic arn: %s", err)
+		return
+	}
+	c, err := mysns.NewClient(ctx)
+	if err != nil {
+		log.Errorf("Failed to init sns: %s", err)
+		return
+	}
+	params := &sns.PublishInput{
+		TopicArn:       aws.String(topic),
+		Message:        aws.String(fmt.Sprintf("New order [%d]", order.OrderNumber)),
+		MessageGroupId: aws.String(order.StoreKey),
+		MessageAttributes: map[string]types.MessageAttributeValue{
+			"orderId": {
+				DataType:    aws.String("String"),
+				StringValue: aws.String(order.ID.Hex()),
+			},
+		},
+	}
+	if _, err := c.Publish(ctx, params); err != nil {
+		log.Errorf("Failed to publish: %s", err)
+		return
+	}
+	log.Infof("SNS message published")
 }
 
 func newGiftCardCode() string {
