@@ -15,7 +15,7 @@ func TestSendOrder(t *testing.T) {
 		t.Skip()
 	}
 	ctx := context.WithValue(context.TODO(), commoncontext.FieldStage, "dev")
-	err := servicemailjet.SendOrder(ctx, servicemailjet.SendInput{
+	err := servicemailjet.Send[servicemailjet.SendOrderVariables](ctx, servicemailjet.SendInput{
 		From: servicemailjet.Email{
 			Address: "noreply@asialoop.de",
 			Name:    "Asia Loop GmbH",
