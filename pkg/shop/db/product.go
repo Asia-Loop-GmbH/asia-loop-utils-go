@@ -38,6 +38,8 @@ type Product struct {
 	Description      string             `bson:"description" json:"description"`
 	Allergens        []string           `bson:"allergens" json:"allergens"`
 	IsGiftCard       bool               `bson:"isGiftCard" json:"isGiftCard"`
+	IsStar           bool               `bson:"isStar" json:"isStar"`
+	IsNew            bool               `bson:"isNew" json:"isNew"`
 	CreatedAt        time.Time          `bson:"createdAt" json:"createdAt"`
 	UpdatedAt        time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
