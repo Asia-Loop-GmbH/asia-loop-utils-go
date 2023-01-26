@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/orderutils"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/orderutils"
 	commoncontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 

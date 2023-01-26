@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/servicemailjet"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/servicemailjet"
 	commoncontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 
@@ -15,7 +15,7 @@ func TestSendOrder(t *testing.T) {
 		t.Skip()
 	}
 	ctx := context.WithValue(context.TODO(), commoncontext.FieldStage, "dev")
-	err := servicemailjet.SendOrder(ctx, servicemailjet.SendInput{
+	err := servicemailjet.Send[servicemailjet.SendOrderVariables](ctx, servicemailjet.SendInput{
 		From: servicemailjet.Email{
 			Address: "noreply@asialoop.de",
 			Name:    "Asia Loop GmbH",

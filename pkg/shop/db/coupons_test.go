@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/shop/db"
 )
 
 func TestCoupon_Available_Disabled(t *testing.T) {

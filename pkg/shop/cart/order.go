@@ -11,8 +11,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/orderutils"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/orderutils"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )

@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v6/pkg/normalizer"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/normalizer"
 )
 
 func TestEmail(t *testing.T) {

@@ -2,6 +2,7 @@ package servicemailjet
 
 import (
 	"context"
+	"encoding/json"
 
 	"github.com/mailjet/mailjet-apiv3-go/v4"
 
@@ -21,13 +22,14 @@ type Email struct {
 }
 
 type SendInput struct {
-	From       Email
-	To         []Email
-	Subject    string
-	TemplateID TemplateID
+	From        Email
+	To          []Email
+	Subject     string
+	TemplateID  TemplateID
+	Attachments *mailjet.AttachmentsV31
 }
 
-func Send(ctx context.Context, input SendInput, variables map[string]interface{}) error {
+func Send[T any](ctx context.Context, input SendInput, variables T) error {
 	receivers := make(mailjet.RecipientsV31, 0)
 	for _, to := range input.To {
 		receivers = append(receivers, mailjet.RecipientV31{
@@ -39,6 +41,15 @@ func Send(ctx context.Context, input SendInput, variables map[string]interface{}
 	bcc := make(mailjet.RecipientsV31, 0)
 	bcc = append(bcc, mailjet.RecipientV31{Email: ccEmail})
 
+	mapVariables := make(map[string]interface{})
+	v, err := json.Marshal(variables)
+	if err != nil {
+		return err
+	}
+	if err := json.Unmarshal(v, &mapVariables); err != nil {
+		return err
+	}
+
 	info := mailjet.InfoMessagesV31{
 		From: &mailjet.RecipientV31{
 			Email: input.From.Address,
@@ -49,13 +60,13 @@ func Send(ctx context.Context, input SendInput, variables map[string]interface{}
 		Subject:          input.Subject,
 		TemplateID:       int(input.TemplateID),
 		TemplateLanguage: true,
-		Variables:        variables,
+		Variables:        mapVariables,
+		Attachments:      input.Attachments,
 	}
 
-	err := mymailjet.Send(ctx, info)
-
-	if err != nil {
+	if err := mymailjet.Send(ctx, info); err != nil {
 		return err
 	}
+
 	return nil
 }
