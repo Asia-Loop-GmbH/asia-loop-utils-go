@@ -1,0 +1,33 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="[servicewoo/coupon] TestGetCouponByCode_Shop_Fail" type="GoTestRunConfiguration" factoryName="Go Test">
+    <module name="asia-loop-utils-go" />
+    <working_directory value="$PROJECT_DIR$/pkg/servicewoo/coupon" />
+    <envs>
+      <env name="APP" value="admin" />
+      <env name="LUG_LOCAL" value="true" />
+    </envs>
+    <EXTENSION ID="net.ashald.envfile">
+      <option name="IS_ENABLED" value="false" />
+      <option name="IS_SUBST" value="false" />
+      <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+      <option name="IS_IGNORE_MISSING_FILES" value="false" />
+      <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+      <ENTRIES>
+        <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+      </ENTRIES>
+    </EXTENSION>
+    <EXTENSION ID="software.aws.toolkits.jetbrains.core.execution.GoAwsConnectionRunConfigurationExtension">
+      <option name="credential" value="profile:al" />
+      <option name="region" value="eu-central-1" />
+      <option name="useCurrentConnection" value="false" />
+    </EXTENSION>
+    <root_directory value="$PROJECT_DIR$" />
+    <kind value="PACKAGE" />
+    <package value="github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/servicewoo/coupon" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$" />
+    <framework value="gotest" />
+    <pattern value="^\QTestGetCouponByCode_Shop_Fail\E$" />
+    <method v="2" />
+  </configuration>
+</component>

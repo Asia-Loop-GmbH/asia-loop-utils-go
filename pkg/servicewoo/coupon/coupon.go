@@ -8,29 +8,28 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 
+	"github.com/pkg/errors"
 	"github.com/shopspring/decimal"
+	"go.mongodb.org/mongo-driver/bson"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/servicewoo"
+	shopdb "github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
 func IsValidAndHasEnough(ctx context.Context, code, appliedAmount string) bool {
 	log := logger.FromContext(ctx)
 	log.Infof("check coupon valid and has enough amount: %s", code)
+
 	coupon, err := GetCouponByCode(ctx, code)
 	if err != nil {
 		log.Errorf("could not get coupon '%s': %s", code, err)
 		return false
 	}
-	current, err := decimal.NewFromString(coupon.Amount)
-	if err != nil {
-		return false
-	}
-	toUse, err := decimal.NewFromString(appliedAmount)
-	if err != nil {
-		return false
-	}
+	current := decimal.RequireFromString(coupon.Amount)
+	toUse := decimal.RequireFromString(appliedAmount)
 	return current.Cmp(toUse) > 0
 }
 
@@ -41,6 +40,25 @@ func GetCouponByCode(ctx context.Context, code string) (*servicewoo.Coupon, erro
 	if code == "" {
 		return nil, fmt.Errorf("blank coupon code")
 	}
+
+	colCoupons, err := shopdb.CollectionCoupons(ctx)
+	if err != nil {
+		log.Errorf("Failed to init db collection")
+		return nil, errors.Wrap(err, "failed to init db collection")
+	}
+	find := colCoupons.FindOne(ctx, bson.M{"code": strings.ToUpper(code)})
+	shopCoupon := new(shopdb.Coupon)
+	if err := find.Decode(shopCoupon); err == nil {
+		log.Infof("This is a shop coupon: %s", code)
+		return &servicewoo.Coupon{
+			ID:     0,
+			Code:   shopCoupon.Code,
+			Amount: shopCoupon.Available(),
+		}, nil
+	}
+
+	log.Infof("This is not a shop coupon: %s", code)
+
 	serviceWoo, err := servicewoo.NewWoo(ctx)
 	if err != nil {
 		return nil, err
@@ -78,20 +96,40 @@ func GetCouponByCode(ctx context.Context, code string) (*servicewoo.Coupon, erro
 func UpdateCouponByCode(ctx context.Context, code, amount string) error {
 	log := logger.FromContext(ctx)
 	log.Infof("update coupon %s: %s", code, amount)
+
 	coupon, err := GetCouponByCode(ctx, code)
 	if err != nil {
 		return err
 	}
-	toUse, err := decimal.NewFromString(amount)
-	if err != nil {
-		return err
-	}
-	currentAmount, err := decimal.NewFromString(coupon.Amount)
-	if err != nil {
-		return err
-	}
-	newAmount := currentAmount.Sub(toUse)
+	toUse := decimal.RequireFromString(amount)
+	currentAmount := decimal.RequireFromString(coupon.Amount)
 
+	// this is a hack
+	if len(strings.Split(code, "-")) == 3 {
+		// shop coupon
+		colCoupons, err := shopdb.CollectionCoupons(ctx)
+		if err != nil {
+			log.Errorf("Failed to init db collection")
+			return errors.Wrap(err, "failed to init db collection")
+		}
+		update := colCoupons.FindOneAndUpdate(ctx, bson.M{"code": strings.ToUpper(code)}, bson.D{{
+			"$push", bson.D{{"usage", shopdb.CouponUsage{
+				OrderID:   "Local in admin app",
+				Total:     toUse.StringFixed(2),
+				CreatedAt: time.Now(),
+			}}},
+		}})
+		if err := update.Err(); err != nil {
+			log.Errorf("Failed to update coupon: %s", err)
+			return errors.Wrap(err, "failed to update coupon")
+		}
+		log.Infof("Shop coupon [%s] updated", code)
+		return nil
+	}
+
+	log.Infof("Try to update in woo")
+
+	newAmount := currentAmount.Sub(toUse)
 	updateCoupon := servicewoo.Coupon{
 		Amount: newAmount.StringFixed(2),
 	}
