@@ -12,7 +12,6 @@ import (
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/orderutils"
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/shop/db"
@@ -63,25 +62,14 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 		// check if gift card, then create codes
 		if order.Items[i].IsGiftCard {
 			order.Items[i].GiftCardCode = lo.Times(order.Items[i].Amount, func(index int) string {
-				code := newGiftCardCode()
-				log.Infof("Gift card code generated: %s = %s€", code, order.Items[i].UnitPrice)
-				now := time.Now()
-				coupon := db.Coupon{
-					ID:        primitive.NewObjectID(),
-					Type:      db.CouponTypeGiftCard,
-					Code:      code,
-					Total:     order.Items[i].UnitPrice,
-					Usage:     make([]db.CouponUsage, 0),
-					Disabled:  false,
-					CreatedAt: now,
-					UpdatedAt: now,
-				}
-				_, err := colCoupons.InsertOne(ctx, coupon)
+				coupon, err := db.NewGiftCard(ctx, order.Items[i].UnitPrice)
 				if err != nil {
-					log.Errorf("Failed to save coupon [%s]", code)
+					log.Errorf("Failed to create coupon [%s]", err)
 					// TODO: we don't expect this happens, so it's good for now
+					return ""
 				}
-				return code
+				log.Infof("Gift card code generated: %s = %s€", coupon.Code, coupon.Total)
+				return coupon.Code
 			})
 		}
 
@@ -153,13 +141,4 @@ func sendSNSOrderCreated(ctx context.Context, order *db.Order) {
 		return
 	}
 	log.Infof("SNS message published")
-}
-
-func newGiftCardCode() string {
-	return fmt.Sprintf(
-		"%s-%s-%s",
-		random.String(4, lo.UpperCaseLettersCharset),
-		random.String(4, lo.UpperCaseLettersCharset),
-		random.String(4, lo.UpperCaseLettersCharset),
-	)
 }

@@ -2,15 +2,19 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/mongodb"
+	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )
 
 const colCoupons = "coupons"
@@ -54,4 +58,43 @@ func (c *Coupon) Available() string {
 		available = available.Sub(decimal.RequireFromString(u.Total))
 	})
 	return available.StringFixed(2)
+}
+
+func NewGiftCard(ctx context.Context, value string) (*Coupon, error) {
+	log := logger.FromContext(ctx)
+	log.Infof("Create new gift card")
+
+	col, err := CollectionCoupons(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Failed to init db collection")
+	}
+
+	code := newGifCardCode()
+	log.Infof("Gift card code generated: %s = %s€", code, value)
+	now := time.Now()
+	coupon := Coupon{
+		ID:        primitive.NewObjectID(),
+		Type:      CouponTypeGiftCard,
+		Code:      code,
+		Total:     value,
+		Usage:     make([]CouponUsage, 0),
+		Disabled:  false,
+		CreatedAt: now,
+		UpdatedAt: now,
+	}
+
+	_, err = col.InsertOne(ctx, coupon)
+	if err != nil {
+		return nil, errors.Wrap(err, "Failed to create coupon")
+	}
+	return &coupon, nil
+}
+
+func newGifCardCode() string {
+	return fmt.Sprintf(
+		"%s-%s-%s",
+		random.String(4, lo.UpperCaseLettersCharset),
+		random.String(4, lo.UpperCaseLettersCharset),
+		random.String(4, lo.UpperCaseLettersCharset),
+	)
 }
