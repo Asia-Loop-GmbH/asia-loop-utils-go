@@ -104,14 +104,15 @@ func UpdateCouponByCode(ctx context.Context, code, amount string) error {
 	toUse := decimal.RequireFromString(amount)
 	currentAmount := decimal.RequireFromString(coupon.Amount)
 
-	// this is a hack
-	if len(strings.Split(code, "-")) == 3 {
+	colCoupons, err := shopdb.CollectionCoupons(ctx)
+	if err != nil {
+		log.Errorf("Failed to init db collection")
+		return errors.Wrap(err, "failed to init db collection")
+	}
+	find := colCoupons.FindOne(ctx, bson.M{"code": strings.ToUpper(code)})
+	existing := new(shopdb.CouponUsage)
+	if err := find.Decode(existing); err == nil {
 		// shop coupon
-		colCoupons, err := shopdb.CollectionCoupons(ctx)
-		if err != nil {
-			log.Errorf("Failed to init db collection")
-			return errors.Wrap(err, "failed to init db collection")
-		}
 		update := colCoupons.FindOneAndUpdate(ctx, bson.M{"code": strings.ToUpper(code)}, bson.D{{
 			"$push", bson.D{{"usage", shopdb.CouponUsage{
 				OrderID:   "Local in admin app",
