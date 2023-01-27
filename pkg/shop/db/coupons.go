@@ -60,6 +60,35 @@ func (c *Coupon) Available() string {
 	return available.StringFixed(2)
 }
 
+func NewGiftCardFromCode(ctx context.Context, code, value string) (*Coupon, error) {
+	log := logger.FromContext(ctx)
+	log.Infof("Create new gift card for provided code: %s", code)
+
+	col, err := CollectionCoupons(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Failed to init db collection")
+	}
+
+	log.Infof("Gift card code generated: %s = %s€", code, value)
+	now := time.Now()
+	coupon := Coupon{
+		ID:        primitive.NewObjectID(),
+		Type:      CouponTypeGiftCard,
+		Code:      code,
+		Total:     value,
+		Usage:     make([]CouponUsage, 0),
+		Disabled:  false,
+		CreatedAt: now,
+		UpdatedAt: now,
+	}
+
+	_, err = col.InsertOne(ctx, coupon)
+	if err != nil {
+		return nil, errors.Wrap(err, "Failed to create coupon")
+	}
+	return &coupon, nil
+}
+
 func NewGiftCard(ctx context.Context, value string) (*Coupon, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Create new gift card")
