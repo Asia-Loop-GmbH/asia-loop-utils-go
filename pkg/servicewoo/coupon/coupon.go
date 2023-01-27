@@ -30,7 +30,7 @@ func IsValidAndHasEnough(ctx context.Context, code, appliedAmount string) bool {
 	}
 	current := decimal.RequireFromString(coupon.Amount)
 	toUse := decimal.RequireFromString(appliedAmount)
-	return current.Cmp(toUse) > 0
+	return current.Cmp(toUse) >= 0
 }
 
 func GetCouponByCode(ctx context.Context, code string) (*servicewoo.Coupon, error) {
