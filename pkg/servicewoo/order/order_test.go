@@ -30,3 +30,13 @@ func TestGetRefunds(t *testing.T) {
 	assert.Equal(t, 1, len(refunds))
 	assert.Equal(t, 262, refunds[0].ID)
 }
+
+func TestSearch(t *testing.T) {
+	if testing.Short() {
+		t.Skip()
+	}
+	ctx := context.WithValue(context.TODO(), mycontext.FieldStage, "prod")
+	orders, err := order.SearchAll(ctx, "lenamtruong@gmail.com", 10)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, orders)
+}
