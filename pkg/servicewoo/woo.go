@@ -18,7 +18,7 @@ type Woo struct {
 func NewWoo(ctx context.Context) (*Woo, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("read woo information")
-	shopUrl, err := ssm.GetParameter(ctx, "/shop/url", false)
+	shopUrl, err := ssm.GetParameter(ctx, "/shop/woo/url", false)
 	if err != nil {
 		return nil, err
 	}
