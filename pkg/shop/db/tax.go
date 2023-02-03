@@ -14,6 +14,7 @@ import (
 const (
 	TaxClassStandard = "standard"
 	TaxClassTakeaway = "takeaway"
+	TaxClassZero     = "kein"
 )
 
 const colTax = "taxes"

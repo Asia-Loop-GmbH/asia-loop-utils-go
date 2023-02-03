@@ -30,6 +30,7 @@ type Cart struct {
 	IsPickup   bool               `bson:"isPickup" json:"isPickup"`
 	Items      []CartItem         `bson:"items" json:"items"`
 	CouponCode *string            `bson:"couponCode,omitempty" json:"couponCode,omitempty"`
+	Tip        *string            `bson:"tip,omitempty" json:"tip,omitempty"`
 	Secret     string             `bson:"secret" json:"secret"`
 	Payments   []Payment          `bson:"payments" json:"payments"`
 	Paid       bool               `bson:"paid" json:"paid"`

@@ -19,6 +19,7 @@ type Order struct {
 	StoreKey      string                           `bson:"storeKey" json:"storeKey"`
 	User          *string                          `bson:"user,omitempty" json:"user,omitempty"`
 	CouponCode    *string                          `bson:"couponCode,omitempty" json:"couponCode,omitempty"`
+	Tip           *string                          `bson:"tip,omitempty" json:"tip,omitempty"`
 	IsPickup      bool                             `bson:"isPickup" json:"isPickup"`
 	Items         []OrderItem                      `bson:"items" json:"items"`
 	Summary       OrderSummary                     `bson:"summary" json:"summary"`
@@ -69,6 +70,7 @@ type OrderItem struct {
 }
 
 const CouponSKU = "_CP"
+const TipSKU = "_TIP"
 
 const colOrders = "orders"
 
