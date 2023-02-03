@@ -26,9 +26,10 @@ type Order struct {
 	Paid          bool                             `bson:"paid" json:"paid"`
 	InvoiceNumber *string                          `bson:"invoiceNumber,omitempty" json:"invoiceNumber,omitempty"`
 	OrderNumber   *string                          `bson:"orderNumber,omitempty" json:"orderNumber,omitempty"`
-	Payment       *Payment                         `bson:"payment" json:"payment,omitempty"`
+	Payment       *Payment                         `bson:"payment,omitempty" json:"payment,omitempty"`
 	Checkout      *CartCheckout                    `bson:"checkout,omitempty" json:"checkout,omitempty"`
 	Refunds       []checkout.PaymentRefundResource `bson:"refunds" json:"refunds"`
+	Source        *string                          `bson:"source,omitempty" json:"source,omitempty"`
 	CreatedAt     time.Time                        `bson:"createdAt" json:"createdAt"`
 	UpdatedAt     time.Time                        `bson:"updatedAt" json:"updatedAt"`
 }
