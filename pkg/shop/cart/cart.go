@@ -161,6 +161,33 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 		})
 	}
 
+	var tip *decimal.Decimal
+	if shoppingCart.Tip != nil {
+		t, err := decimal.NewFromString(*shoppingCart.Tip)
+		if err != nil {
+			log.Errorf("Invalid trip: %s", *shoppingCart.Tip)
+		} else {
+			tip = &t
+
+			items = append(items, db.OrderItem{
+				CartItem: db.CartItem{
+					Amount: 1,
+				},
+				SKU:          db.TipSKU,
+				Name:         "Trinkgeld",
+				Categories:   nil,
+				UnitPrice:    tip.StringFixed(2),
+				Total:        tip.StringFixed(2),
+				Tax:          "0.00",
+				Net:          tip.StringFixed(2),
+				Saving:       "0.00",
+				TaxClass:     db.TaxClassZero,
+				IsGiftCard:   false,
+				GiftCardCode: nil,
+			})
+		}
+	}
+
 	var payment *db.Payment
 	last, err := lo.Last(shoppingCart.Payments)
 	if err == nil {
@@ -171,33 +198,43 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 		}
 	}
 
+	summary := db.OrderSummary{
+		Total: db.TotalSummary{
+			Value:  sTotal.StringFixed(2),
+			Values: map[string]string{db.TaxClassTakeaway: sTotal.StringFixed(2)},
+		},
+		Tax: db.TotalSummary{
+			Value:  sTax.StringFixed(2),
+			Values: map[string]string{db.TaxClassTakeaway: sTax.StringFixed(2)},
+		},
+		Net: db.TotalSummary{
+			Value:  sNet.StringFixed(2),
+			Values: map[string]string{db.TaxClassTakeaway: sNet.StringFixed(2)},
+		},
+		Saving: sSaving.StringFixed(2),
+	}
+	if tip != nil {
+		summary.Total.Value = sTotal.Add(*tip).StringFixed(2)
+		summary.Total.Values[db.TaxClassZero] = tip.StringFixed(2)
+
+		summary.Net.Values[db.TaxClassZero] = tip.StringFixed(2)
+		summary.Net.Value = sNet.Add(*tip).StringFixed(2)
+	}
+
 	return &db.Order{
 		ID:         shoppingCart.ID,
 		User:       shoppingCart.User,
 		CouponCode: shoppingCart.CouponCode,
+		Tip:        shoppingCart.Tip,
 		StoreKey:   shoppingCart.StoreKey,
 		Checkout:   shoppingCart.Checkout,
 		IsPickup:   shoppingCart.IsPickup,
 		Paid:       shoppingCart.Paid,
 		Items:      items,
-		Summary: db.OrderSummary{
-			Total: db.TotalSummary{
-				Value:  sTotal.StringFixed(2),
-				Values: map[string]string{db.TaxClassTakeaway: sTotal.StringFixed(2)},
-			},
-			Tax: db.TotalSummary{
-				Value:  sTax.StringFixed(2),
-				Values: map[string]string{db.TaxClassTakeaway: sTax.StringFixed(2)},
-			},
-			Net: db.TotalSummary{
-				Value:  sNet.StringFixed(2),
-				Values: map[string]string{db.TaxClassTakeaway: sNet.StringFixed(2)},
-			},
-			Saving: sSaving.StringFixed(2),
-		},
-		Payment:   payment,
-		Secret:    shoppingCart.Secret,
-		CreatedAt: shoppingCart.CreatedAt,
-		UpdatedAt: shoppingCart.UpdatedAt,
+		Summary:    summary,
+		Payment:    payment,
+		Secret:     shoppingCart.Secret,
+		CreatedAt:  shoppingCart.CreatedAt,
+		UpdatedAt:  shoppingCart.UpdatedAt,
 	}, nil
 }

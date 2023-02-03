@@ -1058,6 +1058,140 @@ func TestToOrder_IgnoreZeroCustomPrice(t *testing.T) {
 	}, order.Summary)
 }
 
+func TestToOrder_Tip(t *testing.T) {
+	id := primitive.NewObjectID()
+	secret := "some-secret"
+	updated := time.Now()
+	created := time.Now()
+	sku := "some-sku"
+	name := "product name"
+	price := "12.34"
+	amount := 4
+	expectedTotal := "49.36"
+	expectedTax := "3.24"
+	expectedNet := "46.12"
+	expectedTaxClass := "takeaway"
+	cartItem := db.CartItem{
+		ProductID: id.Hex(),
+		Options:   nil,
+		Amount:    amount,
+	}
+	categories := []string{"category1", "category2"}
+	simpleProduct := db.Product{
+		ID:   id,
+		SKU:  sku,
+		Name: name,
+		Price: db.CustomizablePrice{
+			Value:        price,
+			CustomValues: nil,
+		},
+		TaxClassStandard: "standard",
+		TaxClassTakeAway: "takeaway",
+		Categories:       categories,
+		Options:          nil,
+		Variations:       nil,
+	}
+	products := []db.Product{simpleProduct}
+	storeKey := "ERLANGEN"
+	cartCheckout := &db.CartCheckout{
+		FirstName:    "First Name",
+		LastName:     "Last",
+		AddressLine1: "Line1",
+		AddressLine2: "",
+		City:         "City",
+		Postcode:     "Postcode",
+		Telephone:    "Tel",
+		Email:        "Email",
+		Note:         "",
+		Date:         "",
+		Slot:         "",
+		Begin:        lo.ToPtr(time.Now()),
+	}
+	user := lo.ToPtr("some user")
+	tip := "1.23"
+	shoppingCart := db.Cart{
+		ID:        id,
+		User:      user,
+		StoreKey:  storeKey,
+		Tip:       lo.ToPtr(tip),
+		IsPickup:  false,
+		Paid:      true,
+		Secret:    secret,
+		CreatedAt: created,
+		UpdatedAt: updated,
+		Items:     []db.CartItem{cartItem},
+		Payments:  nil,
+		Checkout:  cartCheckout,
+	}
+	order, err := toOrder(context.TODO(), &shoppingCart, nil, products, taxes)
+
+	assert.NoError(t, err)
+	assert.Equal(t, id, order.ID)
+	assert.Equal(t, secret, order.Secret)
+	assert.Equal(t, updated, order.UpdatedAt)
+	assert.Equal(t, created, order.CreatedAt)
+	assert.Equal(t, false, order.IsPickup)
+	assert.True(t, order.Paid)
+	assert.Equal(t, storeKey, order.StoreKey)
+	assert.Equal(t, cartCheckout, order.Checkout)
+	assert.Equal(t, user, order.User)
+	assert.Equal(t, tip, *order.Tip)
+	assert.Nil(t, order.Payment)
+
+	assert.Equal(t, db.OrderItem{
+		CartItem:   cartItem,
+		SKU:        sku,
+		Name:       name,
+		Categories: categories,
+		UnitPrice:  price,
+		Total:      expectedTotal,
+		Tax:        expectedTax,
+		Net:        expectedNet,
+		TaxClass:   expectedTaxClass,
+		Saving:     "0.00",
+	}, order.Items[0])
+	assert.Equal(t, db.OrderItem{
+		CartItem: db.CartItem{
+			Amount: 1,
+		},
+		SKU:          db.TipSKU,
+		Name:         "Trinkgeld",
+		Categories:   nil,
+		UnitPrice:    tip,
+		Total:        tip,
+		Tax:          "0.00",
+		Net:          tip,
+		Saving:       "0.00",
+		TaxClass:     db.TaxClassZero,
+		IsGiftCard:   false,
+		GiftCardCode: nil,
+	}, order.Items[1])
+
+	expectedTotalWithTip := decimal.RequireFromString(expectedTotal).Add(decimal.RequireFromString(tip)).StringFixed(2)
+	expectedNetWithTip := decimal.RequireFromString(expectedNet).Add(decimal.RequireFromString(tip)).StringFixed(2)
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
+			Value: expectedTotalWithTip,
+			Values: map[string]string{
+				db.TaxClassTakeaway: expectedTotal,
+				db.TaxClassZero:     tip,
+			},
+		},
+		Tax: db.TotalSummary{
+			Value:  expectedTax,
+			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
+		},
+		Net: db.TotalSummary{
+			Value: expectedNetWithTip,
+			Values: map[string]string{
+				db.TaxClassTakeaway: expectedNet,
+				db.TaxClassZero:     tip,
+			},
+		},
+		Saving: "0.00",
+	}, order.Summary)
+}
+
 func TestToOrder(t *testing.T) {
 	id := primitive.NewObjectID()
 	secret := "some-secret"
