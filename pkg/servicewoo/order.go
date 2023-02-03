@@ -15,6 +15,7 @@ const (
 
 type Order struct {
 	ID               int             `json:"id"`
+	OrderKey         string          `json:"order_key"`
 	Number           string          `json:"number"`
 	DiscountTotal    string          `json:"discount_total"`
 	DiscountTax      string          `json:"discount_tax"`
