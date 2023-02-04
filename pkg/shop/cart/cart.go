@@ -188,16 +188,6 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 		}
 	}
 
-	var payment *db.Payment
-	last, err := lo.Last(shoppingCart.Payments)
-	if err == nil {
-		sameAmount := last.Session.Amount.Value == sTotal.Mul(decimal.NewFromInt(100)).IntPart()
-		notExpired := last.Session.ExpiresAt.After(time.Now())
-		if sameAmount && notExpired {
-			payment = &last
-		}
-	}
-
 	summary := db.OrderSummary{
 		Total: db.TotalSummary{
 			Value:  sTotal.StringFixed(2),
@@ -219,6 +209,17 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 
 		summary.Net.Values[db.TaxClassZero] = tip.StringFixed(2)
 		summary.Net.Value = sNet.Add(*tip).StringFixed(2)
+	}
+
+	var payment *db.Payment
+	last, err := lo.Last(shoppingCart.Payments)
+	if err == nil {
+		finalTotal := decimal.RequireFromString(summary.Total.Value)
+		sameAmount := last.Session.Amount.Value == finalTotal.Mul(decimal.NewFromInt(100)).IntPart()
+		notExpired := last.Session.ExpiresAt.After(time.Now())
+		if sameAmount && notExpired {
+			payment = &last
+		}
 	}
 
 	return &db.Order{
