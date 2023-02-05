@@ -58,6 +58,9 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 
 	order.InvoiceNumber = invoiceNumber
 	order.OrderNumber = &orderNumber
+	now := time.Now()
+	order.CreatedAt = now
+	order.UpdatedAt = now
 	for i := 0; i < len(order.Items); i++ {
 		// check if gift card, then create codes
 		if order.Items[i].IsGiftCard {
