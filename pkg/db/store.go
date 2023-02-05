@@ -45,6 +45,7 @@ type StoreConfiguration struct {
 	POSID                     string `bson:"posId" json:"posId"`
 	EnableAutomaticPosPayment bool   `bson:"enableAutomaticPosPayment" json:"enableAutomaticPosPayment"`
 	WPStoreKey                string `bson:"wpStoreKey" json:"wpStoreKey"`
+	DeliverectLocationID      string `bson:"deliverectLocationId" json:"deliverectLocationId"`
 }
 
 type Device struct {
