@@ -3,6 +3,7 @@ package cart
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -78,11 +79,12 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 
 		// check if coupon, then update coupon value
 		if order.Items[i].SKU == db.CouponSKU {
-			findCoupon := colCoupons.FindOne(ctx, bson.M{"code": *order.CouponCode})
+			code := strings.ToUpper(*order.CouponCode)
+			findCoupon := colCoupons.FindOne(ctx, bson.M{"code": code})
 			usedCoupon := new(db.Coupon)
 			err = findCoupon.Decode(usedCoupon)
 			if err != nil {
-				log.Errorf("Failed to find coupon [%s] to update: %s", *order.CouponCode, err)
+				log.Errorf("Failed to find coupon [%s] to update: %s", code, err)
 			} else {
 				_, err := colCoupons.UpdateByID(ctx, usedCoupon.ID, bson.D{{
 					"$push", bson.D{
@@ -97,7 +99,7 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 					},
 				}})
 				if err != nil {
-					log.Errorf("Failed to update coupon [%s]: %s", *order.CouponCode, err)
+					log.Errorf("Failed to update coupon [%s]: %s", code, err)
 				}
 			}
 		}
