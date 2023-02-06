@@ -2,6 +2,7 @@ package cart
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"github.com/pkg/errors"
@@ -54,15 +55,17 @@ func ToOrder(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {
 
 	coupon := new(db.Coupon)
 	if shoppingCart.CouponCode != nil {
+		code := strings.ToUpper(*shoppingCart.CouponCode)
+
 		colCoupons, err := db.CollectionCoupons(ctx)
 		if err != nil {
 			log.Errorf("Failed to init db collection: %s", err)
 			return nil, errors.Wrap(err, "failed to init db collection")
 		}
-		findCoupon := colCoupons.FindOne(ctx, bson.M{"code": *shoppingCart.CouponCode, "disabled": false})
+		findCoupon := colCoupons.FindOne(ctx, bson.M{"code": code, "disabled": false})
 		err = findCoupon.Decode(coupon)
 		if err == mongo.ErrNoDocuments {
-			log.Errorf("Coupon not found: %s", *shoppingCart.CouponCode)
+			log.Errorf("Coupon not found: %s", code)
 			coupon = nil
 		} else if err != nil {
 			log.Errorf("Failed to decode coupon: %s", err)
