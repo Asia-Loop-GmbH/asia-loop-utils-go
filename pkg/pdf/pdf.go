@@ -62,7 +62,7 @@ func NewFromHTML(ctx context.Context, html string) ([]byte, error) {
 	}(res.Body)
 	if res.StatusCode != http.StatusOK {
 		log.Errorf("HTTP code: %d", res.StatusCode)
-		return nil, err
+		return nil, fmt.Errorf("failed to convert html to pdf, http code: %d", res.StatusCode)
 	}
 
 	resBodyRaw, err := io.ReadAll(res.Body)
