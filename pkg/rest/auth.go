@@ -17,6 +17,14 @@ import (
 )
 
 func RequireAdmin(ctx context.Context, request *events.APIGatewayProxyRequest) *events.APIGatewayProxyResponse {
+	return requireRole(ctx, request, []string{db.RoleAdmin})
+}
+
+func RequireStoreAdmin(ctx context.Context, request *events.APIGatewayProxyRequest) *events.APIGatewayProxyResponse {
+	return requireRole(ctx, request, []string{db.RoleAdmin, db.RoleStoreAdmin})
+}
+
+func requireRole(ctx context.Context, request *events.APIGatewayProxyRequest, roles []string) *events.APIGatewayProxyResponse {
 	log := logger.FromContext(ctx)
 	log.Infof("This action requires admin role")
 
@@ -42,7 +50,7 @@ func RequireAdmin(ctx context.Context, request *events.APIGatewayProxyRequest) *
 	}
 
 	if !lo.ContainsBy(user.Roles, func(item db.RoleEntry) bool {
-		return item.Name == db.RoleAdmin
+		return lo.Contains(roles, item.Name)
 	}) {
 		log.Infof("%+v", request.RequestContext.Identity)
 		log.Errorf("User [%s] doesn't have admin role", *username)
