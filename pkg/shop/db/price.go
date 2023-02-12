@@ -1,5 +1,9 @@
 package db
 
+import (
+	"github.com/shopspring/decimal"
+)
+
 type CustomizablePrice struct {
 	Value        string            `bson:"value" json:"value"`
 	CustomValues map[string]string `bson:"customValues" json:"customValues"`
@@ -7,7 +11,7 @@ type CustomizablePrice struct {
 
 func (p *CustomizablePrice) GetPrice(key string) string {
 	custom, ok := p.CustomValues[key]
-	if ok && custom != "0.00" {
+	if ok && decimal.RequireFromString(custom).IsPositive() {
 		return custom
 	}
 	return p.Value
