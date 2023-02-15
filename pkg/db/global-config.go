@@ -25,5 +25,5 @@ type GlobalConfig struct {
 	ProductAttributeOutOfStockIn int                `bson:"productAttributeOutOfStockInId" json:"productAttributeOutOfStockInId"`
 	ProductAttributePfandId      int                `bson:"productAttributePfandId" json:"productAttributePfandId"`
 	PusherAPIKey                 string             `json:"pusherApiKey"`
-	DeliverectWebhookSecret      *string            `json:"deliverectWebhookSecret,omitempty"`
+	DeliverectWebhookSecret      string             `json:"deliverectWebhookSecret"`
 }
