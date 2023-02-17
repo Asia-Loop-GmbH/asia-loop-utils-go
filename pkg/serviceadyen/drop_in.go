@@ -63,7 +63,7 @@ func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.Car
 			}
 		})),
 		ShopperEmail:     cartCheckout.Email,
-		ShopperReference: cartCheckout.Email,
+		ShopperReference: random.String(10, lo.UpperCaseLettersCharset), // TODO: is there anyway to have a better shopper reference?
 	})
 
 	if err != nil {
