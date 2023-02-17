@@ -14,6 +14,22 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )
 
+func adyenIntValue(val string) int64 {
+	amount := decimal.RequireFromString(val)
+	return amount.Mul(decimal.NewFromInt(100)).IntPart()
+}
+
+func adyenTaxPercentage(taxClass string) int64 {
+	switch taxClass {
+	case db.TaxClassStandard:
+		return 1900
+	case db.TaxClassZero:
+		return 0
+	default:
+		return 700
+	}
+}
+
 func NewDropInPayment(ctx context.Context, shoppingCart *db.Order, returnURL string) (*checkout.CreateCheckoutSessionResponse, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("new drop in payment for cart [%s]", shoppingCart.ID.Hex())
@@ -33,6 +49,18 @@ func NewDropInPayment(ctx context.Context, shoppingCart *db.Order, returnURL str
 		Reference:              random.String(10, lo.AlphanumericCharset),
 		ReturnUrl:              returnURL,
 		// TODO: should we send more data to adyen
+		LineItems: lo.ToPtr(lo.Map(shoppingCart.Items, func(item db.OrderItem, _ int) checkout.LineItem {
+			return checkout.LineItem{
+				AmountExcludingTax: adyenIntValue(item.Net),
+				AmountIncludingTax: adyenIntValue(item.Total),
+				Description:        item.Name,
+				Quantity:           int64(item.Amount),
+				TaxAmount:          adyenIntValue(item.Tax),
+				TaxPercentage:      adyenTaxPercentage(item.TaxClass),
+			}
+		})),
+		ShopperEmail:     shoppingCart.Checkout.Email,
+		ShopperReference: shoppingCart.Checkout.Email,
 	})
 
 	if err != nil {
