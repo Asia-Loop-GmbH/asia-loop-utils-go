@@ -51,8 +51,9 @@ func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.Car
 		Reference:              random.String(10, lo.AlphanumericCharset),
 		ReturnUrl:              returnURL,
 		// TODO: should we send more data to adyen
-		LineItems: lo.ToPtr(lo.Map(order.Items, func(item db.OrderItem, _ int) checkout.LineItem {
+		LineItems: lo.ToPtr(lo.Map(order.Items, func(item db.OrderItem, idx int) checkout.LineItem {
 			return checkout.LineItem{
+				Id:                 fmt.Sprintf("Item #%d", idx),
 				AmountExcludingTax: adyenIntValue(item.Net),
 				AmountIncludingTax: adyenIntValue(item.Total),
 				Description:        fmt.Sprintf("%d x %s", item.Amount, item.Name),
