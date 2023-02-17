@@ -30,26 +30,28 @@ func adyenTaxPercentage(taxClass string) int64 {
 	}
 }
 
-func NewDropInPayment(ctx context.Context, shoppingCart *db.Order, returnURL string) (*checkout.CreateCheckoutSessionResponse, error) {
+// NewDropInPayment contains order that is converted from shopping cart and hence doesn't have checkout data. We must
+// pass checkout data separately.
+func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.CartCheckout, returnURL string) (*checkout.CreateCheckoutSessionResponse, error) {
 	log := logger.FromContext(ctx)
-	log.Infof("new drop in payment for cart [%s]", shoppingCart.ID.Hex())
+	log.Infof("new drop in payment for cart [%s]", order.ID.Hex())
 	client, err := newClient(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	amount := decimal.RequireFromString(shoppingCart.Summary.Total.Value)
+	amount := decimal.RequireFromString(order.Summary.Total.Value)
 	amountInt := amount.Mul(decimal.NewFromInt(100)).IntPart()
 
 	res, httpRes, err := client.Checkout.Sessions(&checkout.CreateCheckoutSessionRequest{
 		Amount:                 checkout.Amount{Currency: currencyEUR, Value: amountInt},
 		CountryCode:            countryDE,
 		MerchantAccount:        accountECOM,
-		MerchantOrderReference: shoppingCart.ID.Hex(),
+		MerchantOrderReference: order.ID.Hex(),
 		Reference:              random.String(10, lo.AlphanumericCharset),
 		ReturnUrl:              returnURL,
 		// TODO: should we send more data to adyen
-		LineItems: lo.ToPtr(lo.Map(shoppingCart.Items, func(item db.OrderItem, _ int) checkout.LineItem {
+		LineItems: lo.ToPtr(lo.Map(order.Items, func(item db.OrderItem, _ int) checkout.LineItem {
 			return checkout.LineItem{
 				AmountExcludingTax: adyenIntValue(item.Net),
 				AmountIncludingTax: adyenIntValue(item.Total),
@@ -59,8 +61,8 @@ func NewDropInPayment(ctx context.Context, shoppingCart *db.Order, returnURL str
 				TaxPercentage:      adyenTaxPercentage(item.TaxClass),
 			}
 		})),
-		ShopperEmail:     shoppingCart.Checkout.Email,
-		ShopperReference: shoppingCart.Checkout.Email,
+		ShopperEmail:     cartCheckout.Email,
+		ShopperReference: cartCheckout.Email,
 	})
 
 	if err != nil {
