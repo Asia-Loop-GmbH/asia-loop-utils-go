@@ -24,6 +24,19 @@ func TestNewDropInPayment_Success(t *testing.T) {
 			Summary: db.OrderSummary{
 				Total: db.TotalSummary{Value: "12.34"},
 			},
+			Items: []db.OrderItem{
+				{
+					SKU:      "SKU",
+					Name:     "Name",
+					Total:    "12.34",
+					Tax:      "2.34",
+					Net:      "10.00",
+					TaxClass: "700",
+				},
+			},
+		},
+		&db.CartCheckout{
+			Email: "lenamtruong@gmail.com",
 		},
 		"http://localhost:3000",
 	)
