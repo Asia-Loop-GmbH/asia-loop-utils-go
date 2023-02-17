@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/db"
 )
 
 const (

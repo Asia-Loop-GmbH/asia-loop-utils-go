@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/serviceadyen"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/serviceadyen"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
 )
 

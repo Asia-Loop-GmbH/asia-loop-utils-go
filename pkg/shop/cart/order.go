@@ -14,8 +14,8 @@ import (
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/orderutils"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/orderutils"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
 	mysns "github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/sns"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"

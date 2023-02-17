@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/servicewoo"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/servicewoo"
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 

@@ -6,7 +6,7 @@ import (
 	"github.com/adyen/adyen-go-api-library/v6/src/notification"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
 )
 
 func TestOrder_GetPaidEvent(t *testing.T) {
