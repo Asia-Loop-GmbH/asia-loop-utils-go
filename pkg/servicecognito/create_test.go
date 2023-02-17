@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v7/pkg/servicecognito"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/servicecognito"
 )
 
 func TestCreateUser(t *testing.T) {
