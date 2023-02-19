@@ -14,9 +14,8 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
 )
 
-func adyenIntValue(val string) int64 {
-	amount := decimal.RequireFromString(val)
-	return amount.Mul(decimal.NewFromInt(100)).IntPart()
+func adyenUnitPrice(sum string, amount int) int64 {
+	return decimal.RequireFromString(sum).Div(decimal.NewFromInt(int64(amount))).Mul(decimal.NewFromInt(100)).IntPart()
 }
 
 func adyenTaxPercentage(taxClass string) int64 {
@@ -54,11 +53,11 @@ func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.Car
 		LineItems: lo.ToPtr(lo.Map(order.Items, func(item db.OrderItem, idx int) checkout.LineItem {
 			return checkout.LineItem{
 				Id:                 fmt.Sprintf("Item #%d", idx),
-				AmountExcludingTax: adyenIntValue(item.Net),
-				AmountIncludingTax: adyenIntValue(item.Total),
-				Description:        fmt.Sprintf("%d x %s", item.Amount, item.Name),
-				Quantity:           1,
-				TaxAmount:          adyenIntValue(item.Tax),
+				AmountExcludingTax: adyenUnitPrice(item.Net, item.Amount),
+				AmountIncludingTax: adyenUnitPrice(item.Total, item.Amount),
+				Description:        item.Name,
+				Quantity:           int64(item.Amount),
+				TaxAmount:          adyenUnitPrice(item.Tax, item.Amount),
 				TaxPercentage:      adyenTaxPercentage(item.TaxClass),
 			}
 		})),
