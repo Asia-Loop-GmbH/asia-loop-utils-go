@@ -55,7 +55,7 @@ func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.Car
 				Id:                 fmt.Sprintf("Item #%d", idx),
 				AmountExcludingTax: adyenUnitPrice(item.Net, item.Amount),
 				AmountIncludingTax: adyenUnitPrice(item.Total, item.Amount),
-				Description:        fmt.Sprintf(item.Name),
+				Description:        item.Name,
 				Quantity:           int64(item.Amount),
 				TaxAmount:          adyenUnitPrice(item.Tax, item.Amount),
 				TaxPercentage:      adyenTaxPercentage(item.TaxClass),
