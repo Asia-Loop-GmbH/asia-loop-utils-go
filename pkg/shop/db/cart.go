@@ -55,10 +55,11 @@ type CartCheckout struct {
 }
 
 type Payment struct {
-	Session     checkout.CreateCheckoutSessionResponse `bson:"session" json:"session"`
-	Environment string                                 `bson:"environment" json:"environment"`
-	Client      string                                 `bson:"client" json:"client"`
-	Events      []notification.NotificationRequestItem `bson:"events" json:"events"`
+	Session        checkout.CreateCheckoutSessionResponse `bson:"session" json:"session"`
+	Environment    string                                 `bson:"environment" json:"environment"`
+	Client         string                                 `bson:"client" json:"client"`
+	Events         []notification.NotificationRequestItem `bson:"events" json:"events"`
+	RedirectEvents []checkout.PaymentDetailsResponse      `bson:"redirectEvents" json:"redirectEvents"`
 }
 
 type CartItem struct {
