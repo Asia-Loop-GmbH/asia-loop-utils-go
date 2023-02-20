@@ -87,3 +87,39 @@ func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.Car
 	log.Infof("%+v", res)
 	return &res, nil
 }
+
+func ProcessRedirect(ctx context.Context, sessionID, redirectResult string) (*checkout.PaymentDetailsResponse, error) {
+	log := logger.FromContext(ctx)
+	log.Infof("Update details for session [%s]", sessionID)
+	client, err := newClient(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	res, httpRes, err := client.Checkout.PaymentsDetails(&checkout.DetailsRequest{
+		Details: checkout.PaymentCompletionDetails{
+			RedirectResult: redirectResult,
+		},
+	})
+	if err != nil {
+		log.Errorf("Failed to update payment details: %s", err)
+		return nil, err
+	}
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			log.Warnf("Failed to close http response body: %s", err)
+		}
+	}(httpRes.Body)
+
+	if httpRes.StatusCode >= 300 {
+		responseBody, err := io.ReadAll(httpRes.Body)
+		if err != nil {
+			return nil, err
+		}
+		return nil, fmt.Errorf("dyen request error %s: %s", httpRes.Status, string(responseBody))
+	}
+
+	log.Infof("%+v", res)
+	return &res, nil
+}
