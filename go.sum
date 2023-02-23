@@ -27,8 +27,8 @@ github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.23 h1:QoOybhwRf
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.23/go.mod h1:9uPh+Hrz2Vn6oMnQYiUi/zbh3ovbnQk19YKINkQny44=
 github.com/aws/aws-sdk-go-v2/service/sns v1.20.4 h1:WrHiTFASw/Q0lGX2kEKvzMobxsMno/WuPXJyZyEGKEg=
 github.com/aws/aws-sdk-go-v2/service/sns v1.20.4/go.mod h1:e1fyQ5uQWkMKrxMXF/B5YwgKHXIbdVsU3Ttb0XqnMQg=
-github.com/aws/aws-sdk-go-v2/service/ssm v1.35.4 h1:SsnvRej4YNUIRn9oQ1zvt3Sra1cmkAwyePEIaXpz2hc=
-github.com/aws/aws-sdk-go-v2/service/ssm v1.35.4/go.mod h1:DlzAqaXaUSJVQGuZrGPb4TWTkDG6vUs5OiIoX0AxjkU=
+github.com/aws/aws-sdk-go-v2/service/ssm v1.35.5 h1:x7FjoHx8A559fAHi0WMnrVxxk9iXwyj1UK5S7TrqFAM=
+github.com/aws/aws-sdk-go-v2/service/ssm v1.35.5/go.mod h1:DlzAqaXaUSJVQGuZrGPb4TWTkDG6vUs5OiIoX0AxjkU=
 github.com/aws/aws-sdk-go-v2/service/sso v1.12.4 h1:qJdM48OOLl1FBSzI7ZrA1ZfLwOyCYqkXV5lko1hYDBw=
 github.com/aws/aws-sdk-go-v2/service/sso v1.12.4/go.mod h1:jtLIhd+V+lft6ktxpItycqHqiVXrPIRjWIsFIlzMriw=
 github.com/aws/aws-sdk-go-v2/service/ssooidc v1.14.4 h1:YRkWXQveFb0tFC0TLktmmhGsOcCgLwvq88MC2al47AA=
@@ -104,8 +104,8 @@ github.com/mailjet/mailjet-apiv3-go/v4 v4.0.1/go.mod h1:2SU3t6eh/uK6BSeBmdhpIUau
 github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe/go.mod h1:wL8QJuTMNUDYhXwkmfOly8iTdp5TEcJFWZD2D7SIkUc=
 github.com/montanaflynn/stats v0.6.6 h1:Duep6KMIDpY4Yo11iFsvyqJDyfzLF9+sndUKT+v64GQ=
 github.com/montanaflynn/stats v0.6.6/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
-github.com/nam-truong-le/lambda-utils-go/v3 v3.3.14 h1:fM1tLeNCLTIjNT3tZif5ooEvXUjOfyxAw5bDB1clt1Y=
-github.com/nam-truong-le/lambda-utils-go/v3 v3.3.14/go.mod h1:/GDzzyw8lmOBHupbpbpRaAkIhLajsqUVCDuV2TvSo9k=
+github.com/nam-truong-le/lambda-utils-go/v3 v3.3.19 h1:xBC8HvkNaW/sBvsBfa0cvLOdnb9qdFGgzkkUXcsizZg=
+github.com/nam-truong-le/lambda-utils-go/v3 v3.3.19/go.mod h1:oRjrXgrLgo8KA2/TpY2bxFYK6eeUqqCcfs0Iih1gSjk=
 github.com/nyaruka/phonenumbers v1.1.6 h1:DcueYq7QrOArAprAYNoQfDgp0KetO4LqtnBtQC6Wyes=
 github.com/nyaruka/phonenumbers v1.1.6/go.mod h1:yShPJHDSH3aTKzCbXyVxNpbl2kA+F+Ne5Pun/MvFRos=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
