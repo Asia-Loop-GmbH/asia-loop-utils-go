@@ -17,7 +17,7 @@ require (
 	github.com/samber/lo v1.37.0
 	github.com/shopspring/decimal v1.3.1
 	github.com/stretchr/testify v1.8.2
-	go.mongodb.org/mongo-driver v1.11.2
+	go.mongodb.org/mongo-driver v1.11.3
 	googlemaps.github.io/maps v1.4.0
 )
 
