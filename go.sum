@@ -26,8 +26,9 @@ github.com/aws/aws-sdk-go-v2/internal/ini v1.3.31 h1:hf+Vhp5WtTdcSdE+yEcUz8L73sA
 github.com/aws/aws-sdk-go-v2/internal/ini v1.3.31/go.mod h1:5zUjguZfG5qjhG9/wqmuyHRyUftl2B5Cp6NNxNC6kRA=
 github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.22.5 h1:axGPbcjf9Td0a7vN7HO7tlkaN6hVEtvWVkcUZvNrfwc=
 github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.22.5/go.mod h1:H4hfLdGGr3RPJLsT4IojB+wyjjYq5jT6rTTFz0XDrUc=
-github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.24 h1:c5qGfdbCHav6viBwiyDns3OXqhqAbGjfIB4uVu2ayhk=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.24/go.mod h1:HMA4FZG6fyib+NDo5bpIxX1EhYjrAOveZJY2YR0xrNE=
+github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.25 h1:5LHn8JQ0qvjD9L9JhMtylnkcw7j05GDZqM9Oin6hpr0=
+github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.25/go.mod h1:/95IA+0lMnzW6XzqYJRpjjsAbKEORVeO0anQqjd2CNU=
 github.com/aws/aws-sdk-go-v2/service/sns v1.20.6 h1:s8ukppSyVyRWktx1km5pNttWVIyFAnZjjAlgXlONO2M=
 github.com/aws/aws-sdk-go-v2/service/sns v1.20.6/go.mod h1:8o/0aAt6gOxdVFubsp4L8Bry0EBss7OhM+II2p607JE=
 github.com/aws/aws-sdk-go-v2/service/ssm v1.35.6 h1:7aR7m/6O8/BlYgMqpDwwLmsF0KCus5S+18zP3Y0Wj98=
@@ -107,8 +108,8 @@ github.com/mailjet/mailjet-apiv3-go/v4 v4.0.1/go.mod h1:2SU3t6eh/uK6BSeBmdhpIUau
 github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe/go.mod h1:wL8QJuTMNUDYhXwkmfOly8iTdp5TEcJFWZD2D7SIkUc=
 github.com/montanaflynn/stats v0.6.6 h1:Duep6KMIDpY4Yo11iFsvyqJDyfzLF9+sndUKT+v64GQ=
 github.com/montanaflynn/stats v0.6.6/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
-github.com/nam-truong-le/lambda-utils-go/v3 v3.3.30 h1:lCmgA/UdwqmzUQWsgQH1ziz79sxAEa4manjFiGeNeT4=
-github.com/nam-truong-le/lambda-utils-go/v3 v3.3.30/go.mod h1:gZx3khzWMTLrV8D5H21C5sMWOMFu2v0fbmNiupnSKYs=
+github.com/nam-truong-le/lambda-utils-go/v3 v3.3.32 h1:hWWin6/d7THqL7pcXvw7nzexedXU6N5GN+kT+Y0UXGY=
+github.com/nam-truong-le/lambda-utils-go/v3 v3.3.32/go.mod h1:B1QH276InYNOpnoHjJI3thD27g3ZGBuiN18lhjF1We0=
 github.com/nyaruka/phonenumbers v1.1.6 h1:DcueYq7QrOArAprAYNoQfDgp0KetO4LqtnBtQC6Wyes=
 github.com/nyaruka/phonenumbers v1.1.6/go.mod h1:yShPJHDSH3aTKzCbXyVxNpbl2kA+F+Ne5Pun/MvFRos=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
