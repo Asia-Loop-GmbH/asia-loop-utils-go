@@ -23,25 +23,32 @@ func CollectionStores(ctx context.Context) (*mongo.Collection, error) {
 }
 
 type Store struct {
-	ID                   primitive.ObjectID `bson:"_id" json:"id"`
-	Email                string             `bson:"email" json:"email"`
-	Telephone            string             `bson:"telephone" json:"telephone"`
-	Name                 string             `bson:"name" json:"name"`
-	Key                  string             `bson:"key" json:"key"`
-	Address              string             `bson:"address" json:"address"`
-	Owner                string             `bson:"owner" json:"owner"`
-	BusinessRegistration string             `bson:"businessRegistration" json:"businessRegistration"`
-	TaxNumber            string             `bson:"taxNumber" json:"taxNumber"`
-	MBW                  map[string]string  `bson:"mbw" json:"mbw"`
-	Slots                []map[string]bool  `bson:"slots" json:"slots"` // week starts with Sunday = index 0
-	Holidays             []string           `bson:"holidays" json:"holidays"`
-	CreatedAt            time.Time          `bson:"createdAt" json:"createdAt"`
-	UpdatedAt            time.Time          `bson:"updatedAt" json:"updatedAt"`
+	ID                   primitive.ObjectID         `bson:"_id" json:"id"`
+	Email                string                     `bson:"email" json:"email"`
+	Telephone            string                     `bson:"telephone" json:"telephone"`
+	Name                 string                     `bson:"name" json:"name"`
+	Key                  string                     `bson:"key" json:"key"`
+	Address              string                     `bson:"address" json:"address"`
+	Owner                string                     `bson:"owner" json:"owner"`
+	BusinessRegistration string                     `bson:"businessRegistration" json:"businessRegistration"`
+	TaxNumber            string                     `bson:"taxNumber" json:"taxNumber"`
+	MBW                  map[string]string          `bson:"mbw" json:"mbw"`
+	Slots                []map[string]bool          `bson:"slots" json:"slots"` // week starts with Sunday = index 0
+	Holidays             []string                   `bson:"holidays" json:"holidays"`
+	SpecialDays          map[string]map[string]bool `bson:"specialDays,omitempty" json:"specialDays,omitempty"`
+	CreatedAt            time.Time                  `bson:"createdAt" json:"createdAt"`
+	UpdatedAt            time.Time                  `bson:"updatedAt" json:"updatedAt"`
 }
 
 func (s *Store) GetSlots(date string) []string {
 	if lo.Contains(s.Holidays, date) {
 		return make([]string, 0)
+	}
+
+	if specialDay, ok := s.SpecialDays[date]; ok {
+		return lo.Filter(lo.Keys(specialDay), func(item string, index int) bool {
+			return specialDay[item]
+		})
 	}
 
 	d, err := time.Parse("2006-01-02", date)
