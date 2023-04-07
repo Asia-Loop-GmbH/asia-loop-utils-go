@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/goutils v1.1.1
 	github.com/adyen/adyen-go-api-library/v6 v6.0.1
 	github.com/aws/aws-lambda-go v1.39.1
-	github.com/aws/aws-sdk-go-v2 v1.17.7
+	github.com/aws/aws-sdk-go-v2 v1.17.8
 	github.com/aws/aws-sdk-go-v2/config v1.18.19
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.22.6
 	github.com/aws/aws-sdk-go-v2/service/sns v1.20.6
