@@ -13,7 +13,7 @@ env:
 jobs:
   test:
     name: gh-action-test
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted]
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.UNIT_TEST_AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.UNIT_TEST_AWS_SECRET_ACCESS_KEY }}
