@@ -10,7 +10,7 @@ env:
 jobs:
   release:
     name: gh-action-create-release
-    runs-on: [self-hosted, linux]
+    runs-on: [self-hosted]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
