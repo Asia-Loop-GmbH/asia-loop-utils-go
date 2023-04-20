@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.22.8
 	github.com/aws/aws-sdk-go-v2/service/sns v1.20.8
 	github.com/mailjet/mailjet-apiv3-go/v4 v4.0.1
-	github.com/nam-truong-le/lambda-utils-go/v3 v3.3.55
+	github.com/nam-truong-le/lambda-utils-go/v3 v3.3.56
 	github.com/nyaruka/phonenumbers v1.1.6
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.38.1
