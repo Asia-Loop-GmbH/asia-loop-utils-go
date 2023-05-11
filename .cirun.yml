@@ -2,8 +2,8 @@ runners:
   - name: "cirun-runner"
     cloud: "aws"
     region: "eu-central-1"
-    instance_type: "t2.medium"
-    machine_image: "ami-06fd8a495a537da8b"
+    instance_type: "t4g.medium"
+    machine_image: "ami-07625524674f7c390"
     preemptible: true
     labels:
       - "cirun"
