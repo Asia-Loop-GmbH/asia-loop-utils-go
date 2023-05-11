@@ -1,0 +1,8 @@
+runners:
+  - name: "cirun-runner"
+    cloud: "aws"
+    instance_type: "t4g.medium"
+    machine_image: "ami-07625524674f7c390"
+    preemptible: true
+    labels:
+      - "cirun"
