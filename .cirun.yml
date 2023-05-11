@@ -6,4 +6,4 @@ runners:
     machine_image: "ami-07625524674f7c390"
     preemptible: true
     labels:
-      - "cirun"
+      - "cirun-aws"
