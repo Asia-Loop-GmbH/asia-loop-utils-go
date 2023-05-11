@@ -1,6 +1,7 @@
 runners:
   - name: "cirun-runner"
     cloud: "aws"
+    region: "eu-central-1"
     instance_type: "t2.medium"
     machine_image: "ami-06fd8a495a537da8b"
     preemptible: true
