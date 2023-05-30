@@ -4,5 +4,11 @@
     "config:base"
   ],
   "postUpdateOptions": ["gomodTidy"],
-  "reviewers": ["nam-truong-le"]
+  "reviewers": ["nam-truong-le"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
+  ]
 }
