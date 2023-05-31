@@ -15,7 +15,7 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
 )
 
-func generateInvoiceFromAdminOrder(ctx context.Context, order *db.Order, store *db.Store, customer *db.Customer) ([]byte, error) {
+func InvoiceFromAdminOrder(ctx context.Context, order *db.Order, store *db.Store, customer *db.Customer) ([]byte, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Generate invoice")
 
