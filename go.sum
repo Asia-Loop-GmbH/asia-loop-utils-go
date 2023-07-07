@@ -104,8 +104,8 @@ github.com/mailjet/mailjet-apiv3-go/v4 v4.0.1/go.mod h1:2SU3t6eh/uK6BSeBmdhpIUau
 github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe/go.mod h1:wL8QJuTMNUDYhXwkmfOly8iTdp5TEcJFWZD2D7SIkUc=
 github.com/montanaflynn/stats v0.6.6 h1:Duep6KMIDpY4Yo11iFsvyqJDyfzLF9+sndUKT+v64GQ=
 github.com/montanaflynn/stats v0.6.6/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
-github.com/nam-truong-le/lambda-utils-go/v3 v3.7.18 h1:jKCNZlBsErxCYGrkrBf81skJsjOXoovy3pwIR3/LiEI=
-github.com/nam-truong-le/lambda-utils-go/v3 v3.7.18/go.mod h1:51DK43sF3z68ziNhZApHijZpl6lnCmPLE5EG1RkNNJQ=
+github.com/nam-truong-le/lambda-utils-go/v3 v3.9.0 h1:NQO1NG1MyENC2PwHMx97dQjBBW/m856Vwyb/uqXDHZ8=
+github.com/nam-truong-le/lambda-utils-go/v3 v3.9.0/go.mod h1:51DK43sF3z68ziNhZApHijZpl6lnCmPLE5EG1RkNNJQ=
 github.com/nyaruka/phonenumbers v1.1.7 h1:5UUI9hE79Kk0dymSquXbMYB7IlNDNhvu2aNlJpm9et8=
 github.com/nyaruka/phonenumbers v1.1.7/go.mod h1:DC7jZd321FqUe+qWSNcHi10tyIyGNXGcNbfkPvdp1Vs=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
