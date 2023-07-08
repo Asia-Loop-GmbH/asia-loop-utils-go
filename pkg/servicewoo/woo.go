@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/secretsmanager"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 type Woo struct {
@@ -18,15 +18,15 @@ type Woo struct {
 func NewWoo(ctx context.Context) (*Woo, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("read woo information")
-	shopUrl, err := ssm.GetParameter(ctx, "/shop/woo/url", false)
+	shopUrl, err := secretsmanager.GetParameter(ctx, "/shop/woo/url")
 	if err != nil {
 		return nil, err
 	}
-	wooKey, err := ssm.GetParameter(ctx, "/shop/woo/key", false)
+	wooKey, err := secretsmanager.GetParameter(ctx, "/shop/woo/key")
 	if err != nil {
 		return nil, err
 	}
-	wooSecret, err := ssm.GetParameter(ctx, "/shop/woo/secret", true)
+	wooSecret, err := secretsmanager.GetParameter(ctx, "/shop/woo/secret")
 	if err != nil {
 		return nil, err
 	}

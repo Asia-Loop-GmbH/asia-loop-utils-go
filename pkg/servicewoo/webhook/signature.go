@@ -9,8 +9,8 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/secretsmanager"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 const (
@@ -33,7 +33,7 @@ func ValidateRequest(ctx context.Context, request *events.APIGatewayProxyRequest
 	log.Infof(request.Body)
 	log.Infof(fmt.Sprintf("%v", request.Headers))
 
-	secret, err := ssm.GetParameter(ctx, "/shop/woo/webhook/secret", true)
+	secret, err := secretsmanager.GetParameter(ctx, "/shop/woo/webhook/secret")
 	if err != nil {
 		log.Errorf("failed to get webhook secret from ssm: %s", err)
 		// ping=false, valid=false, err=err

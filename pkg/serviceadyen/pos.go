@@ -11,8 +11,8 @@ import (
 
 	"github.com/samber/lo"
 
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/random"
 )
 
 func NewTender(ctx context.Context, pos, orderId string, amount float32) error {

@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/secretsmanager"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 type Request struct {
@@ -24,11 +24,11 @@ type Response struct {
 
 func NewFromHTML(ctx context.Context, html string) ([]byte, error) {
 	log := logger.FromContext(ctx)
-	toolsURL, err := ssm.GetParameter(ctx, "/external/tools/url", false)
+	toolsURL, err := secretsmanager.GetParameter(ctx, "/external/tools/url")
 	if err != nil {
 		return nil, err
 	}
-	apiKey, err := ssm.GetParameter(ctx, "/external/tools/apikey", true)
+	apiKey, err := secretsmanager.GetParameter(ctx, "/external/tools/apikey")
 	if err != nil {
 		return nil, err
 	}

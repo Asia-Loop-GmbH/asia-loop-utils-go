@@ -13,7 +13,7 @@ import (
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/db"
 	shopdb "github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 func InvoiceFromShopOrder(ctx context.Context, order *shopdb.Order, store *shopdb.Store) ([]byte, error) {

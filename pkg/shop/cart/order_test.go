@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
-	mycontext "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
+	mycontext "github.com/nam-truong-le/lambda-utils-go/v4/pkg/context"
 )
 
 func TestCreateOrder(t *testing.T) {
@@ -17,11 +17,11 @@ func TestCreateOrder(t *testing.T) {
 		t.Skip()
 	}
 
-	ctx := context.WithValue(context.Background(), mycontext.FieldStage, "dev")
+	ctx := context.WithValue(context.Background(), mycontext.FieldStage, "prod")
 
 	colCarts, err := db.CollectionCarts(ctx)
 	assert.NoError(t, err)
-	cartID, err := primitive.ObjectIDFromHex("63d0acb74b08ccf14cc0d713")
+	cartID, err := primitive.ObjectIDFromHex("646de78d5cbaa84611a77abc")
 	assert.NoError(t, err)
 	find := colCarts.FindOne(ctx, bson.M{"_id": cartID})
 	shoppingCart := new(db.Cart)

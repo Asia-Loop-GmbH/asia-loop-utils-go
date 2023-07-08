@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 func ToOrder(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {

@@ -16,10 +16,10 @@ import (
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/orderutils"
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
-	mysns "github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/sns"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
+	mysns "github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/sns"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/ssm"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/random"
 )
 
 func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal string) (*db.Order, error) {

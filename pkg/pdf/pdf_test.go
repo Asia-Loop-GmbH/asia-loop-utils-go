@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	context2 "github.com/nam-truong-le/lambda-utils-go/v3/pkg/context"
+	context2 "github.com/nam-truong-le/lambda-utils-go/v4/pkg/context"
 )
 
 func TestNewFromHTML(t *testing.T) {
