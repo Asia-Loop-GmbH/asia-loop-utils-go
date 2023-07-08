@@ -6,8 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/mongodb"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/secretsmanager"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/mongodb"
 )
 
 const (
@@ -31,7 +31,7 @@ type User struct {
 const colUsers = "users"
 
 func CollectionUsers(ctx context.Context) (*mongo.Collection, error) {
-	database, err := ssm.GetParameter(ctx, "/shop/mongo/database", false)
+	database, err := secretsmanager.GetParameter(ctx, "/shop/mongo/database")
 	if err != nil {
 		return nil, err
 	}

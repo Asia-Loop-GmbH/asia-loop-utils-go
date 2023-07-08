@@ -10,8 +10,8 @@ import (
 	"github.com/shopspring/decimal"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/random"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/random"
 )
 
 func adyenUnitPrice(sum string, amount int) int64 {

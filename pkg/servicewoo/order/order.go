@@ -10,7 +10,7 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/servicewoo"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 func GetRefunds(ctx context.Context, id int) ([]servicewoo.Refund, error) {

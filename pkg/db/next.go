@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 func Next(ctx context.Context, key string) (int64, error) {

@@ -6,8 +6,8 @@ import (
 
 	"googlemaps.github.io/maps"
 
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/secretsmanager"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 type ResolveAddressResult struct {
@@ -22,7 +22,7 @@ type ResolveAddressResult struct {
 func ResolveAddress(ctx context.Context, address string) (*ResolveAddressResult, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("resolve address: %s", address)
-	apiKey, err := ssm.GetParameter(ctx, "/google/maps/key", true)
+	apiKey, err := secretsmanager.GetParameter(ctx, "/google/maps/key")
 	if err != nil {
 		return nil, err
 	}

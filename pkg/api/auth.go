@@ -6,8 +6,8 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/pkg/errors"
 
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/aws/ssm"
-	"github.com/nam-truong-le/lambda-utils-go/v3/pkg/logger"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/secretsmanager"
+	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 const (
@@ -24,7 +24,7 @@ func AuthorizeAnalyticsRequest(ctx context.Context, request *events.APIGatewayPr
 		return errors.New("missing API key")
 	}
 
-	key, err := ssm.GetParameter(ctx, "/analytics/key", true)
+	key, err := secretsmanager.GetParameter(ctx, "/analytics/key")
 	if err != nil {
 		return err
 	}
