@@ -12,6 +12,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sns v1.20.13
 	github.com/mailjet/mailjet-apiv3-go/v4 v4.0.1
 	github.com/nam-truong-le/lambda-utils-go/v3 v3.9.0
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.0.0
 	github.com/nyaruka/phonenumbers v1.1.7
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.38.1
