@@ -15,6 +15,10 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
+var (
+	deliveryDiscountExcludedProductCategories = []string{"drink"}
+)
+
 func ToOrder(ctx context.Context, shoppingCart *db.Cart) (*db.Order, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Calculate public cart")
@@ -126,7 +130,7 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 
 		itemPrice := decimal.RequireFromString(product.GetPrice(shoppingCart.StoreKey, item.Options))
 		saving := decimal.Zero
-		if shoppingCart.IsPickup && !product.IsGiftCard {
+		if shoppingCart.IsPickup && !product.IsGiftCard && len(lo.Intersect(deliveryDiscountExcludedProductCategories, product.Categories)) == 0 {
 			originalPrice := itemPrice.Add(decimal.Zero)
 			itemPrice = itemPrice.Mul(decimal.NewFromFloat(0.8)).Round(2)
 			saving = originalPrice.Sub(itemPrice).Mul(decimal.NewFromInt(int64(item.Amount)))
