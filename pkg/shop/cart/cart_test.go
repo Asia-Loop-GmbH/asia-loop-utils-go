@@ -1218,7 +1218,7 @@ func TestToOrder_Drink(t *testing.T) {
 		Options:   nil,
 		Amount:    amount,
 	}
-	categories := []string{"category1", "category2"}
+	categories := []string{"category1", "category2", "drink"}
 	simpleProduct := db.Product{
 		ID:   id,
 		SKU:  sku,
@@ -1254,7 +1254,7 @@ func TestToOrder_Drink(t *testing.T) {
 		ID:        id,
 		User:      user,
 		StoreKey:  storeKey,
-		IsPickup:  false,
+		IsPickup:  true,
 		Paid:      true,
 		Secret:    secret,
 		CreatedAt: created,
@@ -1270,7 +1270,7 @@ func TestToOrder_Drink(t *testing.T) {
 	assert.Equal(t, secret, order.Secret)
 	assert.Equal(t, updated, order.UpdatedAt)
 	assert.Equal(t, created, order.CreatedAt)
-	assert.Equal(t, false, order.IsPickup)
+	assert.Equal(t, true, order.IsPickup)
 	assert.True(t, order.Paid)
 	assert.Equal(t, storeKey, order.StoreKey)
 	assert.Equal(t, cartCheckout, order.Checkout)
