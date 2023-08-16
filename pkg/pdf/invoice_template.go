@@ -5,10 +5,12 @@ import (
 )
 
 type invoiceTemplateItems struct {
-	Name   string
-	SKU    string
-	Amount int
-	Total  string
+	Name     string
+	SKU      string
+	Amount   int
+	Total    string
+	TaxClass string
+	Tax      string
 }
 
 type invoiceTemplateProps struct {
@@ -25,6 +27,8 @@ type invoiceTemplateProps struct {
 	Items           []invoiceTemplateItems
 	Total           string
 	Tax             string
+	Tax19           string
+	Tax7            string
 }
 
 const invoiceTemplate = `
@@ -78,9 +82,11 @@ const invoiceTemplate = `
     <table style="width: 100%; margin-top: 2rem;">
         <thead>
             <tr style="text-align: left; background-color: #23a638; color: white;">
-                <th style="width: 50%;">Produkt</th>
-                <th style="width: 30%;">Anzahl</th>
+                <th style="width: 30%;">Produkt</th>
+                <th style="width: 10%;">Anzahl</th>
                 <th style="width: 20%;">Preis</th>
+                <th style="width: 20%;">MwSt.</th>
+                <th style="width: 20%;"></th>
             </tr>
         </thead>
         <tbody>
@@ -96,6 +102,12 @@ const invoiceTemplate = `
                 <td style="border-bottom: 1px solid grey;">
                     <span>{{.Total}}€</span>
                 </td>
+                <td style="border-bottom: 1px solid grey;">
+                    <span>{{.TaxClass}}</span>
+                </td>
+                <td style="border-bottom: 1px solid grey;">
+                    <span>{{.Tax}}€</span>
+                </td>
             </tr>
             {{end}}
         </tbody>
@@ -110,6 +122,24 @@ const invoiceTemplate = `
                 <span>{{.Total}}€</span> (inkl. <span>{{.Tax}}€</span> MwSt.)
             </td>
         </tr>
+		<tr>
+			<td style="width: 50%;"></td>
+            <td style="width: 30%;">
+                <strong>MwSt. 19%</strong>
+            </td>
+            <td style="width: 20%;">
+                <span>{{.Total19}}€</span>
+            </td>
+		</tr>
+		<tr>
+			<td style="width: 50%;"></td>
+            <td style="width: 30%;">
+                <strong>MwSt. 7%</strong>
+            </td>
+            <td style="width: 20%;">
+                <span>{{.Total7}}€</span>
+            </td>
+		</tr>
     </table>
     <div class="footer">
         <table style="width: 100%; border-top: 2px solid #23a638;">
