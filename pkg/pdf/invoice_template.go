@@ -128,7 +128,7 @@ const invoiceTemplate = `
                 <strong>MwSt. 19%</strong>
             </td>
             <td style="width: 20%;">
-                <span>{{.Total19}}€</span>
+                <span>{{.Tax19}}€</span>
             </td>
 		</tr>
 		<tr>
@@ -137,7 +137,7 @@ const invoiceTemplate = `
                 <strong>MwSt. 7%</strong>
             </td>
             <td style="width: 20%;">
-                <span>{{.Total7}}€</span>
+                <span>{{.Tax7}}€</span>
             </td>
 		</tr>
     </table>
