@@ -7,7 +7,7 @@ require (
 	github.com/adyen/adyen-go-api-library/v6 v6.0.1
 	github.com/aws/aws-lambda-go v1.41.0
 	github.com/aws/aws-sdk-go-v2 v1.21.0
-	github.com/aws/aws-sdk-go-v2/config v1.18.36
+	github.com/aws/aws-sdk-go-v2/config v1.18.37
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.25.4
 	github.com/aws/aws-sdk-go-v2/service/sns v1.21.5
 	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.71
