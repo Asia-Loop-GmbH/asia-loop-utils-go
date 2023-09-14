@@ -33,6 +33,7 @@ type Store struct {
 	BusinessRegistration string                     `bson:"businessRegistration" json:"businessRegistration"`
 	TaxNumber            string                     `bson:"taxNumber" json:"taxNumber"`
 	MBW                  map[string]string          `bson:"mbw" json:"mbw"`
+	MBWAllowOnlyCities   map[string][]string        `bson:"mbwAllowOnlyCities" json:"mbwAllowOnlyCities,omitempty"`
 	Slots                []map[string]bool          `bson:"slots" json:"slots"` // week starts with Sunday = index 0
 	Holidays             []string                   `bson:"holidays" json:"holidays"`
 	SpecialDays          map[string]map[string]bool `bson:"specialDays,omitempty" json:"specialDays,omitempty"`
