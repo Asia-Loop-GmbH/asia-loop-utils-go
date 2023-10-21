@@ -66,7 +66,7 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 		// check if gift card, then create codes
 		if order.Items[i].IsGiftCard {
 			order.Items[i].GiftCardCode = lo.Times(order.Items[i].Amount, func(index int) string {
-				coupon, err := db.NewGiftCard(ctx, order.Items[i].UnitPrice)
+				coupon, err := db.NewMehrzweckCoupon(ctx, order.Items[i].UnitPrice)
 				if err != nil {
 					log.Errorf("Failed to create coupon [%s]", err)
 					// TODO: we don't expect this happens, so it's good for now
