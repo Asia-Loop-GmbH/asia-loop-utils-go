@@ -28,7 +28,8 @@ func CollectionCoupons(ctx context.Context) (*mongo.Collection, error) {
 }
 
 const (
-	CouponTypeGiftCard = "GiftCard"
+	CouponTypeGiftCard  = "GiftCard"  // This can be generated GS or old bought GS, a.k.a. Einzweck-Gutscheine
+	CouponTypeMehrzweck = "Mehrzweck" // This can be the new bought GS, a.k.a. Mehrzweck-Gutscheine
 )
 
 type Coupon struct {
@@ -60,15 +61,16 @@ func (c *Coupon) Available() string {
 	return available.StringFixed(2)
 }
 
-func NewGiftCardFromCode(ctx context.Context, code, value string) (*Coupon, error) {
+func NewGiftCard(ctx context.Context, value string) (*Coupon, error) {
 	log := logger.FromContext(ctx)
-	log.Infof("Create new gift card for provided code: %s", code)
+	log.Infof("Create new gift card")
 
 	col, err := CollectionCoupons(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to init db collection")
 	}
 
+	code := newGifCardCode()
 	log.Infof("Gift card code generated: %s = %s€", code, value)
 	now := time.Now()
 	coupon := Coupon{
@@ -89,9 +91,9 @@ func NewGiftCardFromCode(ctx context.Context, code, value string) (*Coupon, erro
 	return &coupon, nil
 }
 
-func NewGiftCard(ctx context.Context, value string) (*Coupon, error) {
+func NewMehrzweckCoupon(ctx context.Context, value string) (*Coupon, error) {
 	log := logger.FromContext(ctx)
-	log.Infof("Create new gift card")
+	log.Infof("Create new Mehrzweck coupon")
 
 	col, err := CollectionCoupons(ctx)
 	if err != nil {
@@ -99,11 +101,11 @@ func NewGiftCard(ctx context.Context, value string) (*Coupon, error) {
 	}
 
 	code := newGifCardCode()
-	log.Infof("Gift card code generated: %s = %s€", code, value)
+	log.Infof("Mehrzweck coupon code generated: %s = %s€", code, value)
 	now := time.Now()
 	coupon := Coupon{
 		ID:        primitive.NewObjectID(),
-		Type:      CouponTypeGiftCard,
+		Type:      CouponTypeMehrzweck,
 		Code:      code,
 		Total:     value,
 		Usage:     make([]CouponUsage, 0),
