@@ -35,6 +35,14 @@ var (
 			CreatedAt:   time.Time{},
 			UpdatedAt:   time.Time{},
 		},
+		{
+			ID:          primitive.NewObjectID(),
+			Name:        "kein",
+			DisplayName: "MwSt. 0%",
+			Rate:        "0.00",
+			CreatedAt:   time.Time{},
+			UpdatedAt:   time.Time{},
+		},
 	}
 )
 
@@ -868,9 +876,9 @@ func TestToOrder_GiftCard(t *testing.T) {
 	name := "product name"
 	price := "50.00"
 	expectedTotal := "50.00"
-	expectedNet := "46.73"
-	expectedTax := "3.27"
-	expectedTaxClass := "takeaway"
+	expectedNet := "50.00"
+	expectedTax := "0.00"
+	expectedTaxClass := "kein"
 	categories := []string{"category1", "category2"}
 	storeKey := "ERLANGEN"
 	giftCard := db.Product{
@@ -880,8 +888,8 @@ func TestToOrder_GiftCard(t *testing.T) {
 		Price: db.CustomizablePrice{
 			Value: price,
 		},
-		TaxClassStandard: "standard",
-		TaxClassTakeAway: "takeaway",
+		TaxClassStandard: "kein",
+		TaxClassTakeAway: "kein",
 		IsGiftCard:       true,
 		Categories:       categories,
 	}
@@ -946,15 +954,15 @@ func TestToOrder_GiftCard(t *testing.T) {
 	assert.Equal(t, db.OrderSummary{
 		Total: db.TotalSummary{
 			Value:  expectedTotal,
-			Values: map[string]string{db.TaxClassTakeaway: expectedTotal},
+			Values: map[string]string{db.TaxClassZero: expectedTotal, db.TaxClassTakeaway: "0.00"},
 		},
 		Tax: db.TotalSummary{
 			Value:  expectedTax,
-			Values: map[string]string{db.TaxClassTakeaway: expectedTax},
+			Values: map[string]string{db.TaxClassTakeaway: "0.00"},
 		},
 		Net: db.TotalSummary{
 			Value:  expectedNet,
-			Values: map[string]string{db.TaxClassTakeaway: expectedNet},
+			Values: map[string]string{db.TaxClassZero: expectedNet, db.TaxClassTakeaway: "0.00"},
 		},
 		Saving: "0.00",
 	}, order.Summary)
@@ -1195,6 +1203,109 @@ func TestToOrder_Tip(t *testing.T) {
 				db.TaxClassTakeaway: expectedNet,
 				db.TaxClassZero:     tip,
 			},
+		},
+		Saving: "0.00",
+	}, order.Summary)
+}
+
+func TestToOrder_Tip_And_GiftCard(t *testing.T) {
+	id := primitive.NewObjectID()
+	secret := "some-secret"
+	updated := time.Now()
+	created := time.Now()
+	tip := "10.00"
+	sku := "some-sku"
+	name := "product name"
+	price := "50.00"
+	expectedTotal := "60.00"
+	expectedNet := "60.00"
+	expectedTax := "0.00"
+	expectedTaxClass := "kein"
+	categories := []string{"category1", "category2"}
+	storeKey := "ERLANGEN"
+	giftCard := db.Product{
+		ID:   id,
+		SKU:  sku,
+		Name: name,
+		Price: db.CustomizablePrice{
+			Value: price,
+		},
+		TaxClassStandard: "kein",
+		TaxClassTakeAway: "kein",
+		IsGiftCard:       true,
+		Categories:       categories,
+	}
+	cartItem := db.CartItem{
+		ProductID: id.Hex(),
+		Amount:    1,
+	}
+	products := []db.Product{giftCard}
+	cartCheckout := &db.CartCheckout{
+		FirstName:    "First Name",
+		LastName:     "Last",
+		AddressLine1: "Line1",
+		AddressLine2: "",
+		City:         "City",
+		Postcode:     "Postcode",
+		Telephone:    "Tel",
+		Email:        "Email",
+		Note:         "",
+		Date:         "",
+		Slot:         "",
+		Begin:        lo.ToPtr(time.Now()),
+	}
+	shoppingCart := db.Cart{
+		ID:        id,
+		StoreKey:  storeKey,
+		IsPickup:  true,
+		Paid:      true,
+		Secret:    secret,
+		CreatedAt: created,
+		UpdatedAt: updated,
+		Items:     []db.CartItem{cartItem},
+		Payments:  nil,
+		Checkout:  cartCheckout,
+		Tip:       lo.ToPtr(tip),
+	}
+	order, err := toOrder(context.TODO(), &shoppingCart, nil, products, taxes)
+
+	assert.NoError(t, err)
+	assert.Equal(t, id, order.ID)
+	assert.Equal(t, secret, order.Secret)
+	assert.Equal(t, updated, order.UpdatedAt)
+	assert.Equal(t, created, order.CreatedAt)
+	assert.Equal(t, true, order.IsPickup)
+	assert.True(t, order.Paid)
+	assert.Equal(t, storeKey, order.StoreKey)
+	assert.Equal(t, cartCheckout, order.Checkout)
+	assert.Nil(t, order.Payment)
+
+	assert.Equal(t, db.OrderItem{
+		CartItem:   cartItem,
+		SKU:        sku,
+		Name:       name,
+		Categories: categories,
+		UnitPrice:  price,
+		Total:      price,
+		Tax:        "0.00",
+		Net:        price,
+		TaxClass:   expectedTaxClass,
+		IsGiftCard: true,
+		Saving:     "0.00",
+	}, order.Items[0])
+
+	assert.Equal(t, db.OrderSummary{
+		Total: db.TotalSummary{
+			Value:  expectedTotal,
+			Values: map[string]string{db.TaxClassZero: expectedTotal, db.TaxClassTakeaway: "0.00"},
+		},
+		Tax: db.TotalSummary{
+			Value:  expectedTax,
+			Values: map[string]string{db.TaxClassTakeaway: "0.00"},
+		},
+		Net: db.TotalSummary{
+			Value:  expectedNet,
+			Values: map[string]string{db.TaxClassZero: expectedNet, db.TaxClassTakeaway: "0.00"},
 		},
 		Saving: "0.00",
 	}, order.Summary)

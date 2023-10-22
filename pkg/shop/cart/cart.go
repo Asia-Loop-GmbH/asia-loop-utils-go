@@ -105,9 +105,16 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 		Net:    decimal.Zero,
 		Saving: decimal.Zero,
 	}
+	zeroSummary := summaryTotal{
+		Total:  decimal.Zero,
+		Tax:    decimal.Zero,
+		Net:    decimal.Zero,
+		Saving: decimal.Zero,
+	}
 	summaryTotals := map[string]*summaryTotal{
 		db.TaxClassTakeaway: &takeawaySummary,
 		db.TaxClassStandard: &standardSummary,
+		db.TaxClassZero:     &zeroSummary,
 	}
 
 	items := lo.Map(shoppingCart.Items, func(item db.CartItem, index int) db.OrderItem {
@@ -154,7 +161,7 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 			SKU:        product.SKU,
 			Name:       product.Name,
 			Categories: product.Categories,
-			UnitPrice:  itemPrice.StringFixed(2), // TODO: we must improve this in the future, when we support store specific prices
+			UnitPrice:  itemPrice.StringFixed(2),
 			Total:      totalPrice.StringFixed(2),
 			Tax:        totalTax.StringFixed(2),
 			Net:        totalNet.StringFixed(2),
@@ -218,26 +225,38 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 		}
 	}
 
-	sTotal := takeawaySummary.Total.Add(standardSummary.Total)
-	sTax := takeawaySummary.Tax.Add(standardSummary.Tax)
-	sNet := takeawaySummary.Net.Add(standardSummary.Net)
-	sSaving := takeawaySummary.Saving.Add(standardSummary.Saving)
+	sTotal := takeawaySummary.Total.Add(standardSummary.Total).Add(zeroSummary.Total)
+	sTax := takeawaySummary.Tax.Add(standardSummary.Tax).Add(zeroSummary.Tax)
+	sNet := takeawaySummary.Net.Add(standardSummary.Net).Add(zeroSummary.Net)
+	sSaving := takeawaySummary.Saving.Add(standardSummary.Saving).Add(zeroSummary.Saving)
 
 	totalValues := map[string]string{}
 	totalValues[db.TaxClassTakeaway] = takeawaySummary.Total.StringFixed(2)
 	if !standardSummary.Total.IsZero() {
 		totalValues[db.TaxClassStandard] = standardSummary.Total.StringFixed(2)
 	}
+	if !zeroSummary.Total.IsZero() {
+		totalValues[db.TaxClassZero] = zeroSummary.Total.StringFixed(2)
+	}
+
 	taxValues := map[string]string{}
 	taxValues[db.TaxClassTakeaway] = takeawaySummary.Tax.StringFixed(2)
 	if !standardSummary.Tax.IsZero() {
 		taxValues[db.TaxClassStandard] = standardSummary.Tax.StringFixed(2)
 	}
+	if !zeroSummary.Tax.IsZero() {
+		taxValues[db.TaxClassZero] = zeroSummary.Tax.StringFixed(2)
+	}
+
 	netValues := map[string]string{}
 	netValues[db.TaxClassTakeaway] = takeawaySummary.Net.StringFixed(2)
 	if !standardSummary.Net.IsZero() {
 		netValues[db.TaxClassStandard] = standardSummary.Net.StringFixed(2)
 	}
+	if !zeroSummary.Net.IsZero() {
+		netValues[db.TaxClassZero] = zeroSummary.Net.StringFixed(2)
+	}
+
 	summary := db.OrderSummary{
 		Total: db.TotalSummary{
 			Value:  sTotal.StringFixed(2),
@@ -255,10 +274,18 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 	}
 	if tip != nil {
 		summary.Total.Value = sTotal.Add(*tip).StringFixed(2)
-		summary.Total.Values[db.TaxClassZero] = tip.StringFixed(2)
+		if currentTotal, found := summary.Total.Values[db.TaxClassZero]; found {
+			summary.Total.Values[db.TaxClassZero] = tip.Add(decimal.RequireFromString(currentTotal)).StringFixed(2)
+		} else {
+			summary.Total.Values[db.TaxClassZero] = tip.StringFixed(2)
+		}
 
-		summary.Net.Values[db.TaxClassZero] = tip.StringFixed(2)
 		summary.Net.Value = sNet.Add(*tip).StringFixed(2)
+		if currentNet, found := summary.Net.Values[db.TaxClassZero]; found {
+			summary.Net.Values[db.TaxClassZero] = tip.Add(decimal.RequireFromString(currentNet)).StringFixed(2)
+		} else {
+			summary.Net.Values[db.TaxClassZero] = tip.StringFixed(2)
+		}
 	}
 
 	var payment *db.Payment
