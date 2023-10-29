@@ -663,6 +663,7 @@ func TestToOrder_ApplyCoupon_CouponBiggerThanTotal(t *testing.T) {
 	}
 	coupon := &db.Coupon{
 		Type:  db.CouponTypeGiftCard,
+		Code:  "GS1234",
 		Total: "20.00",
 		Usage: []db.CouponUsage{
 			{
@@ -676,7 +677,7 @@ func TestToOrder_ApplyCoupon_CouponBiggerThanTotal(t *testing.T) {
 			Amount: 1,
 		},
 		SKU:          db.CouponSKU,
-		Name:         "Gutschein",
+		Name:         "Gutschein GS1234",
 		Categories:   nil,
 		UnitPrice:    "-12.34",
 		Total:        "-12.34",
@@ -780,6 +781,7 @@ func TestToOrder_ApplyCoupon(t *testing.T) {
 	coupon := &db.Coupon{
 		Type:  db.CouponTypeGiftCard,
 		Total: "10.00",
+		Code:  "GS1234",
 		Usage: []db.CouponUsage{
 			{
 				Total: "2.00",
@@ -792,7 +794,7 @@ func TestToOrder_ApplyCoupon(t *testing.T) {
 			Amount: 1,
 		},
 		SKU:          db.CouponSKU,
-		Name:         "Gutschein",
+		Name:         "Gutschein GS1234",
 		Categories:   nil,
 		UnitPrice:    "-8.00",
 		Total:        "-8.00",
