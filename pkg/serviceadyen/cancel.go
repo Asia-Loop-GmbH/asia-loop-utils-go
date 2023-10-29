@@ -7,15 +7,17 @@ import (
 
 	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
 	"github.com/pkg/errors"
+	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
 type RefundOptions struct {
-	PSPRef      string
-	Value       string
-	MerchantRef string
+	RefundRef string
+	PSPRef    string
+	Value     string
+	Items     []checkout.LineItem
 }
 
 func Refund(ctx context.Context, opts RefundOptions) (*checkout.PaymentRefundResource, error) {
@@ -35,7 +37,8 @@ func Refund(ctx context.Context, opts RefundOptions) (*checkout.PaymentRefundRes
 			Value:    amountInt,
 		},
 		MerchantAccount: accountECOM,
-		Reference:       opts.MerchantRef,
+		Reference:       opts.RefundRef,
+		LineItems:       lo.ToPtr(opts.Items),
 	}, ctx)
 
 	if err != nil {
