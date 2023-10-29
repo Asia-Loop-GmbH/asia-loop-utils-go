@@ -3,7 +3,6 @@ package cart
 import (
 	"context"
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -12,9 +11,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
-	"go.mongodb.org/mongo-driver/bson"
 
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/orderutils"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/coupon"
 	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
 	mysns "github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/sns"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/ssm"
@@ -26,10 +25,6 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 	log := logger.FromContext(ctx)
 	log.Infof("Cart was paid, will create final order")
 
-	colCoupons, err := db.CollectionCoupons(ctx)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to init db collection")
-	}
 	colOrders, err := db.CollectionOrders(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to init db collection")
@@ -66,41 +61,22 @@ func CreateOrder(ctx context.Context, shoppingCart *db.Cart, confirmedTotal stri
 		// check if gift card, then create codes
 		if order.Items[i].IsGiftCard {
 			order.Items[i].GiftCardCode = lo.Times(order.Items[i].Amount, func(index int) string {
-				coupon, err := db.NewMehrzweckCoupon(ctx, order.Items[i].UnitPrice)
+				newCoupon, err := db.NewMehrzweckCoupon(ctx, order.Items[i].UnitPrice)
 				if err != nil {
 					log.Errorf("Failed to create coupon [%s]", err)
 					// TODO: we don't expect this happens, so it's good for now
 					return ""
 				}
-				log.Infof("Gift card code generated: %s = %s€", coupon.Code, coupon.Total)
-				return coupon.Code
+				log.Infof("Gift card code generated: %s = %s€", newCoupon.Code, newCoupon.Total)
+				return newCoupon.Code
 			})
 		}
 
 		// check if coupon, then update coupon value
 		if order.Items[i].SKU == db.CouponSKU {
-			code := strings.ToUpper(*order.CouponCode)
-			findCoupon := colCoupons.FindOne(ctx, bson.M{"code": code})
-			usedCoupon := new(db.Coupon)
-			err = findCoupon.Decode(usedCoupon)
+			err := coupon.UpdateCouponByOrderItem(ctx, order.ID.Hex(), order.Items[i])
 			if err != nil {
-				log.Errorf("Failed to find coupon [%s] to update: %s", code, err)
-			} else {
-				_, err := colCoupons.UpdateByID(ctx, usedCoupon.ID, bson.D{{
-					"$push", bson.D{
-						{
-							"usage",
-							db.CouponUsage{
-								OrderID:   order.ID.Hex(),
-								Total:     decimal.RequireFromString(order.Items[i].Total).Neg().StringFixed(2),
-								CreatedAt: time.Now(),
-							},
-						},
-					},
-				}})
-				if err != nil {
-					log.Errorf("Failed to update coupon [%s]: %s", code, err)
-				}
+				log.Errorf("Failed to update coupon %s: %s", order.Items[i].Name, err)
 			}
 		}
 	}

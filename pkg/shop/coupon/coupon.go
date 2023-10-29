@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
+	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson"
 
@@ -50,6 +51,36 @@ func GetCouponByCode(ctx context.Context, code string) (*shopdb.Coupon, error) {
 	return shopCoupon, nil
 }
 
+func UpdateCouponByOrderItem(ctx context.Context, orderID string, item shopdb.OrderItem) error {
+	log := logger.FromContext(ctx)
+	log.Infof("Update coupon: %+v", item)
+	code := strings.Split(item.Name, " ")[1]
+
+	colCoupons, err := shopdb.CollectionCoupons(ctx)
+	if err != nil {
+		log.Errorf("Failed to init db collection")
+		return errors.Wrap(err, "failed to init db collection")
+	}
+
+	update := colCoupons.FindOneAndUpdate(ctx, bson.M{"code": strings.ToUpper(code)}, bson.D{{
+		"$push", bson.D{{"usage", shopdb.CouponUsage{
+			OrderID:   orderID,
+			Total:     decimal.RequireFromString(item.Total).Neg().StringFixed(2),
+			Net:       lo.ToPtr(decimal.RequireFromString(item.Net).Neg().StringFixed(2)),
+			Tax:       lo.ToPtr(decimal.RequireFromString(item.Tax).Neg().StringFixed(2)),
+			TaxClass:  lo.ToPtr(item.TaxClass),
+			CreatedAt: time.Now(),
+		}}},
+	}})
+
+	if err := update.Err(); err != nil {
+		log.Errorf("Failed to update coupon: %s", err)
+		return errors.Wrap(err, "failed to update coupon")
+	}
+	log.Infof("Shop coupon [%s] updated", code)
+	return nil
+}
+
 func UpdateCouponByCode(ctx context.Context, code, amount string) error {
 	log := logger.FromContext(ctx)
 	log.Infof("update coupon %s: %s", code, amount)
@@ -60,12 +91,6 @@ func UpdateCouponByCode(ctx context.Context, code, amount string) error {
 	if err != nil {
 		log.Errorf("Failed to init db collection")
 		return errors.Wrap(err, "failed to init db collection")
-	}
-	find := colCoupons.FindOne(ctx, bson.M{"code": strings.ToUpper(code)})
-	existing := new(shopdb.CouponUsage)
-	if err := find.Decode(existing); err != nil {
-		log.Errorf("Failed to decode coupon: %s", err)
-		return errors.Wrap(err, "failed to decode coupon")
 	}
 
 	update := colCoupons.FindOneAndUpdate(ctx, bson.M{"code": strings.ToUpper(code)}, bson.D{{

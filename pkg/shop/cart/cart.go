@@ -2,6 +2,7 @@ package cart
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"time"
 
@@ -170,32 +171,24 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 			IsGiftCard: product.IsGiftCard,
 		}
 	})
-	if coupon != nil {
-		couponAmount := decimal.RequireFromString(coupon.Available())
-		couponAmount = decimal.Min(couponAmount, takeawaySummary.Total.Add(standardSummary.Total))
-		couponTax := couponAmount.Div(decimal.NewFromFloat(1.07)).Mul(decimal.NewFromFloat(0.07)).Round(2)
-		couponNet := couponAmount.Sub(couponTax)
 
-		takeawaySummary.Total = takeawaySummary.Total.Sub(couponAmount)
-		takeawaySummary.Net = takeawaySummary.Net.Sub(couponNet)
-		takeawaySummary.Tax = takeawaySummary.Tax.Sub(couponTax)
+	appliedCouponItems := generateCouponItems(ctx, coupon, &takeawaySummary, &standardSummary)
 
-		items = append(items, db.OrderItem{
-			CartItem: db.CartItem{
-				Amount: 1,
-			},
-			SKU:          db.CouponSKU,
-			Name:         "Gutschein",
-			Categories:   nil,
-			UnitPrice:    couponAmount.Neg().StringFixed(2),
-			Total:        couponAmount.Neg().StringFixed(2),
-			Tax:          couponTax.Neg().StringFixed(2),
-			Net:          couponNet.Neg().StringFixed(2),
-			Saving:       "0.00",
-			TaxClass:     db.TaxClassTakeaway,
-			IsGiftCard:   false,
-			GiftCardCode: nil,
-		})
+	for _, item := range appliedCouponItems {
+		switch item.TaxClass {
+		case db.TaxClassTakeaway:
+			takeawaySummary.Total = takeawaySummary.Total.Add(decimal.RequireFromString(item.Total))
+			takeawaySummary.Tax = takeawaySummary.Tax.Add(decimal.RequireFromString(item.Tax))
+			takeawaySummary.Net = takeawaySummary.Net.Add(decimal.RequireFromString(item.Net))
+		case db.TaxClassStandard:
+			standardSummary.Total = standardSummary.Total.Add(decimal.RequireFromString(item.Total))
+			standardSummary.Tax = standardSummary.Tax.Add(decimal.RequireFromString(item.Tax))
+			standardSummary.Net = standardSummary.Net.Add(decimal.RequireFromString(item.Net))
+		default:
+			log.Errorf("Unsupported coupon tax [%s]", item.TaxClass)
+			return nil, fmt.Errorf("unsupported coupon tax [%s]", item.TaxClass)
+		}
+		items = append(items, item)
 	}
 
 	var tip *decimal.Decimal
