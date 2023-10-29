@@ -47,6 +47,9 @@ type CouponUsage struct {
 	OrderID   string    `bson:"orderId" json:"orderId"`
 	Total     string    `bson:"total" json:"total"`
 	CreatedAt time.Time `bson:"createdAt" json:"createdAt"`
+	Net       *string   `bson:"net,omitempty" json:"net,omitempty"`
+	Tax       *string   `bson:"tax,omitempty" json:"tax,omitempty"`
+	TaxClass  *string   `bson:"taxClass,omitempty" json:"taxClass,omitempty"`
 }
 
 func (c *Coupon) Available() string {
