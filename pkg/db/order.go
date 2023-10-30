@@ -54,7 +54,7 @@ type OrderItem struct {
 	Extra      []OrderItemExtra `bson:"extra" json:"extra"`
 	Net        string           `bson:"net" json:"net"`
 	Tax        string           `bson:"tax" json:"tax"`
-	TaxClass   string           `bson:"taxClass" json:"taxClass"`
+	TaxClass   TaxClass         `bson:"taxClass" json:"taxClass"`
 	TaxRate    string           `bson:"taxRate" json:"taxRate"`
 	Total      string           `bson:"total" json:"total"`
 }
