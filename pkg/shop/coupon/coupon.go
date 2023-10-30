@@ -3,6 +3,7 @@ package coupon
 import (
 	"context"
 	"fmt"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/db"
 	"strings"
 	"time"
 
@@ -49,6 +50,42 @@ func GetCouponByCode(ctx context.Context, code string) (*shopdb.Coupon, error) {
 		return nil, errors.Wrap(err, "failed to decode coupon")
 	}
 	return shopCoupon, nil
+}
+
+var adminTaxClassToShopTaxClass = map[db.TaxClass]string{
+	db.TaxClassStandard: shopdb.TaxClassStandard,
+	db.TaxClassReduced:  shopdb.TaxClassTakeaway,
+	db.TaxClassZero:     shopdb.TaxClassZero,
+}
+
+func UpdateCouponByAdminOrderItem(ctx context.Context, orderID string, item db.OrderItem) error {
+	log := logger.FromContext(ctx)
+	log.Infof("Update coupon by admin order item: %+v", item)
+	code := strings.Split(item.Name, " ")[1]
+
+	colCoupons, err := shopdb.CollectionCoupons(ctx)
+	if err != nil {
+		log.Errorf("Failed to init db collection")
+		return errors.Wrap(err, "failed to init db collection")
+	}
+
+	update := colCoupons.FindOneAndUpdate(ctx, bson.M{"code": strings.ToUpper(code)}, bson.D{{
+		"$push", bson.D{{"usage", shopdb.CouponUsage{
+			OrderID:   orderID,
+			Total:     decimal.RequireFromString(item.Total).Neg().StringFixed(2),
+			Net:       lo.ToPtr(decimal.RequireFromString(item.Net).Neg().StringFixed(2)),
+			Tax:       lo.ToPtr(decimal.RequireFromString(item.Tax).Neg().StringFixed(2)),
+			TaxClass:  lo.ToPtr(adminTaxClassToShopTaxClass[item.TaxClass]),
+			CreatedAt: time.Now(),
+		}}},
+	}})
+
+	if err := update.Err(); err != nil {
+		log.Errorf("Failed to update coupon: %s", err)
+		return errors.Wrap(err, "failed to update coupon")
+	}
+	log.Infof("Shop coupon [%s] updated", code)
+	return nil
 }
 
 func UpdateCouponByOrderItem(ctx context.Context, orderID string, item shopdb.OrderItem) error {
