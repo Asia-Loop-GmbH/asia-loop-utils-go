@@ -17,11 +17,11 @@ github.com/aws/aws-sdk-go-v2/credentials v1.14.0/go.mod h1:q/3oaTPlamrQWHPwJe56M
 github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.14.0 h1:lF/cVllNAPKgjDwN2RsQUX9g/f6hXer9f10ubLFSoug=
 github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.14.0/go.mod h1:c28nJNzMVVb9TQpZ5q4tzZvwEJwf/7So7Ie2s90l1Fw=
 github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.43/go.mod h1:auo+PiyLl0n1l8A0e8RIeR8tOzYPfZZH/JNlrJ8igTQ=
-github.com/aws/aws-sdk-go-v2/internal/configsources v1.2.0 h1:tN6dNNE4SzMuyMnVtQJXGVKX177/d5Zy4MuA1HA4KUc=
-github.com/aws/aws-sdk-go-v2/internal/configsources v1.2.0/go.mod h1:F6MXWETIeetAHwFHyoHEqrcB3NpijFv9nLP5h9CXtT0=
+github.com/aws/aws-sdk-go-v2/internal/configsources v1.2.1 h1:fi1ga6WysOyYb5PAf3Exd6B5GiSNpnZim4h1rhlBqx0=
+github.com/aws/aws-sdk-go-v2/internal/configsources v1.2.1/go.mod h1:V5CY8wNurvPUibTi9mwqUqpiFZ5LnioKWIFUDtIzdI8=
 github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.37/go.mod h1:Qe+2KtKml+FEsQF/DHmDV+xjtche/hwoF75EG4UlHW8=
-github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.5.0 h1:bfdsbTARDjaC/dSYGMO+E0psxFU4hTvCLnqYAfZ3D38=
-github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.5.0/go.mod h1:Jg8XVv5M2V2wiAMvBFx+O59jg6Yr8vhP0bgNF/IuquM=
+github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.5.1 h1:ZpaV/j48RlPc4AmOZuPv22pJliXjXq8/reL63YzyFnw=
+github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.5.1/go.mod h1:R8aXraabD2e3qv1csxM14/X9WF4wFMIY0kH4YEtYD5M=
 github.com/aws/aws-sdk-go-v2/internal/ini v1.4.0 h1:21tlTXq3ev10yLMAjXZzpkZbrl49h3ElSjmxD57tD/E=
 github.com/aws/aws-sdk-go-v2/internal/ini v1.4.0/go.mod h1:d9YrBHJhyzDCv5UsEVRizHlFV6Q0sLemFq6uxuqWfUw=
 github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.29.0 h1:QZqfgOR5Uf2DocFKkiURYHSy6yIAV/7h/4O4XMhClNM=
@@ -30,8 +30,8 @@ github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.10.0 h1:dJnwy5Awv
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.10.0/go.mod h1:RsPWWy7u/hwmFX57sQ7MLvrvJeYyNkiMm5BaavpoU18=
 github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.22.0 h1:RsC+oqnIfSIxvmB6ZUvTmZwka4O881Lctl8st63xADE=
 github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.22.0/go.mod h1:L/OnLGx45j+YT7Zj9ZvaU6NHbf3E0IL0pnD15DXwmh8=
-github.com/aws/aws-sdk-go-v2/service/sns v1.23.0 h1:iMmh/hzUQ7uJzKBI/QyMpJXUKcaNsVE4/Z+s6E3hMCI=
-github.com/aws/aws-sdk-go-v2/service/sns v1.23.0/go.mod h1:gLVePJ104BrkWKr4aU3CURZYZnZN7BQGDsB668Uh3ZY=
+github.com/aws/aws-sdk-go-v2/service/sns v1.25.0 h1:jLJACSO/+RZZ5KWPSt6Fw0+6mUTJMTyAb0+iLaB256Y=
+github.com/aws/aws-sdk-go-v2/service/sns v1.25.0/go.mod h1:TaJ0nsVcYe9tq+m/VH721tzquF8YusAgcwD5xeppVNw=
 github.com/aws/aws-sdk-go-v2/service/ssm v1.40.0 h1:DHZFzwbFXlfw15I0ERlTVB/YH9iHNr2C1axjRpB7/Gg=
 github.com/aws/aws-sdk-go-v2/service/ssm v1.40.0/go.mod h1:qpnJ98BgJ3YUEvHMgJ1OADwaOgqhgv0nxnqAjTKupeY=
 github.com/aws/aws-sdk-go-v2/service/sso v1.16.0 h1:ZIlR6Wr/EgYwBdEz1NWBqdUsTh0mV7A68pId3YZl6H0=
