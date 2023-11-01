@@ -14,25 +14,31 @@ import (
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/mongodb"
 )
 
+type RefundRequest struct {
+	Ref       string    `bson:"ref" json:"ref"`
+	CreatedAt time.Time `bson:"createdAt" json:"createdAt"`
+}
+
 type Order struct {
-	ID            primitive.ObjectID               `bson:"_id" json:"id"`
-	StoreKey      string                           `bson:"storeKey" json:"storeKey"`
-	User          *string                          `bson:"user,omitempty" json:"user,omitempty"`
-	CouponCode    *string                          `bson:"couponCode,omitempty" json:"couponCode,omitempty"`
-	Tip           *string                          `bson:"tip,omitempty" json:"tip,omitempty"`
-	IsPickup      bool                             `bson:"isPickup" json:"isPickup"`
-	Items         []OrderItem                      `bson:"items" json:"items"`
-	Summary       OrderSummary                     `bson:"summary" json:"summary"`
-	Secret        string                           `bson:"secret" json:"secret"`
-	Paid          bool                             `bson:"paid" json:"paid"`
-	InvoiceNumber *string                          `bson:"invoiceNumber,omitempty" json:"invoiceNumber,omitempty"`
-	OrderNumber   *string                          `bson:"orderNumber,omitempty" json:"orderNumber,omitempty"`
-	Payment       *Payment                         `bson:"payment,omitempty" json:"payment,omitempty"`
-	Checkout      *CartCheckout                    `bson:"checkout,omitempty" json:"checkout,omitempty"`
-	Refunds       []checkout.PaymentRefundResource `bson:"refunds" json:"refunds"`
-	Source        *string                          `bson:"source,omitempty" json:"source,omitempty"`
-	CreatedAt     time.Time                        `bson:"createdAt" json:"createdAt"`
-	UpdatedAt     time.Time                        `bson:"updatedAt" json:"updatedAt"`
+	ID             primitive.ObjectID               `bson:"_id" json:"id"`
+	StoreKey       string                           `bson:"storeKey" json:"storeKey"`
+	User           *string                          `bson:"user,omitempty" json:"user,omitempty"`
+	CouponCode     *string                          `bson:"couponCode,omitempty" json:"couponCode,omitempty"`
+	Tip            *string                          `bson:"tip,omitempty" json:"tip,omitempty"`
+	IsPickup       bool                             `bson:"isPickup" json:"isPickup"`
+	Items          []OrderItem                      `bson:"items" json:"items"`
+	Summary        OrderSummary                     `bson:"summary" json:"summary"`
+	Secret         string                           `bson:"secret" json:"secret"`
+	Paid           bool                             `bson:"paid" json:"paid"`
+	InvoiceNumber  *string                          `bson:"invoiceNumber,omitempty" json:"invoiceNumber,omitempty"`
+	OrderNumber    *string                          `bson:"orderNumber,omitempty" json:"orderNumber,omitempty"`
+	Payment        *Payment                         `bson:"payment,omitempty" json:"payment,omitempty"`
+	Checkout       *CartCheckout                    `bson:"checkout,omitempty" json:"checkout,omitempty"`
+	Refunds        []checkout.PaymentRefundResource `bson:"refunds" json:"refunds"`
+	RefundRequests []RefundRequest                  `bson:"refundRequests" json:"refundRequests"`
+	Source         *string                          `bson:"source,omitempty" json:"source,omitempty"`
+	CreatedAt      time.Time                        `bson:"createdAt" json:"createdAt"`
+	UpdatedAt      time.Time                        `bson:"updatedAt" json:"updatedAt"`
 }
 
 func (o Order) GetPaidEvent() notification.NotificationRequestItem {

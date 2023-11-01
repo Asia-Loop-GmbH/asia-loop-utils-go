@@ -16,9 +16,10 @@ func TestRefund(t *testing.T) {
 	}
 	ctx := context.WithValue(context.Background(), mycontext.FieldStage, "dev")
 	res, err := serviceadyen.Refund(ctx, serviceadyen.RefundOptions{
-		PSPRef:      "G8WVVDD5HV5X8N82",
-		Value:       "16.45",
-		MerchantRef: "1m2KXb0Itp",
+		RefundRef: "",
+		PSPRef:    "G8WVVDD5HV5X8N82",
+		Value:     "16.45",
+		Items:     nil,
 	})
 	assert.NoError(t, err)
 	assert.Equal(t, int64(1645), res.Amount.Value)
