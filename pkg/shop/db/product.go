@@ -70,3 +70,28 @@ func (p *Product) GetPrice(storeKey string, selectedOptions map[string]string) s
 	}
 	return p.Price.GetPrice(storeKey)
 }
+
+func (p *Product) IsAvailableInStore(storeKey string, selectedOptions map[string]string, options []ProductOption) bool {
+	if p.IsGiftCard {
+		return false
+	}
+	if lo.Contains(p.DisabledIn, storeKey) || lo.Contains(p.OutOfStockIn, storeKey) {
+		return false
+	}
+
+	for selectedName, selectedValue := range selectedOptions {
+		for _, option := range options {
+			if selectedName == option.Name {
+				for _, value := range option.Values {
+					if value.Name == selectedValue {
+						if lo.Contains(value.DisabledIn, storeKey) || lo.Contains(value.OutOfStockIn, storeKey) {
+							return false
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return true
+}
