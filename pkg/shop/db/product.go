@@ -72,9 +72,6 @@ func (p *Product) GetPrice(storeKey string, selectedOptions map[string]string) s
 }
 
 func (p *Product) IsAvailableInStore(storeKey string, selectedOptions map[string]string, options []ProductOption) bool {
-	if p.IsGiftCard {
-		return false
-	}
 	if lo.Contains(p.DisabledIn, storeKey) || lo.Contains(p.OutOfStockIn, storeKey) {
 		return false
 	}

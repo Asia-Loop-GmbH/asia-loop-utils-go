@@ -18,16 +18,6 @@ func TestIsAvailableInStore(t *testing.T) {
 		expectedIsAvail bool
 	}{
 		{
-			name: "gift card product not available",
-			product: db.Product{
-				IsGiftCard: true,
-			},
-			storeKey:        "store123",
-			selectedOptions: nil,
-			options:         nil,
-			expectedIsAvail: false,
-		},
-		{
 			name: "disabled product not available",
 			product: db.Product{
 				DisabledIn: []string{"store123"},
