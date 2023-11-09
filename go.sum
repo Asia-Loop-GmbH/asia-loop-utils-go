@@ -21,8 +21,8 @@ github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.5.2 h1:UZx8SXZ0YtzRiALzYAW
 github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.5.2/go.mod h1:ipuRpcSaklmxR6C39G187TpBAO132gUfleTGccUPs8c=
 github.com/aws/aws-sdk-go-v2/internal/ini v1.5.2 h1:5KL4rS1yq5rJ6Q8lrlsFPHCPWwhkMINNiRXHb4YbFyc=
 github.com/aws/aws-sdk-go-v2/internal/ini v1.5.2/go.mod h1:rdAuXeHWhI/zkpYcO5n8WCpaIgY9MUxFyBsuqq3kjyA=
-github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.30.0 h1:rsDmRS54evkGBknhb427oHCgjhTC9XI+Nli+1fmh1J4=
-github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.30.0/go.mod h1:AXN9IuwTHOR0gkzGU5GnP58swo183IIb821Nz9fhwQY=
+github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.30.1 h1:eG+hlz4fhbih1qnl2GACJ7NgrpfFwcQZeUWdVvecD/k=
+github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.30.1/go.mod h1:R1cDoUJ6v2iltqxzvDXgjQmjrVIcOAaWUZG039DtRug=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.10.2 h1:h7j73yuAVVjic8pqswh+L/7r2IHP43QwRyOu6zcCDDE=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.10.2/go.mod h1:H07AHdK5LSy8F7EJUQhoxyiCNkePoHj2D8P2yGTWafo=
 github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.23.0 h1:PXSCgeF51ApT3k+fduqw7IaCxICt1nozWV1iPz7TyxU=
