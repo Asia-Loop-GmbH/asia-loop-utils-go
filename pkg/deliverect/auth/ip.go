@@ -18,7 +18,7 @@ var stageIPMap = map[string][]string{
 	"prod": productionIPs,
 }
 
-func validateCallerIP(ctx context.Context, request *events.APIGatewayProxyRequest) bool {
+func ValidateCallerIP(ctx context.Context, request *events.APIGatewayProxyRequest) bool {
 	log := logger.FromContext(ctx)
 	callerIP := request.RequestContext.Identity.SourceIP
 	log.Infof("Validate deliverect webhook call from [%s] to [%s]", callerIP, request.Path)
