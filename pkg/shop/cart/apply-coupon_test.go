@@ -2,7 +2,7 @@ package cart
 
 import (
 	"context"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/shop/db"
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"

@@ -7,7 +7,7 @@ import (
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/serviceadyen"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/serviceadyen"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/v4/pkg/context"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/random"
 )

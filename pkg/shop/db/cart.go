@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
-	"github.com/adyen/adyen-go-api-library/v6/src/notification"
+	"github.com/adyen/adyen-go-api-library/v8/src/checkout"
+	"github.com/adyen/adyen-go-api-library/v8/src/webhook"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -58,7 +58,7 @@ type Payment struct {
 	Session        checkout.CreateCheckoutSessionResponse `bson:"session" json:"session"`
 	Environment    string                                 `bson:"environment" json:"environment"`
 	Client         string                                 `bson:"client" json:"client"`
-	Events         []notification.NotificationRequestItem `bson:"events" json:"events"`
+	Events         []webhook.NotificationRequestItem      `bson:"events" json:"events"`
 	RedirectEvents []checkout.PaymentDetailsResponse      `bson:"redirectEvents" json:"redirectEvents"`
 }
 

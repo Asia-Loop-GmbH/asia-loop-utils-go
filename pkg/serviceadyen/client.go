@@ -3,8 +3,8 @@ package serviceadyen
 import (
 	"context"
 
-	"github.com/adyen/adyen-go-api-library/v6/src/adyen"
-	"github.com/adyen/adyen-go-api-library/v6/src/common"
+	"github.com/adyen/adyen-go-api-library/v8/src/adyen"
+	"github.com/adyen/adyen-go-api-library/v8/src/common"
 
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/secretsmanager"
 	mycontext "github.com/nam-truong-le/lambda-utils-go/v4/pkg/context"

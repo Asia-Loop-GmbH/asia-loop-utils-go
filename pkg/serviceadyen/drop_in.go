@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
+	"github.com/adyen/adyen-go-api-library/v8/src/checkout"
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/random"
 )
@@ -39,31 +39,30 @@ func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.Car
 		return nil, err
 	}
 
+	checkoutService := client.Checkout()
 	amount := decimal.RequireFromString(order.Summary.Total.Value)
 	amountInt := amount.Mul(decimal.NewFromInt(100)).IntPart()
 
-	res, httpRes, err := client.Checkout.Sessions(&checkout.CreateCheckoutSessionRequest{
+	res, httpRes, err := checkoutService.PaymentsApi.Sessions(ctx, checkoutService.PaymentsApi.SessionsInput().IdempotencyKey(order.ID.Hex()).CreateCheckoutSessionRequest(checkout.CreateCheckoutSessionRequest{
 		Amount:                 checkout.Amount{Currency: currencyEUR, Value: amountInt},
-		CountryCode:            countryDE,
+		CountryCode:            lo.ToPtr(countryDE),
 		MerchantAccount:        accountECOM,
-		MerchantOrderReference: order.ID.Hex(),
+		MerchantOrderReference: lo.ToPtr(order.ID.Hex()),
 		Reference:              random.String(10, lo.AlphanumericCharset),
 		ReturnUrl:              returnURL,
-		// TODO: should we send more data to adyen
-		LineItems: lo.ToPtr(lo.Map(order.Items, func(item db.OrderItem, idx int) checkout.LineItem {
+		LineItems: lo.Map(order.Items, func(item db.OrderItem, idx int) checkout.LineItem {
 			return checkout.LineItem{
-				Id:                 fmt.Sprintf("Item #%d", idx),
-				AmountExcludingTax: adyenUnitPrice(item.Net, item.Amount),
-				AmountIncludingTax: adyenUnitPrice(item.Total, item.Amount),
-				Description:        item.Name,
-				Quantity:           int64(item.Amount),
-				TaxAmount:          adyenUnitPrice(item.Tax, item.Amount),
-				TaxPercentage:      adyenTaxPercentage(item.TaxClass),
+				Id:                 lo.ToPtr(fmt.Sprintf("Item #%d", idx)),
+				AmountExcludingTax: lo.ToPtr(adyenUnitPrice(item.Net, item.Amount)),
+				AmountIncludingTax: lo.ToPtr(adyenUnitPrice(item.Total, item.Amount)),
+				Description:        lo.ToPtr(item.Name),
+				Quantity:           lo.ToPtr(int64(item.Amount)),
+				TaxAmount:          lo.ToPtr(adyenUnitPrice(item.Tax, item.Amount)),
+				TaxPercentage:      lo.ToPtr(adyenTaxPercentage(item.TaxClass)),
 			}
-		})),
-		ShopperEmail:     cartCheckout.Email,
-		ShopperReference: random.String(10, lo.UpperCaseLettersCharset), // TODO: is there anyway to have a better shopper reference?
-	})
+		}),
+		ShopperEmail: lo.ToPtr(cartCheckout.Email),
+	}))
 
 	if err != nil {
 		log.Errorf("Failed to create payment session: %s", err)
@@ -95,12 +94,13 @@ func ProcessRedirect(ctx context.Context, sessionID, redirectResult string) (*ch
 	if err != nil {
 		return nil, err
 	}
+	checkoutService := client.Checkout()
 
-	res, httpRes, err := client.Checkout.PaymentsDetails(&checkout.DetailsRequest{
+	res, httpRes, err := checkoutService.PaymentsApi.PaymentsDetails(ctx, checkoutService.PaymentsApi.PaymentsDetailsInput().IdempotencyKey(sessionID).PaymentDetailsRequest(checkout.PaymentDetailsRequest{
 		Details: checkout.PaymentCompletionDetails{
-			RedirectResult: redirectResult,
+			RedirectResult: lo.ToPtr(redirectResult),
 		},
-	})
+	}))
 	if err != nil {
 		log.Errorf("Failed to update payment details: %s", err)
 		return nil, err

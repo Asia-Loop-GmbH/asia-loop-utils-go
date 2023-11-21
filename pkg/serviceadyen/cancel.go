@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
+	"github.com/adyen/adyen-go-api-library/v8/src/checkout"
 	"github.com/pkg/errors"
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
@@ -20,7 +20,7 @@ type RefundOptions struct {
 	Items     []checkout.LineItem
 }
 
-func Refund(ctx context.Context, opts RefundOptions) (*checkout.PaymentRefundResource, error) {
+func Refund(ctx context.Context, opts RefundOptions) (*checkout.PaymentRefundResponse, error) {
 	log := logger.FromContext(ctx)
 	log.Infof("Cancel payment")
 
@@ -28,18 +28,20 @@ func Refund(ctx context.Context, opts RefundOptions) (*checkout.PaymentRefundRes
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to init adyen client")
 	}
+	checkoutService := client.Checkout()
 
 	amount := decimal.RequireFromString(opts.Value)
 	amountInt := amount.Mul(decimal.NewFromInt(100)).IntPart()
-	res, httpRes, err := client.Checkout.PaymentsPaymentPspReferenceRefunds(opts.PSPRef, &checkout.CreatePaymentRefundRequest{
+
+	res, httpRes, err := checkoutService.ModificationsApi.RefundCapturedPayment(ctx, checkoutService.ModificationsApi.RefundCapturedPaymentInput(opts.PSPRef).IdempotencyKey(opts.RefundRef).PaymentRefundRequest(checkout.PaymentRefundRequest{
 		Amount: checkout.Amount{
 			Currency: currencyEUR,
 			Value:    amountInt,
 		},
+		LineItems:       opts.Items,
 		MerchantAccount: accountECOM,
-		Reference:       opts.RefundRef,
-		LineItems:       lo.ToPtr(opts.Items),
-	}, ctx)
+		Reference:       lo.ToPtr(opts.RefundRef),
+	}))
 
 	if err != nil {
 		log.Errorf("Failed to refund payment [%+v]: %s", opts, err)

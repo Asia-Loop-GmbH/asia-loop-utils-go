@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/adyen/adyen-go-api-library/v6/src/checkout"
-	"github.com/adyen/adyen-go-api-library/v6/src/notification"
+	"github.com/adyen/adyen-go-api-library/v8/src/checkout"
+	"github.com/adyen/adyen-go-api-library/v8/src/webhook"
 	"github.com/samber/lo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -34,15 +34,15 @@ type Order struct {
 	OrderNumber    *string                          `bson:"orderNumber,omitempty" json:"orderNumber,omitempty"`
 	Payment        *Payment                         `bson:"payment,omitempty" json:"payment,omitempty"`
 	Checkout       *CartCheckout                    `bson:"checkout,omitempty" json:"checkout,omitempty"`
-	Refunds        []checkout.PaymentRefundResource `bson:"refunds" json:"refunds"`
+	Refunds        []checkout.PaymentRefundResponse `bson:"refunds" json:"refunds"`
 	RefundRequests []RefundRequest                  `bson:"refundRequests" json:"refundRequests"`
 	Source         *string                          `bson:"source,omitempty" json:"source,omitempty"`
 	CreatedAt      time.Time                        `bson:"createdAt" json:"createdAt"`
 	UpdatedAt      time.Time                        `bson:"updatedAt" json:"updatedAt"`
 }
 
-func (o Order) GetPaidEvent() notification.NotificationRequestItem {
-	found, _ := lo.Find(o.Payment.Events, func(item notification.NotificationRequestItem) bool {
+func (o Order) GetPaidEvent() webhook.NotificationRequestItem {
+	found, _ := lo.Find(o.Payment.Events, func(item webhook.NotificationRequestItem) bool {
 		return item.EventCode == "AUTHORISATION" && item.Success == "true"
 	}) // we expect always found
 	return found

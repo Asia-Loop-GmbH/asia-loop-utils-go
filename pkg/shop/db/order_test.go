@@ -3,16 +3,16 @@ package db_test
 import (
 	"testing"
 
-	"github.com/adyen/adyen-go-api-library/v6/src/notification"
+	"github.com/adyen/adyen-go-api-library/v8/src/webhook"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/shop/db"
 )
 
 func TestOrder_GetPaidEvent(t *testing.T) {
 	order := db.Order{
 		Payment: &db.Payment{
-			Events: []notification.NotificationRequestItem{
+			Events: []webhook.NotificationRequestItem{
 				{
 					EventCode: "foo",
 					Success:   "bar",
@@ -33,7 +33,7 @@ func TestOrder_GetPaidEvent(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, notification.NotificationRequestItem{
+	assert.Equal(t, webhook.NotificationRequestItem{
 		EventCode: "AUTHORISATION", Success: "true",
 	}, order.GetPaidEvent())
 }

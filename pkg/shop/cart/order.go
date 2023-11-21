@@ -12,9 +12,9 @@ import (
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/orderutils"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/coupon"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/orderutils"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/shop/coupon"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/shop/db"
 	mysns "github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/sns"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/aws/ssm"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"

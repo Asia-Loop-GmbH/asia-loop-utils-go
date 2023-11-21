@@ -5,7 +5,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/db"
 )
 
 type OrderPublic struct {
