@@ -3,7 +3,7 @@ package coupon
 import (
 	"context"
 	"fmt"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/db"
 	"strings"
 	"time"
 
@@ -12,7 +12,7 @@ import (
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson"
 
-	shopdb "github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
+	shopdb "github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 

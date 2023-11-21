@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/shop/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/shop/db"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 

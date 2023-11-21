@@ -9,10 +9,10 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/api"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/db"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/normalizer"
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/servicegooglemaps"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/api"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/db"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/normalizer"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/servicegooglemaps"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/random"
 )

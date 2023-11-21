@@ -9,7 +9,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/asia-loop-gmbh/asia-loop-utils-go/v8/pkg/servicewoo"
+	"github.com/asia-loop-gmbh/asia-loop-utils-go/v9/pkg/servicewoo"
 	"github.com/nam-truong-le/lambda-utils-go/v4/pkg/logger"
 )
 
