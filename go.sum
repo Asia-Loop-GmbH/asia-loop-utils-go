@@ -640,8 +640,8 @@ github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.23.3 h1:NurfTBFmaehSiWMv5
 github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.23.3/go.mod h1:LDD9wCQ1tvjMIWEIFPvZ8JgJsEOjded+X5jav9tD/zg=
 github.com/aws/aws-sdk-go-v2/service/sns v1.25.3 h1:6/Esm0BnUNrx+yy8AaslbaeJa8V40tTJ9N+tOihYWVo=
 github.com/aws/aws-sdk-go-v2/service/sns v1.25.3/go.mod h1:GkPiLToDWySwNSsR4AVam/Sv8UAZuMlGe9dozvyRCPE=
-github.com/aws/aws-sdk-go-v2/service/ssm v1.43.0 h1:hrbnozmShh4n0ar1Zk7Ol0ST1sep1ECGHLwbdbfAFRo=
-github.com/aws/aws-sdk-go-v2/service/ssm v1.43.0/go.mod h1:5tNnH3XNzW2Jo3TXQjKKH/Ivx7gRsz9nGcvGhq6YPRA=
+github.com/aws/aws-sdk-go-v2/service/ssm v1.43.1 h1:QCZGFHZnzP0yRveI5X+5Cu54wdvpbgiuF3Qy3xBykyA=
+github.com/aws/aws-sdk-go-v2/service/ssm v1.43.1/go.mod h1:Iw3+XCa7ARZWsPiV3Zozf5Hb3gD7pHDLKu9Xcc4iwDM=
 github.com/aws/aws-sdk-go-v2/service/sso v1.17.3 h1:CdsSOGlFF3Pn+koXOIpTtvX7st0IuGsZ8kJqcWMlX54=
 github.com/aws/aws-sdk-go-v2/service/sso v1.17.3/go.mod h1:oA6VjNsLll2eVuUoF2D+CMyORgNzPEW/3PyUdq6WQjI=
 github.com/aws/aws-sdk-go-v2/service/ssooidc v1.20.1 h1:cbRqFTVnJV+KRpwFl76GJdIZJKKCdTPnjUZ7uWh3pIU=
@@ -869,8 +869,8 @@ github.com/minio/c2goasm v0.0.0-20190812172519-36a3d3bbc4f3/go.mod h1:RagcQ7I8Ie
 github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe/go.mod h1:wL8QJuTMNUDYhXwkmfOly8iTdp5TEcJFWZD2D7SIkUc=
 github.com/montanaflynn/stats v0.6.6 h1:Duep6KMIDpY4Yo11iFsvyqJDyfzLF9+sndUKT+v64GQ=
 github.com/montanaflynn/stats v0.6.6/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.1.169 h1:n6HOFUkNF/NiGcezKs3PCx70F1GhPH/39GrKF8eXoS8=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.1.169/go.mod h1:QzdHwvqfxEhavR/CK96cc5PrE2XHFCuukU6mXs6qaII=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.1.172 h1:xlzMTD+khfE9ikxJiwElEsUUMq2zfwxy7YfaDh2qAWU=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.1.172/go.mod h1:xX+G61NKEWtNbhyX7JblUECZo4i9QkLxXYc3HLz1+48=
 github.com/nyaruka/phonenumbers v1.2.1 h1:88YAhE7g5qrjR2nhUOU/KkrfpbV2HKkjFRLjzVwCGyA=
 github.com/nyaruka/phonenumbers v1.2.1/go.mod h1:wzk2qq7qwsaBKrfbkWKdgHYOOH+QFTesSpIq53ELw8M=
 github.com/phpdave11/gofpdf v1.4.2/go.mod h1:zpO6xFn9yxo3YLyMvW8HcKWVdbNqgIfOOp2dXMnm1mY=
