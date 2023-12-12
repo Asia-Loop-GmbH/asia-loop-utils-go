@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.26.1
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.31.5
 	github.com/aws/aws-sdk-go-v2/service/sns v1.26.5
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.209
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.210
 	github.com/nyaruka/phonenumbers v1.2.3
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.39.0
@@ -38,7 +38,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/uuid v1.4.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/klauspost/compress v1.15.13 // indirect
 	github.com/montanaflynn/stats v0.6.6 // indirect
