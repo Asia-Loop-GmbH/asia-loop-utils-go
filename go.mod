@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.31.5
 	github.com/aws/aws-sdk-go-v2/service/sns v1.26.5
 	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.210
-	github.com/nyaruka/phonenumbers v1.2.3
+	github.com/nyaruka/phonenumbers v1.3.0
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.39.0
 	github.com/shopspring/decimal v1.3.1
@@ -50,7 +50,7 @@ require (
 	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/crypto v0.12.0 // indirect
-	golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15 // indirect
+	golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611 // indirect
 	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/oauth2 v0.11.0 // indirect
 	golang.org/x/sync v0.2.0 // indirect
