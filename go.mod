@@ -5,12 +5,12 @@ go 1.20
 require (
 	github.com/Masterminds/goutils v1.1.1
 	github.com/adyen/adyen-go-api-library/v8 v8.2.0
-	github.com/aws/aws-lambda-go v1.42.0
+	github.com/aws/aws-lambda-go v1.43.0
 	github.com/aws/aws-sdk-go-v2 v1.24.0
 	github.com/aws/aws-sdk-go-v2/config v1.26.1
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.32.0
 	github.com/aws/aws-sdk-go-v2/service/sns v1.26.5
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.212
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.213
 	github.com/nyaruka/phonenumbers v1.3.0
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.39.0
