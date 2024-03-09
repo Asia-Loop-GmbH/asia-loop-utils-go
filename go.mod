@@ -8,7 +8,7 @@ require (
 	github.com/aws/aws-lambda-go v1.46.0
 	github.com/aws/aws-sdk-go-v2 v1.25.3
 	github.com/aws/aws-sdk-go-v2/config v1.27.7
-	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.35.2
+	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.36.0
 	github.com/aws/aws-sdk-go-v2/service/sns v1.29.2
 	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.241
 	github.com/nyaruka/phonenumbers v1.3.2
