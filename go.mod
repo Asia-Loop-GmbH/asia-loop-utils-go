@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.36.0
 	github.com/aws/aws-sdk-go-v2/service/sns v1.29.2
 	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.243
-	github.com/nyaruka/phonenumbers v1.3.2
+	github.com/nyaruka/phonenumbers v1.3.3
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.39.0
 	github.com/shopspring/decimal v1.3.1
@@ -58,6 +58,6 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
