@@ -636,8 +636,8 @@ github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.11.1 h1:EyBZibR
 github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.11.1/go.mod h1:JKpmtYhhPs7D97NL/ltqz7yCkERFW5dOlHyVl66ZYF8=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.11.6 h1:b+E7zIUHMmcB4Dckjpkapoy47W6C9QBv/zoUP+Hn8Kc=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.11.6/go.mod h1:S2fNV0rxrP78NhPbCZeQgY8H9jdDMeGtwcfZIRxzBqU=
-github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.28.4 h1:5GYToReUFSGP6/zqvG3fv8qNqeetyfsSiPHduHShjAc=
-github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.28.4/go.mod h1:slgOMs1CQu8UVgwoFqEvCi71L4HVoZgM0r8MtcNP6Mc=
+github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.28.5 h1:1i3Pq5g1NaXI/u8lTHRVMHyCc0HoZzSk2EFmiy14Hbk=
+github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.28.5/go.mod h1:slgOMs1CQu8UVgwoFqEvCi71L4HVoZgM0r8MtcNP6Mc=
 github.com/aws/aws-sdk-go-v2/service/sns v1.29.3 h1:R2MIMza/lZex1wIawXmo6S+suwFv/JcxOFSJPpsSVBY=
 github.com/aws/aws-sdk-go-v2/service/sns v1.29.3/go.mod h1:tr9l7BHYU/SvlJAL9CH56XZNcOBb/d24j3RrXkzzaTA=
 github.com/aws/aws-sdk-go-v2/service/ssm v1.49.4 h1:2f1Gkbe9O15DntphmbdEInn6MGIZ3x2bbv8b0p/4awQ=
@@ -867,8 +867,8 @@ github.com/minio/asm2plan9s v0.0.0-20200509001527-cdd76441f9d8/go.mod h1:mC1jAcs
 github.com/minio/c2goasm v0.0.0-20190812172519-36a3d3bbc4f3/go.mod h1:RagcQ7I8IeTMnF8JTXieKnO4Z6JCsikNEzj0DwauVzE=
 github.com/montanaflynn/stats v0.6.6 h1:Duep6KMIDpY4Yo11iFsvyqJDyfzLF9+sndUKT+v64GQ=
 github.com/montanaflynn/stats v0.6.6/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.1.247 h1:3K9gqh+2qFVb4W6BkAuaCCjwP0A8WLvO26fd3mBEswc=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.1.247/go.mod h1:K6YDv4aScQF9I6YdaNruE5VBpzzQ9NI5t/Ksb3UCeq0=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.1.248 h1:jc/iy74i31IoGoWJkYyBan4co9DzlpD/n/33QlRdRuA=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.1.248/go.mod h1:pOQ2Id/fuBy/bUhHfXEO/uJQHryIsIbJZ6nlhKgKXIg=
 github.com/nyaruka/phonenumbers v1.3.4 h1:bF1Wdh++fxw09s3surhVeBhXEcUKG07pHeP8HQXqjn8=
 github.com/nyaruka/phonenumbers v1.3.4/go.mod h1:Ut+eFwikULbmCenH6InMKL9csUNLyxHuBLyfkpum11s=
 github.com/phpdave11/gofpdf v1.4.2/go.mod h1:zpO6xFn9yxo3YLyMvW8HcKWVdbNqgIfOOp2dXMnm1mY=
