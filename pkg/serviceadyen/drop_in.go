@@ -6,6 +6,7 @@ import (
 	"io"
 
 	"github.com/adyen/adyen-go-api-library/v8/src/checkout"
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 	"github.com/shopspring/decimal"
 
@@ -43,7 +44,7 @@ func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.Car
 	amount := decimal.RequireFromString(order.Summary.Total.Value)
 	amountInt := amount.Mul(decimal.NewFromInt(100)).IntPart()
 
-	res, httpRes, err := checkoutService.PaymentsApi.Sessions(ctx, checkoutService.PaymentsApi.SessionsInput().IdempotencyKey(order.ID.Hex()).CreateCheckoutSessionRequest(checkout.CreateCheckoutSessionRequest{
+	createCheckoutSession := checkout.CreateCheckoutSessionRequest{
 		Amount:                 checkout.Amount{Currency: currencyEUR, Value: amountInt},
 		CountryCode:            lo.ToPtr(countryDE),
 		MerchantAccount:        accountECOM,
@@ -62,7 +63,11 @@ func NewDropInPayment(ctx context.Context, order *db.Order, cartCheckout *db.Car
 			}
 		}),
 		ShopperEmail: lo.ToPtr(cartCheckout.Email),
-	}))
+	}
+	idempotencyKey := uuid.New().String()
+	res, httpRes, err := checkoutService.PaymentsApi.Sessions(ctx,
+		checkoutService.PaymentsApi.SessionsInput().IdempotencyKey(idempotencyKey).CreateCheckoutSessionRequest(createCheckoutSession),
+	)
 
 	if err != nil {
 		log.Errorf("Failed to create payment session: %s", err)
