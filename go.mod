@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.38.5
 	github.com/aws/aws-sdk-go-v2/service/sns v1.29.11
 	github.com/google/uuid v1.6.0
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.267
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.268
 	github.com/nyaruka/phonenumbers v1.3.6
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.39.0
@@ -30,7 +30,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.11.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.11.11 // indirect
-	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.29.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.30.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.50.6 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.20.11 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.24.5 // indirect
