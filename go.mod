@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.41.0
 	github.com/aws/aws-sdk-go-v2/service/sns v1.31.0
 	github.com/google/uuid v1.6.0
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.274
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.275
 	github.com/nyaruka/phonenumbers v1.3.6
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.41.0
