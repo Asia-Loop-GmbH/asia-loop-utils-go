@@ -18,7 +18,7 @@ require (
 	github.com/shopspring/decimal v1.4.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.9.0
-	go.mongodb.org/mongo-driver v1.15.1
+	go.mongodb.org/mongo-driver v1.16.0
 	googlemaps.github.io/maps v1.7.0
 )
 
@@ -41,7 +41,7 @@ require (
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/klauspost/compress v1.15.13 // indirect
-	github.com/montanaflynn/stats v0.6.6 // indirect
+	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/pusher/pusher-http-go/v5 v5.1.1 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
@@ -49,12 +49,12 @@ require (
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a // indirect
 	go.opencensus.io v0.24.0 // indirect
-	golang.org/x/crypto v0.17.0 // indirect
+	golang.org/x/crypto v0.22.0 // indirect
 	golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611 // indirect
-	golang.org/x/net v0.14.0 // indirect
+	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/oauth2 v0.11.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
