@@ -8,7 +8,7 @@ require (
 	github.com/aws/aws-lambda-go v1.47.0
 	github.com/aws/aws-sdk-go-v2 v1.30.1
 	github.com/aws/aws-sdk-go-v2/config v1.27.24
-	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.41.1
+	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.41.2
 	github.com/aws/aws-sdk-go-v2/service/sns v1.31.1
 	github.com/google/uuid v1.6.0
 	github.com/nam-truong-le/lambda-utils-go/v4 v4.1.275
