@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/Masterminds/goutils v1.1.1
+	github.com/adyen/adyen-go-api-library/v10 v10.4.0
 	github.com/adyen/adyen-go-api-library/v8 v8.2.0
 	github.com/aws/aws-lambda-go v1.47.0
 	github.com/aws/aws-sdk-go-v2 v1.30.3
