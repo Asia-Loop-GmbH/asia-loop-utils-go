@@ -9,7 +9,7 @@ require (
 	github.com/adyen/adyen-go-api-library/v8 v8.2.0
 	github.com/aws/aws-lambda-go v1.47.0
 	github.com/aws/aws-sdk-go-v2 v1.30.4
-	github.com/aws/aws-sdk-go-v2/config v1.27.29
+	github.com/aws/aws-sdk-go-v2/config v1.27.30
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.43.2
 	github.com/aws/aws-sdk-go-v2/service/sns v1.31.5
 	github.com/google/uuid v1.6.0
