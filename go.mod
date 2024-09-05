@@ -2,7 +2,7 @@ module github.com/asia-loop-gmbh/asia-loop-utils-go/v9
 
 go 1.21
 
-toolchain go1.23.0
+toolchain go1.23.1
 
 require (
 	github.com/Masterminds/goutils v1.1.1
