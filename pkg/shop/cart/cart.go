@@ -282,8 +282,8 @@ func toOrder(ctx context.Context, shoppingCart *db.Cart, coupon *db.Coupon, prod
 	}
 
 	var payment *db.Payment
-	last, err := lo.Last(shoppingCart.Payments)
-	if err == nil {
+	last, found := lo.Last(shoppingCart.Payments)
+	if found {
 		finalTotal := decimal.RequireFromString(summary.Total.Value)
 		sameAmount := last.Session.Amount.Value == finalTotal.Mul(decimal.NewFromInt(100)).IntPart()
 		notExpired := last.Session.ExpiresAt.After(time.Now())

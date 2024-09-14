@@ -2,6 +2,7 @@ package cart
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -17,11 +18,12 @@ func TestCreateOrder(t *testing.T) {
 		t.Skip()
 	}
 
+	_ = os.Setenv("APP", "admin")
 	ctx := context.WithValue(context.Background(), mycontext.FieldStage, "prod")
 
 	colCarts, err := db.CollectionCarts(ctx)
 	assert.NoError(t, err)
-	cartID, err := primitive.ObjectIDFromHex("646de78d5cbaa84611a77abc")
+	cartID, err := primitive.ObjectIDFromHex("669a956a4bdad7e1c9e7ad1d")
 	assert.NoError(t, err)
 	find := colCarts.FindOne(ctx, bson.M{"_id": cartID})
 	shoppingCart := new(db.Cart)
