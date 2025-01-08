@@ -11,14 +11,14 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.48.3
 	github.com/aws/aws-sdk-go-v2/service/sns v1.33.8
 	github.com/google/uuid v1.6.0
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.57
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.58
 	github.com/nyaruka/phonenumbers v1.4.4
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.47.0
 	github.com/shopspring/decimal v1.4.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.10.0
-	go.mongodb.org/mongo-driver v1.17.1
+	go.mongodb.org/mongo-driver v1.17.2
 	googlemaps.github.io/maps v1.7.0
 )
 
@@ -40,7 +40,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
-	github.com/klauspost/compress v1.15.13 // indirect
+	github.com/klauspost/compress v1.16.7 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/pusher/pusher-http-go/v5 v5.1.1 // indirect
