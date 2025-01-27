@@ -14,7 +14,7 @@ require (
 	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.69
 	github.com/nyaruka/phonenumbers v1.5.0
 	github.com/pkg/errors v0.9.1
-	github.com/samber/lo v1.48.0
+	github.com/samber/lo v1.49.0
 	github.com/shopspring/decimal v1.4.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.10.0
