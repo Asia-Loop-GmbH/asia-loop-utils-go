@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.49.3
 	github.com/aws/aws-sdk-go-v2/service/sns v1.33.17
 	github.com/google/uuid v1.6.0
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.73
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.74
 	github.com/nyaruka/phonenumbers v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.49.1
@@ -30,8 +30,8 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.12.12 // indirect
-	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.34.15 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssm v1.56.9 // indirect
+	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.34.16 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssm v1.56.10 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.24.14 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.28.13 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.33.12 // indirect
@@ -39,7 +39,6 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
