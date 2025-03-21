@@ -1,6 +1,8 @@
 module github.com/asia-loop-gmbh/asia-loop-utils-go/v9
 
-go 1.23
+go 1.23.0
+
+toolchain go1.24.1
 
 require (
 	github.com/Masterminds/goutils v1.1.1
@@ -12,7 +14,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sns v1.34.2
 	github.com/google/uuid v1.6.0
 	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.90
-	github.com/nyaruka/phonenumbers v1.5.0
+	github.com/nyaruka/phonenumbers v1.6.0
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.49.1
 	github.com/shopspring/decimal v1.4.0
@@ -49,14 +51,14 @@ require (
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/crypto v0.26.0 // indirect
-	golang.org/x/exp v0.0.0-20240525044651-4c93da0ed11d // indirect
+	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394 // indirect
 	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/oauth2 v0.11.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
+	golang.org/x/sync v0.12.0 // indirect
 	golang.org/x/sys v0.23.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/protobuf v1.34.1 // indirect
+	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
