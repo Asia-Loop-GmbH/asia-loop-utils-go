@@ -6,6 +6,7 @@ toolchain go1.24.3
 
 require (
 	github.com/Masterminds/goutils v1.1.1
+	github.com/adyen/adyen-go-api-library/v20 v20.0.0
 	github.com/adyen/adyen-go-api-library/v8 v8.2.0
 	github.com/aws/aws-lambda-go v1.48.0
 	github.com/aws/aws-sdk-go-v2 v1.36.3
