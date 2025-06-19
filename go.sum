@@ -864,8 +864,8 @@ github.com/minio/asm2plan9s v0.0.0-20200509001527-cdd76441f9d8/go.mod h1:mC1jAcs
 github.com/minio/c2goasm v0.0.0-20190812172519-36a3d3bbc4f3/go.mod h1:RagcQ7I8IeTMnF8JTXieKnO4Z6JCsikNEzj0DwauVzE=
 github.com/montanaflynn/stats v0.7.1 h1:etflOAAHORrCC44V+aR6Ftzort912ZU+YLiSTuV8eaE=
 github.com/montanaflynn/stats v0.7.1/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.2.115 h1:Y+/lGBAnX2o2BQ5lMrvuusD7xD2LFPrL+4OERiZ/K9w=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.2.115/go.mod h1:SsgW0p2/vxpxZq4V4WQRoNRdqSumY2JH+sJTfgBUjl4=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.2.116 h1:E9rmp3oWEm0t3Ktpd9rhAhgHuAyEVUc1kLwLdaucOWY=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.2.116/go.mod h1:hCny65Pc16/WeGdgEY9SvTaw+H4pEVBsiG00nhbnHB0=
 github.com/nyaruka/phonenumbers v1.6.3 h1:JU7Q30+UM/03/vto6Q4EiZfEuRpTVyXMqImIbI942Qw=
 github.com/nyaruka/phonenumbers v1.6.3/go.mod h1:7gjs+Lchqm49adhAKB5cdcng5ZXgt6x7Jgvi0ZorUtU=
 github.com/phpdave11/gofpdf v1.4.2/go.mod h1:zpO6xFn9yxo3YLyMvW8HcKWVdbNqgIfOOp2dXMnm1mY=
