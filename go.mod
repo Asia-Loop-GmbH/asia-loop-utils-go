@@ -13,7 +13,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.53.2
 	github.com/aws/aws-sdk-go-v2/service/sns v1.34.7
 	github.com/google/uuid v1.6.0
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.116
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.117
 	github.com/nyaruka/phonenumbers v1.6.3
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.51.0
