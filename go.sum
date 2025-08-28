@@ -636,12 +636,12 @@ github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.1 h1:oegbebP
 github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.1/go.mod h1:kemo5Myr9ac0U9JfSjMo9yHLtw+pECEHsFtJ9tqCEI8=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.5 h1:Cx1M/UUgYu9UCQnIMKaOhkVaFvLy1HneD6T4sS/DlKg=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.5/go.mod h1:fTRNLgrTvPpEzGqc9QkeO4hu/3ng+mdtUbL8shUwXz4=
-github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.39.0 h1:4cI0izhZpHNep5CkZdcME1kSvFGSb38hd8DoOftIiho=
-github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.39.0/go.mod h1:KwGTe+BJ29tKBIkVuZgDzlw70aS4BZxLJVqAjwnhfRQ=
+github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.39.1 h1:iX4OaK+QrUsw2J8k4i/eymX33nFhM4noybFSawxsElU=
+github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.39.1/go.mod h1:hDr+R5WjCdv4Jeb96TCEaEAIVC6Fq2v3Ob8Otk3yofQ=
 github.com/aws/aws-sdk-go-v2/service/sns v1.38.0 h1:BNdYPzlgwyFLZqeFundNKnPDB+TVVfaqZJoz0q6dURk=
 github.com/aws/aws-sdk-go-v2/service/sns v1.38.0/go.mod h1:3nf7APIrKwA04hwtT8PLvCaHO5k08M5YA03ZTJjz77o=
-github.com/aws/aws-sdk-go-v2/service/ssm v1.64.0 h1:P0B6+TCK7bHi+MQPnakYOVrYENtEpVkaoVGeNCWjOV4=
-github.com/aws/aws-sdk-go-v2/service/ssm v1.64.0/go.mod h1:NMCzIcmGKoLNNkZ3/8SZzmp1+jvcU32vyUk5j7BwWI4=
+github.com/aws/aws-sdk-go-v2/service/ssm v1.64.1 h1:zzZo2KZU2unh6WCGr8VvGqsnWAvXmjfH6jQ8oj/MakA=
+github.com/aws/aws-sdk-go-v2/service/ssm v1.64.1/go.mod h1:fp8u6jpj1M+jmNeOcL1Fw+E9lk7112wZvskhHpUqj6U=
 github.com/aws/aws-sdk-go-v2/service/sso v1.28.3 h1:z6lajFT/qGlLRB/I8V5CCklqSuWZKUkdwRAn9leIkiQ=
 github.com/aws/aws-sdk-go-v2/service/sso v1.28.3/go.mod h1:BnyjuIX0l+KXJVl2o9Ki3Zf0M4pA2hQYopFCRUj9ADU=
 github.com/aws/aws-sdk-go-v2/service/ssooidc v1.34.1 h1:8yI3jK5JZ310S8RpgdZdzwvlvBu3QbG8DP7Be/xJ6yo=
@@ -864,8 +864,8 @@ github.com/minio/asm2plan9s v0.0.0-20200509001527-cdd76441f9d8/go.mod h1:mC1jAcs
 github.com/minio/c2goasm v0.0.0-20190812172519-36a3d3bbc4f3/go.mod h1:RagcQ7I8IeTMnF8JTXieKnO4Z6JCsikNEzj0DwauVzE=
 github.com/montanaflynn/stats v0.7.1 h1:etflOAAHORrCC44V+aR6Ftzort912ZU+YLiSTuV8eaE=
 github.com/montanaflynn/stats v0.7.1/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.2.127 h1:C2RkrROxacAy1Mp1Es4/wdvgr8f/w2XgJb8f00wPGu4=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.2.127/go.mod h1:nhWjEtsAyQRZmd4NJIO+c4cB/BwOj1SH9gpRZjdYmJg=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.2.129 h1:ktgduEpHwpbJwoHprsuNX7u6KiTiEaa6UkSDDxuwjAk=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.2.129/go.mod h1:vJXezUL+/BDq89jIjaocKeT4CNGAMQm+oYsI/3L08Ts=
 github.com/nyaruka/phonenumbers v1.6.5 h1:aBCaUhfpRA7hU6fsXk+p7KF1aNx4nQlq9hGeo2qdFg8=
 github.com/nyaruka/phonenumbers v1.6.5/go.mod h1:7gjs+Lchqm49adhAKB5cdcng5ZXgt6x7Jgvi0ZorUtU=
 github.com/phpdave11/gofpdf v1.4.2/go.mod h1:zpO6xFn9yxo3YLyMvW8HcKWVdbNqgIfOOp2dXMnm1mY=
