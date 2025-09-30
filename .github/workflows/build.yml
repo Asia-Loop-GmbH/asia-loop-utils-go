@@ -20,7 +20,7 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.UNIT_TEST_AWS_DEFAULT_REGION }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version-file: 'go.mod'
       - name: Test
