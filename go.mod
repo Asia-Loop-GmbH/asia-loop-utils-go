@@ -7,13 +7,13 @@ toolchain go1.25.2
 require (
 	github.com/Masterminds/goutils v1.1.1
 	github.com/adyen/adyen-go-api-library/v8 v8.2.0
-	github.com/aws/aws-lambda-go v1.49.0
+	github.com/aws/aws-lambda-go v1.50.0
 	github.com/aws/aws-sdk-go-v2 v1.39.2
 	github.com/aws/aws-sdk-go-v2/config v1.31.12
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.57.7
 	github.com/aws/aws-sdk-go-v2/service/sns v1.38.5
 	github.com/google/uuid v1.6.0
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.142
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.143
 	github.com/nyaruka/phonenumbers v1.6.6
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.52.0
