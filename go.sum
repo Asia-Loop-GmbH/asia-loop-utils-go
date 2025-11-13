@@ -866,8 +866,8 @@ github.com/montanaflynn/stats v0.7.1 h1:etflOAAHORrCC44V+aR6Ftzort912ZU+YLiSTuV8
 github.com/montanaflynn/stats v0.7.1/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
 github.com/nam-truong-le/lambda-utils-go/v4 v4.2.157 h1:/yUpvtTnf81JuoIS2XRD9l7rX5vLiXGrjYDpBSiu6yk=
 github.com/nam-truong-le/lambda-utils-go/v4 v4.2.157/go.mod h1:3sFoc6pj20l+X1HuylfShhYnMPOfR8bML0cMymLx9n4=
-github.com/nyaruka/phonenumbers v1.6.6 h1:cZv5/vslJh65zuOrLjdVDHKHzVEwVuUsXAPQi3bjGJU=
-github.com/nyaruka/phonenumbers v1.6.6/go.mod h1:7gjs+Lchqm49adhAKB5cdcng5ZXgt6x7Jgvi0ZorUtU=
+github.com/nyaruka/phonenumbers v1.6.7 h1:WmebT8TNEzNaui5QlrGqbccRC6dZkEkYc+MGQoILSSo=
+github.com/nyaruka/phonenumbers v1.6.7/go.mod h1:7gjs+Lchqm49adhAKB5cdcng5ZXgt6x7Jgvi0ZorUtU=
 github.com/phpdave11/gofpdf v1.4.2/go.mod h1:zpO6xFn9yxo3YLyMvW8HcKWVdbNqgIfOOp2dXMnm1mY=
 github.com/phpdave11/gofpdi v1.0.12/go.mod h1:vBmVV0Do6hSBHC8uKUQ71JGW+ZGQq74llk/7bXwjDoI=
 github.com/phpdave11/gofpdi v1.0.13/go.mod h1:vBmVV0Do6hSBHC8uKUQ71JGW+ZGQq74llk/7bXwjDoI=
