@@ -7,7 +7,7 @@ toolchain go1.25.5
 require (
 	github.com/Masterminds/goutils v1.1.1
 	github.com/adyen/adyen-go-api-library/v8 v8.2.0
-	github.com/aws/aws-lambda-go v1.50.0
+	github.com/aws/aws-lambda-go v1.51.0
 	github.com/aws/aws-sdk-go-v2 v1.40.1
 	github.com/aws/aws-sdk-go-v2/config v1.32.3
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.57.16
