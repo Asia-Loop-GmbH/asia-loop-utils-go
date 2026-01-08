@@ -14,7 +14,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sns v1.39.10
 	github.com/google/uuid v1.6.0
 	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.172
-	github.com/nyaruka/phonenumbers v1.6.7
+	github.com/nyaruka/phonenumbers v1.6.8
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.52.0
 	github.com/shopspring/decimal v1.4.0
@@ -60,6 +60,6 @@ require (
 	golang.org/x/text v0.23.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/protobuf v1.36.5 // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
