@@ -614,8 +614,8 @@ github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kd
 github.com/apache/arrow/go/v10 v10.0.1/go.mod h1:YvhnlEePVnBS4+0z3fhPfUy7W1Ikj0Ih0vcRo/gZ1M0=
 github.com/apache/arrow/go/v11 v11.0.0/go.mod h1:Eg5OsL5H+e299f7u5ssuXsuHQVEGC4xei5aX110hRiI=
 github.com/apache/thrift v0.16.0/go.mod h1:PHK3hniurgQaNMZYaCLEqXKsYK8upmhPbmdP2FXSqgU=
-github.com/aws/aws-lambda-go v1.51.2 h1:U4cuQ52dOLUV0t72TCspLEnWob6jkwTfjIrXr5LE3/c=
-github.com/aws/aws-lambda-go v1.51.2/go.mod h1:dpMpZgvWx5vuQJfBt0zqBha60q7Dd7RfgJv23DymV8A=
+github.com/aws/aws-lambda-go v1.52.0 h1:5NfiRaVl9FafUIt2Ld/Bv22kT371mfAI+l1Hd+tV7ZE=
+github.com/aws/aws-lambda-go v1.52.0/go.mod h1:dpMpZgvWx5vuQJfBt0zqBha60q7Dd7RfgJv23DymV8A=
 github.com/aws/aws-sdk-go-v2 v1.41.1 h1:ABlyEARCDLN034NhxlRUSZr4l71mh+T5KAeGh6cerhU=
 github.com/aws/aws-sdk-go-v2 v1.41.1/go.mod h1:MayyLB8y+buD9hZqkCW3kX1AKq07Y5pXxtgB+rRFhz0=
 github.com/aws/aws-sdk-go-v2/config v1.32.7 h1:vxUyWGUwmkQ2g19n7JY/9YL8MfAIl7bTesIUykECXmY=
@@ -866,8 +866,8 @@ github.com/minio/asm2plan9s v0.0.0-20200509001527-cdd76441f9d8/go.mod h1:mC1jAcs
 github.com/minio/c2goasm v0.0.0-20190812172519-36a3d3bbc4f3/go.mod h1:RagcQ7I8IeTMnF8JTXieKnO4Z6JCsikNEzj0DwauVzE=
 github.com/montanaflynn/stats v0.7.1 h1:etflOAAHORrCC44V+aR6Ftzort912ZU+YLiSTuV8eaE=
 github.com/montanaflynn/stats v0.7.1/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.2.175 h1:agCX8r6NPxRRJbBvuXEO2TtGeKSMzeT3W/VCX/yy+RE=
-github.com/nam-truong-le/lambda-utils-go/v4 v4.2.175/go.mod h1:iR/ZJKJpmzGZfUl4r/vTej40q9f4+PhcGve9Vnm3UC4=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.2.177 h1:rqrQCjJX1ZKtsgy97giVbciPWy3fM7l1GdG2iGdm3H8=
+github.com/nam-truong-le/lambda-utils-go/v4 v4.2.177/go.mod h1:czIkZ9RczT0DDf632Kv17m1+Z9YC2hPE/acFMbJBw8A=
 github.com/nyaruka/phonenumbers v1.6.8 h1:k7HAJ/LeBkXE0vfbajITzTCZD0z0j+epdBNx43yTygk=
 github.com/nyaruka/phonenumbers v1.6.8/go.mod h1:IUu45lj2bSeYXQuxDyyuzOrdV10tyRa1YSsfH8EKN5c=
 github.com/phpdave11/gofpdf v1.4.2/go.mod h1:zpO6xFn9yxo3YLyMvW8HcKWVdbNqgIfOOp2dXMnm1mY=
