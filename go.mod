@@ -13,14 +13,14 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.58.0
 	github.com/aws/aws-sdk-go-v2/service/sns v1.39.11
 	github.com/google/uuid v1.6.0
-	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.179
+	github.com/nam-truong-le/lambda-utils-go/v4 v4.2.180
 	github.com/nyaruka/phonenumbers v1.6.8
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.52.0
 	github.com/shopspring/decimal v1.4.0
 	github.com/sirupsen/logrus v1.9.4
 	github.com/stretchr/testify v1.11.1
-	go.mongodb.org/mongo-driver v1.17.7
+	go.mongodb.org/mongo-driver v1.17.8
 	googlemaps.github.io/maps v1.7.0
 )
 
