@@ -20,7 +20,7 @@ require (
 	github.com/shopspring/decimal v1.4.0
 	github.com/sirupsen/logrus v1.9.4
 	github.com/stretchr/testify v1.11.1
-	go.mongodb.org/mongo-driver v1.17.8
+	go.mongodb.org/mongo-driver v1.17.9
 	googlemaps.github.io/maps v1.7.0
 )
 
