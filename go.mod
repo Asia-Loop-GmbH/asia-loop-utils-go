@@ -6,6 +6,7 @@ toolchain go1.26.2
 
 require (
 	github.com/Masterminds/goutils v1.1.1
+	github.com/adyen/adyen-go-api-library/v21 v21.2.0
 	github.com/adyen/adyen-go-api-library/v8 v8.2.0
 	github.com/aws/aws-lambda-go v1.54.0
 	github.com/aws/aws-sdk-go-v2 v1.41.2
@@ -53,7 +54,7 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/crypto v0.26.0 // indirect
 	golang.org/x/net v0.21.0 // indirect
-	golang.org/x/oauth2 v0.11.0 // indirect
+	golang.org/x/oauth2 v0.27.0 // indirect
 	golang.org/x/sync v0.12.0 // indirect
 	golang.org/x/sys v0.23.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
